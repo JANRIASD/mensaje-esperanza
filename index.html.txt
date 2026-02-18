@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mensaje de Esperanza</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-blue-900 via-indigo-900 to-black text-white min-h-screen flex flex-col items-center justify-center px-4">
+
+
+  <!-- Contenedor principal -->
+  <div class="max-w-2xl w-full bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-10 text-center">
+
+
+    <!-- Imagen del mensaje -->
+    <div class="mb-6">
+      <!-- Reemplaza 'mensaje.jpg' por tu imagen -->
+      <img src="mensaje.jpg" alt="Mensaje de Esperanza" class="rounded-2xl shadow-lg mx-auto" />
+    </div>
+
+
+    <!-- Texto principal debajo de la imagen -->
+    <div class="space-y-4 text-lg">
+      <p class="font-semibold">La Biblia ha transformado millones de vidas.</p>
+      <p>Si llegaste hasta aquí, Dios tiene algo especial para ti.</p>
+    </div>
+
+
+    <!-- Secciones de invitación -->
+    <div class="mt-8 space-y-6 text-left">
+
+
+      <!-- Descargar Biblia -->
+      <div class="bg-white/10 p-4 rounded-xl">
+        <h2 class="text-xl font-bold mb-2">📖 Descarga la Biblia gratis</h2>
+        <p class="mb-3">Puedes leer la Biblia en tu teléfono o computadora de forma gratuita.</p>
+        <a href="https://www.bible.com/es" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold">Descargar Biblia</a>
+      </div>
+
+
+      <!-- Estudio Bíblico -->
+      <div class="bg-white/10 p-4 rounded-xl">
+        <h2 class="text-xl font-bold mb-2">📚 Estudio Bíblico Personalizado</h2>
+        <p class="mb-3">Si deseas estudiar la Biblia en persona o en línea, a tu ritmo, estaremos felices de acompañarte.</p>
+        <!-- Reemplaza el número de WhatsApp -->
+        <a href="https://wa.me/529831255281" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">Solicitar Estudio Bíblico</a>
+      </div>
+
+
+      <!-- Iglesias cercanas -->
+      <div class="bg-white/10 p-4 rounded-xl">
+        <h2 class="text-xl font-bold mb-2">🏠 Recibe una Biblia Física</h2>
+        <p class="mb-3">Puedes visitar una iglesia cercana para recibir tu Biblia y conocer más.</p>
+        <a href="https://www.adventist.org/es/buscador-de-iglesias/" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold">Buscar Iglesias Cercanas</a>
+      </div>
+
+
+    </div>
+
+
+    <!-- Pie de página -->
+    <div class="mt-10 text-sm text-gray-300">
+      <p>Iglesia Adventista del Séptimo Día • Ministerio de Esperanza</p>
+      <p>“Conoceréis la verdad, y la verdad os hará libres.” Juan 8:32</p>
+    </div>
+
+
+  </div>
+
+
+</body>
+</html>
