@@ -3,190 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Un Mensaje para Ti</title>
+<title>Mensaje de Esperanza</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
-  background: #f8f3e8;
-  background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=60');
-  background-size: cover;
-  background-attachment: fixed;
-  color: #2e2e2e;
+  font-family: 'EB Garamond', serif;
+  background: #f7f3e9;
+  color: #3b2f2f;
   text-align: center;
 }
 
-/* capa blanca para legibilidad */
-.overlay {
-  background: rgba(248,243,232,0.85);
-  min-height: 100vh;
-}
-
 header {
-  padding: 14px;
-  background: rgba(255,255,255,0.8);
-  border-bottom: 1px solid #ddd;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 10;
+  padding: 20px;
+  background: #fff8e7;
+  border-bottom: 2px solid #d8c3a5;
 }
 
-header a {
-  margin: 0 12px;
-  text-decoration: none;
-  color: #444;
-  font-size: 15px;
-}
-
-.hero {
-  padding-top: 90px;
+h1 {
+  font-size: 2.2em;
 }
 
 .carousel {
-  max-width: 420px;
-  margin: auto;
+  max-width: 90%;
+  margin: 20px auto;
+  border: 8px solid #e4d3b1;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  background: white;
 }
 
 .carousel img {
   width: 100%;
-  border-radius: 10px;
   display: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .carousel img.active {
   display: block;
 }
 
-.section {
-  max-width: 650px;
-  margin: auto;
-  padding: 35px 18px;
+button {
+  padding: 12px 22px;
+  margin: 10px;
+  border: none;
+  background: #6b4f2c;
+  color: white;
+  font-size: 1.1em;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 28px;
-  font-weight: 600;
+button:hover {
+  background: #4b3218;
 }
 
-p {
-  font-size: 16px;
-  color: #3a3a3a;
-  line-height: 1.6;
+.counter {
+  font-size: 1.5em;
+  margin-top: 15px;
+  font-weight: bold;
 }
 
-.button {
-  display: inline-block;
-  padding: 12px 26px;
-  margin: 8px;
-  border-radius: 4px;
-  border: 1px solid #c9bfa9;
-  background: transparent;
-  color: #2e2e2e;
-  text-decoration: none;
-  font-size: 15px;
-  transition: 0.2s;
-}
-
-.button:hover {
-  background: #efe6d6;
+.map {
+  width: 100%;
+  height: 350px;
+  margin-top: 20px;
+  border-top: 2px solid #d8c3a5;
 }
 
 footer {
-  padding: 20px;
-  font-size: 13px;
-  color: #555;
-  border-top: 1px solid #ddd;
+  margin-top: 30px;
+  font-size: 1em;
+  padding: 15px;
 }
 </style>
 </head>
 
 <body>
-<div class="overlay">
 
 <header>
-  <a href="#inicio">Inicio</a>
-  <a href="#biblia">Biblia</a>
-  <a href="#estudio">Estudio</a>
-  <a href="#iglesia">Iglesias</a>
+<h1>📖 Un Mensaje de Esperanza</h1>
+<p>“Lámpara es a mis pies tu palabra” – Salmos 119:105</p>
 </header>
 
-<div id="inicio" class="hero">
-  <div class="carousel" id="carousel">
-    <img src="mensaje1.jpg">
-    <img src="mensaje2.jpg">
-    <img src="mensaje3.jpg">
-  </div>
+<!-- Carrusel -->
+<div class="carousel">
+  <img id="img1" class="active">
+  <img id="img2">
+  <img id="img3">
 </div>
 
-<div class="section">
-  <h2>No fue casualidad que llegaras aquí</h2>
-  <p>
-    La Biblia sigue siendo viva, actual y poderosa.  
-    Tal vez Dios quería hablarte hoy.
-  </p>
-</div>
+<!-- Botones -->
+<button onclick="window.open('https://www.bible.com/es/bible/149/GEN.1.RVR1960')">📥 Descargar Biblia Gratis</button>
+<button onclick="window.open('https://adventist.org/es/creencias/')">📚 Estudio Bíblico en Línea</button>
+<button onclick="scrollToMap()">📍 Iglesias Adventistas Cercanas</button>
 
-<div id="biblia" class="section">
-  <h2>Leer la Biblia</h2>
-  <a class="button" href="https://www.bible.com/es" target="_blank">Descargar Biblia</a>
-</div>
+<div class="counter" id="contador">🙏 Almas alcanzadas: 0</div>
 
-<div id="estudio" class="section">
-  <h2>Estudio Bíblico Personal</h2>
-  <p>Presencial o en línea, a tu tiempo.</p>
-  <a class="button" href="https://wa.me/529831255281" target="_blank">Solicitar Estudio</a>
-</div>
-
-<div id="iglesia" class="section">
-  <h2>Recibir una Biblia Física</h2>
-  <button class="button" onclick="buscarIglesia()">Buscar iglesia cercana</button>
-</div>
+<div id="map" class="map"></div>
 
 <footer>
-  Iglesia Adventista del Séptimo Día · Cancún<br>
-  “Conoceréis la verdad, y la verdad os hará libres.” Juan 8:32
+<p>Jesús Ama Regenerar Naciones 🌎</p>
 </footer>
 
 <script>
-// Carrusel automático
-let images = document.querySelectorAll(".carousel img");
-let index = 0;
+// 🔹 IMÁGENES DE GOOGLE DRIVE (REEMPLAZA LOS IDs)
+const images = [
+  "https://drive.google.com/uc?id=ID_IMAGEN_1",
+  "https://drive.google.com/uc?id=ID_IMAGEN_2",
+  "https://drive.google.com/uc?id=ID_IMAGEN_3"
+];
 
-const params = new URLSearchParams(window.location.search);
-let imgParam = parseInt(params.get("img"));
-if (imgParam && images[imgParam-1]) index = imgParam-1;
+let current = 0;
+const imgs = [document.getElementById("img1"), document.getElementById("img2"), document.getElementById("img3")];
 
-function showImage() {
-  images.forEach(img => img.classList.remove("active"));
-  images[index].classList.add("active");
-}
-showImage();
-
-setInterval(() => {
-  index = (index + 1) % images.length;
-  showImage();
-}, 6000);
-
-// Buscar iglesia
-function buscarIglesia() {
-  if (!navigator.geolocation) {
-    window.open("https://www.google.com/maps/search/Iglesia+Adventista+del+Séptimo+Día");
-    return;
+function loadImages() {
+  for (let i = 0; i < images.length; i++) {
+    imgs[i].src = images[i];
   }
-  navigator.geolocation.getCurrentPosition(pos => {
-    let lat = pos.coords.latitude;
-    let lon = pos.coords.longitude;
-    window.open(`https://www.google.com/maps/search/Iglesia+Adventista+del+Séptimo+Día/@${lat},${lon},14z`);
+}
+loadImages();
+
+function carousel() {
+  imgs.forEach(img => img.classList.remove("active"));
+  current = (current + 1) % images.length;
+  imgs[current].classList.add("active");
+}
+setInterval(carousel, 5000);
+
+// 🔹 CONTADOR DE ALMAS (LOCAL)
+let count = localStorage.getItem("contadorAlmas") || 0;
+count++;
+localStorage.setItem("contadorAlmas", count);
+document.getElementById("contador").innerText = "🙏 Almas alcanzadas: " + count;
+
+// 🔹 MAPA IGLESIAS ADVENTISTAS
+function initMap(lat, lon) {
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: lat, lng: lon },
+    zoom: 12
+  });
+
+  const request = {
+    location: { lat: lat, lng: lon },
+    radius: '5000',
+    keyword: 'Iglesia Adventista del Séptimo Día'
+  };
+
+  const service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, (results, status) => {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      results.forEach(place => {
+        new google.maps.Marker({
+          map,
+          position: place.geometry.location,
+          title: place.name
+        });
+      });
+    }
   });
 }
+
+function scrollToMap() {
+  document.getElementById("map").scrollIntoView({ behavior: "smooth" });
+}
+
+navigator.geolocation.getCurrentPosition(pos => {
+  initMap(pos.coords.latitude, pos.coords.longitude);
+});
 </script>
 
-</div>
+<!-- CAMBIA TU API KEY -->
+<script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&libraries=places"></script>
+
 </body>
 </html>
