@@ -2,79 +2,74 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mensaje de Esperanza</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un Mensaje para Ti</title>
 
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<!-- ESTILO BIBLIA IMPRESA -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter&display=swap" rel="stylesheet">
 
 <style>
 body {
-  margin: 0;
-  font-family: 'EB Garamond', serif;
-  background: #f7f3e9;
-  color: #3b2f2f;
-  text-align: center;
+  margin:0;
+  font-family: Inter, sans-serif;
+  background:#f8f5ef;
+  color:#2a1f15;
+  text-align:center;
 }
 
 header {
-  padding: 20px;
-  background: #fff8e7;
-  border-bottom: 2px solid #d8c3a5;
-}
-
-h1 {
-  font-size: 2.2em;
-}
-
-.carousel {
-  max-width: 90%;
-  margin: 20px auto;
-  border: 8px solid #e4d3b1;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  background: white;
+  padding:12px;
+  background:#2a1f15;
+  color:#fff;
+  font-family: Playfair Display;
 }
 
 .carousel img {
-  width: 100%;
-  display: none;
+  width:90%;
+  max-width:600px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  margin-top:20px;
 }
 
-.carousel img.active {
-  display: block;
+.section {
+  max-width:700px;
+  margin:auto;
+  padding:20px;
 }
 
-button {
-  padding: 12px 22px;
-  margin: 10px;
-  border: none;
-  background: #6b4f2c;
-  color: white;
-  font-size: 1.1em;
-  border-radius: 6px;
-  cursor: pointer;
+.button {
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:8px;
+  background:#7b4a12;
+  color:white;
+  text-decoration:none;
+  font-size:18px;
+  margin:10px;
 }
 
-button:hover {
-  background: #4b3218;
-}
-
-.counter {
-  font-size: 1.5em;
-  margin-top: 15px;
-  font-weight: bold;
-}
-
-.map {
-  width: 100%;
-  height: 350px;
-  margin-top: 20px;
-  border-top: 2px solid #d8c3a5;
-}
+.button.green { background:#2d6a4f; }
+.button.blue { background:#1d4ed8; }
 
 footer {
-  margin-top: 30px;
-  font-size: 1em;
-  padding: 15px;
+  font-size:14px;
+  color:#666;
+  padding:20px;
+}
+
+/* WhatsApp botón */
+.whatsapp {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:14px 18px;
+  border-radius:50px;
+  font-size:18px;
+  text-decoration:none;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 </style>
 </head>
@@ -82,99 +77,89 @@ footer {
 <body>
 
 <header>
-<h1>📖 Un Mensaje de Esperanza</h1>
-<p>“Lámpara es a mis pies tu palabra” – Salmos 119:105</p>
+Un Mensaje para Ti
 </header>
 
-<!-- Carrusel -->
 <div class="carousel">
-  <img id="img1" class="active">
-  <img id="img2">
-  <img id="img3">
+  <img id="carouselImage" src="" alt="Mensaje de Esperanza">
 </div>
 
-<!-- Botones -->
-<button onclick="window.open('https://www.bible.com/es/bible/149/GEN.1.RVR1960')">📥 Descargar Biblia Gratis</button>
-<button onclick="window.open('https://adventist.org/es/creencias/')">📚 Estudio Bíblico en Línea</button>
-<button onclick="scrollToMap()">📍 Iglesias Adventistas Cercanas</button>
+<div class="section">
+  <h2 id="dailyVerse"></h2>
+</div>
 
-<div class="counter" id="contador">🙏 Almas alcanzadas: 0</div>
+<div class="section">
+  <h3>📖 Descarga la Biblia Gratis</h3>
+  <a class="button green" href="https://www.bible.com/es" target="_blank">Descargar Biblia</a>
+</div>
 
-<div id="map" class="map"></div>
+<div class="section">
+  <h3>📚 Estudio Bíblico Personalizado</h3>
+  <a class="button blue" href="https://wa.me/529831255281" target="_blank">Solicitar Estudio</a>
+</div>
+
+<div class="section">
+  <h3>🏠 Iglesias Adventistas Cercanas</h3>
+  <a class="button" href="https://www.adventist.org/es/buscador-de-iglesias/" target="_blank">Buscar Iglesias</a>
+</div>
+
+<div class="section">
+  <h3>✨ Almas alcanzadas:</h3>
+  <h1 id="counter">0</h1>
+</div>
 
 <footer>
-<p>Jesús Ama Regenerar Naciones 🌎</p>
+Iglesia Adventista del Séptimo Día · Cancún Distrito 8<br>
+Juan 8:32
 </footer>
 
+<!-- WhatsApp flotante -->
+<a class="whatsapp" href="https://wa.me/529831255281" target="_blank">💬 Estudio Bíblico</a>
+
 <script>
-// 🔹 IMÁGENES DE GOOGLE DRIVE (REEMPLAZA LOS IDs)
-const images = [
-  "https://drive.google.com/uc?id=ID_IMAGEN_1",
-  "https://drive.google.com/uc?id=ID_IMAGEN_2",
-  "https://drive.google.com/uc?id=ID_IMAGEN_3"
+// 🔹 REEMPLAZA con tu ID de carpeta Google Drive
+const DRIVE_FOLDER_ID = "PON_AQUI_TU_ID";
+
+// Carrusel Google Drive
+let images = [
+  `https://drive.google.com/uc?id=${DRIVE_FOLDER_ID}&export=download`
 ];
 
-let current = 0;
-const imgs = [document.getElementById("img1"), document.getElementById("img2"), document.getElementById("img3")];
+// Si quieres manual:
+let manualImages = [
+  "mensaje1.jpg",
+  "mensaje2.jpg",
+  "mensaje3.jpg",
+  "mensaje4.jpg"
+];
 
-function loadImages() {
-  for (let i = 0; i < images.length; i++) {
-    imgs[i].src = images[i];
-  }
+let index = 0;
+const img = document.getElementById("carouselImage");
+
+function changeImage() {
+  img.src = manualImages[index];
+  index = (index + 1) % manualImages.length;
 }
-loadImages();
+changeImage();
+setInterval(changeImage, 5000);
 
-function carousel() {
-  imgs.forEach(img => img.classList.remove("active"));
-  current = (current + 1) % images.length;
-  imgs[current].classList.add("active");
-}
-setInterval(carousel, 5000);
+// Versículo diario automático
+const verses = [
+  "El Señor es mi pastor; nada me faltará. Salmo 23:1",
+  "Porque de tal manera amó Dios al mundo... Juan 3:16",
+  "Todo lo puedo en Aquel que me fortalece. Filipenses 4:13",
+  "Conoceréis la verdad y la verdad os hará libres. Juan 8:32"
+];
 
-// 🔹 CONTADOR DE ALMAS (LOCAL)
-let count = localStorage.getItem("contadorAlmas") || 0;
+const today = new Date().getDate();
+document.getElementById("dailyVerse").innerText = verses[today % verses.length];
+
+// Contador almas alcanzadas
+let count = localStorage.getItem("souls") || 0;
 count++;
-localStorage.setItem("contadorAlmas", count);
-document.getElementById("contador").innerText = "🙏 Almas alcanzadas: " + count;
-
-// 🔹 MAPA IGLESIAS ADVENTISTAS
-function initMap(lat, lon) {
-  const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: lat, lng: lon },
-    zoom: 12
-  });
-
-  const request = {
-    location: { lat: lat, lng: lon },
-    radius: '5000',
-    keyword: 'Iglesia Adventista del Séptimo Día'
-  };
-
-  const service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, (results, status) => {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      results.forEach(place => {
-        new google.maps.Marker({
-          map,
-          position: place.geometry.location,
-          title: place.name
-        });
-      });
-    }
-  });
-}
-
-function scrollToMap() {
-  document.getElementById("map").scrollIntoView({ behavior: "smooth" });
-}
-
-navigator.geolocation.getCurrentPosition(pos => {
-  initMap(pos.coords.latitude, pos.coords.longitude);
-});
+localStorage.setItem("souls", count);
+document.getElementById("counter").innerText = count;
 </script>
-
-<!-- CAMBIA TU API KEY -->
-<script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&libraries=places"></script>
 
 </body>
 </html>
