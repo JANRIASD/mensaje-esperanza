@@ -1,73 +1,193 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mensaje de Esperanza</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un Mensaje para Ti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: #f8f3e8;
+  background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=60');
+  background-size: cover;
+  background-attachment: fixed;
+  color: #2e2e2e;
+  text-align: center;
+}
+
+/* capa blanca para legibilidad */
+.overlay {
+  background: rgba(248,243,232,0.85);
+  min-height: 100vh;
+}
+
+header {
+  padding: 14px;
+  background: rgba(255,255,255,0.8);
+  border-bottom: 1px solid #ddd;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+header a {
+  margin: 0 12px;
+  text-decoration: none;
+  color: #444;
+  font-size: 15px;
+}
+
+.hero {
+  padding-top: 90px;
+}
+
+.carousel {
+  max-width: 420px;
+  margin: auto;
+}
+
+.carousel img {
+  width: 100%;
+  border-radius: 10px;
+  display: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.carousel img.active {
+  display: block;
+}
+
+.section {
+  max-width: 650px;
+  margin: auto;
+  padding: 35px 18px;
+}
+
+h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+p {
+  font-size: 16px;
+  color: #3a3a3a;
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 26px;
+  margin: 8px;
+  border-radius: 4px;
+  border: 1px solid #c9bfa9;
+  background: transparent;
+  color: #2e2e2e;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.button:hover {
+  background: #efe6d6;
+}
+
+footer {
+  padding: 20px;
+  font-size: 13px;
+  color: #555;
+  border-top: 1px solid #ddd;
+}
+</style>
 </head>
-<body class="bg-gradient-to-b from-blue-900 via-indigo-900 to-black text-white min-h-screen flex flex-col items-center justify-center px-4">
 
+<body>
+<div class="overlay">
 
-  <!-- Contenedor principal -->
-  <div class="max-w-2xl w-full bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-10 text-center">
+<header>
+  <a href="#inicio">Inicio</a>
+  <a href="#biblia">Biblia</a>
+  <a href="#estudio">Estudio</a>
+  <a href="#iglesia">Iglesias</a>
+</header>
 
-
-    <!-- Imagen del mensaje -->
-    <div class="mb-6">
-      <!-- Reemplaza 'mensaje.jpg' por tu imagen -->
-      <img src="mensaje.jpg" alt="Mensaje de Esperanza" class="rounded-2xl shadow-lg mx-auto" />
-    </div>
-
-
-    <!-- Texto principal debajo de la imagen -->
-    <div class="space-y-4 text-lg">
-      <p class="font-semibold">La Biblia ha transformado millones de vidas.</p>
-      <p>Si llegaste hasta aquí, Dios tiene algo especial para ti.</p>
-    </div>
-
-
-    <!-- Secciones de invitación -->
-    <div class="mt-8 space-y-6 text-left">
-
-
-      <!-- Descargar Biblia -->
-      <div class="bg-white/10 p-4 rounded-xl">
-        <h2 class="text-xl font-bold mb-2">📖 Descarga la Biblia gratis</h2>
-        <p class="mb-3">Puedes leer la Biblia en tu teléfono o computadora de forma gratuita.</p>
-        <a href="https://www.bible.com/es" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold">Descargar Biblia</a>
-      </div>
-
-
-      <!-- Estudio Bíblico -->
-      <div class="bg-white/10 p-4 rounded-xl">
-        <h2 class="text-xl font-bold mb-2">📚 Estudio Bíblico Personalizado</h2>
-        <p class="mb-3">Si deseas estudiar la Biblia en persona o en línea, a tu ritmo, estaremos felices de acompañarte.</p>
-        <!-- Reemplaza el número de WhatsApp -->
-        <a href="https://wa.me/529831255281" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">Solicitar Estudio Bíblico</a>
-      </div>
-
-
-      <!-- Iglesias cercanas -->
-      <div class="bg-white/10 p-4 rounded-xl">
-        <h2 class="text-xl font-bold mb-2">🏠 Recibe una Biblia Física</h2>
-        <p class="mb-3">Puedes visitar una iglesia cercana para recibir tu Biblia y conocer más.</p>
-        <a href="https://www.adventist.org/es/buscador-de-iglesias/" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold">Buscar Iglesias Cercanas</a>
-      </div>
-
-
-    </div>
-
-
-    <!-- Pie de página -->
-    <div class="mt-10 text-sm text-gray-300">
-      <p>Iglesia Adventista del Séptimo Día • Ministerio de Esperanza</p>
-      <p>“Conoceréis la verdad, y la verdad os hará libres.” Juan 8:32</p>
-    </div>
-
-
+<div id="inicio" class="hero">
+  <div class="carousel" id="carousel">
+    <img src="mensaje1.jpg">
+    <img src="mensaje2.jpg">
+    <img src="mensaje3.jpg">
   </div>
+</div>
 
+<div class="section">
+  <h2>No fue casualidad que llegaras aquí</h2>
+  <p>
+    La Biblia sigue siendo viva, actual y poderosa.  
+    Tal vez Dios quería hablarte hoy.
+  </p>
+</div>
 
+<div id="biblia" class="section">
+  <h2>Leer la Biblia</h2>
+  <a class="button" href="https://www.bible.com/es" target="_blank">Descargar Biblia</a>
+</div>
+
+<div id="estudio" class="section">
+  <h2>Estudio Bíblico Personal</h2>
+  <p>Presencial o en línea, a tu tiempo.</p>
+  <a class="button" href="https://wa.me/529831255281" target="_blank">Solicitar Estudio</a>
+</div>
+
+<div id="iglesia" class="section">
+  <h2>Recibir una Biblia Física</h2>
+  <button class="button" onclick="buscarIglesia()">Buscar iglesia cercana</button>
+</div>
+
+<footer>
+  Iglesia Adventista del Séptimo Día · Cancún<br>
+  “Conoceréis la verdad, y la verdad os hará libres.” Juan 8:32
+</footer>
+
+<script>
+// Carrusel automático
+let images = document.querySelectorAll(".carousel img");
+let index = 0;
+
+const params = new URLSearchParams(window.location.search);
+let imgParam = parseInt(params.get("img"));
+if (imgParam && images[imgParam-1]) index = imgParam-1;
+
+function showImage() {
+  images.forEach(img => img.classList.remove("active"));
+  images[index].classList.add("active");
+}
+showImage();
+
+setInterval(() => {
+  index = (index + 1) % images.length;
+  showImage();
+}, 6000);
+
+// Buscar iglesia
+function buscarIglesia() {
+  if (!navigator.geolocation) {
+    window.open("https://www.google.com/maps/search/Iglesia+Adventista+del+Séptimo+Día");
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos => {
+    let lat = pos.coords.latitude;
+    let lon = pos.coords.longitude;
+    window.open(`https://www.google.com/maps/search/Iglesia+Adventista+del+Séptimo+Día/@${lat},${lon},14z`);
+  });
+}
+</script>
+
+</div>
 </body>
 </html>
+﻿
