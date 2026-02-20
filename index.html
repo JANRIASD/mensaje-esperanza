@@ -126,11 +126,9 @@ let images = [
 ];
 
 // Si quieres manual:
+<script>
 let manualImages = [
-  "https://janriasd.github.io/mensaje-esperanza/mensaje1.jpg",
-  "mensaje2.jpg",
-  "mensaje3.jpg",
-  "mensaje4.jpg"
+  "mensaje1.jpg"
 ];
 
 let index = 0;
@@ -140,8 +138,10 @@ function changeImage() {
   img.src = manualImages[index];
   index = (index + 1) % manualImages.length;
 }
+
 changeImage();
 setInterval(changeImage, 5000);
+</script>
 
 // Versículo diario automático
 const verses = [
@@ -163,6 +163,7 @@ document.getElementById("counter").innerText = count;
 
 </body>
 </html>
+
 
 
 
