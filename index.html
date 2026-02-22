@@ -1,35 +1,145 @@
-padding:12px;
-  font-family:Playfair Display;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un momento de Paz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
 
-img {
-  width:90%;
-  max-width:600px;
-  border-radius:15px;
-  margin-top:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
-}
+        /* Contenedor de la imagen y mensaje */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            color: white;
+            transition: 1s ease-in-out;
+        }
 
-.section {
-  max-width:700px;
-  margin:auto;
-  padding:20px;
-}
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Oscurece el fondo para leer mejor */
+        }
 
-.button {
-  padding:12px 22px;
-  border-radius:8px;
-  background:#7b4a12;
-  color:white;
-  text-decoration:none;
-  margin:10px;
-  display:inline-block;
-}
+        .container {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            max-width: 800px;
+        }
 
-footer {
-  font-size:14px;
-  color:#555;
-  padding:20px;
-}
+        h1 {
+            font-family: 'Lora', serif;
+            font-size: 2.2rem;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
 
-.w
+        .ref {
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            color: #d4af37; /* Dorado */
+        }
+
+        /* Botones de acción */
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: 0.3s;
+            border: 1px solid white;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .btn:hover {
+            background: white;
+            color: #333;
+        }
+
+        .btn-primary {
+            background: #d4af37;
+            border-color: #d4af37;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero" id="main-bg">
+        <div class="container">
+            <h1 id="texto-biblico">"Buscad y hallaréis..."</h1>
+            <p class="ref" id="referencia">Mateo 7:7</p>
+
+            <div class="actions">
+                <a href="https://www.bible.com/es/app" target="_blank" class="btn btn-primary">📖 Descargar Biblia Gratis</a>
+                <a href="#oracion" class="btn">🙏 Pedir Oración</a>
+                <a href="#estudio" class="btn">🤝 Estudiar juntos</a>
+                <a href="https://www.google.com/maps/search/iglesia+cristiana+cercana" target="_blank" class="btn">📍 Iglesias cercanas</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Base de datos de temas
+        const contenidos = {
+            "estres": {
+                t: '"No se inquieten por nada; más bien, en toda ocasión presenten sus peticiones a Dios."',
+                r: "Filipenses 4:6",
+                i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2000"
+            },
+            "miedo": {
+                t: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."',
+                r: "Isaías 41:10",
+                i: "https://images.unsplash.com/photo-1470252646218-d7a3634fb5c8?q=80&w=2000"
+            },
+            "familia": {
+                t: '"Cree en el Señor Jesús, y serás salvo, tú y tu casa."',
+                r: "Hechos 16:31",
+                i: "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=2000"
+            }
+        };
+
+        // Leer parámetro de la URL
+        const params = new URLSearchParams(window.location.search);
+        const tema = params.get('tema');
+        
+        // Si el tema existe en nuestra lista, cambiar contenido
+        if(contenidos[tema]) {
+            document.getElementById('texto-biblico').innerText = contenidos[tema].t;
+            document.getElementById('referencia').innerText = contenidos[tema].r;
+            document.getElementById('main-bg').style.backgroundImage = `url('${contenidos[tema].i}')`;
+        } else {
+            // Fondo por defecto
+            document.getElementById('main-bg').style.backgroundImage = `url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2000')`;
+        }
+    </script>
+</body>
+</html>
