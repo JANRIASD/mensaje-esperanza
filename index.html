@@ -6,8 +6,9 @@
     <title>Paz en su Palabra</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Montserrat', sans-serif; background-color: #222; }
+        body, html { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: #f8f9fa; scroll-behavior: smooth; }
         
+        /* Sección Principal (Hero) */
         .hero {
             height: 100vh;
             display: flex;
@@ -16,13 +17,10 @@
             text-align: center;
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
             position: relative;
             color: white;
-            transition: background-image 0.8s ease-in-out;
         }
 
-        /* Capa oscura para que el texto resalte siempre */
         .overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -30,61 +28,75 @@
             z-index: 1;
         }
 
-        .container {
-            position: relative;
-            z-index: 2;
-            padding: 25px;
-            max-width: 850px;
-        }
+        .container { position: relative; z-index: 2; padding: 25px; max-width: 850px; }
 
-        h1 {
-            font-family: 'Lora', serif;
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            font-style: italic;
-            margin-bottom: 20px;
-            line-height: 1.4;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
+        h1 { font-family: 'Lora', serif; font-size: clamp(1.8rem, 5vw, 2.5rem); font-style: italic; margin-bottom: 20px; line-height: 1.4; }
 
-        .ref {
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            color: #d4af37;
-            margin-bottom: 40px;
-        }
+        .ref-principal { font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; color: #d4af37; margin-bottom: 40px; }
 
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
+        .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 50px; }
 
         .btn {
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 50px;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             transition: 0.3s;
             border: 1px solid rgba(255,255,255,0.4);
             color: white;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
         }
 
-        .btn:hover {
+        .btn:hover { background: white; color: #333; }
+        .btn-gold { background: #d4af37; border-color: #d4af37; color: white; }
+
+        /* SECCIÓN VERSÍCULO DIARIO */
+        .daily-verse-section {
+            padding: 80px 20px;
+            text-align: center;
             background: white;
             color: #333;
-            transform: translateY(-3px);
         }
 
-        .btn-gold {
-            background: #d4af37;
-            border-color: #d4af37;
-            color: white;
+        .daily-card {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 20px;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .daily-label {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.7rem;
+            color: #999;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .daily-text {
+            font-family: 'Lora', serif;
+            font-size: 1.4rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .daily-ref {
+            font-weight: 600;
+            color: #d4af37;
+        }
+
+        footer {
+            padding: 40px;
+            font-size: 0.8rem;
+            color: #aaa;
+            text-align: center;
         }
     </style>
 </head>
@@ -93,51 +105,64 @@
     <section class="hero" id="main-bg">
         <div class="overlay"></div>
         <div class="container">
-            <h1 id="texto-biblico">Cargando mensaje de esperanza...</h1>
-            <p class="ref" id="referencia"></p>
+            <h1 id="texto-biblico">Cargando esperanza...</h1>
+            <p class="ref-principal" id="referencia"></p>
 
             <div class="actions">
                 <a href="https://www.bible.com/es" target="_blank" class="btn btn-gold">📖 Biblia Gratis</a>
-                <a href="https://wa.me/TU_NUMERO_AQUI" id="link-oracion" class="btn">🙏 Pedir Oración</a>
+                <a href="https://wa.me/TU_NUMERO" class="btn">🙏 Pedir Oración</a>
                 <a href="#" class="btn">🤝 Estudiar Juntos</a>
-                <a href="https://www.google.com/maps/search/iglesias+cristianas+cerca+de+mi" target="_blank" class="btn">📍 Iglesias Cercanas</a>
+                <a href="https://www.google.com/maps/search/iglesias+cristianas/" target="_blank" class="btn">📍 Iglesias Cercanas</a>
             </div>
+            
+            <a href="#diario" style="color:white; text-decoration:none; font-size: 0.7rem; opacity: 0.7;">⬇ Desliza para el versículo del día</a>
         </div>
     </section>
 
+    <section class="daily-verse-section" id="diario">
+        <div class="daily-card">
+            <span class="daily-label">Versículo del Día</span>
+            <p class="daily-text" id="daily-text">"La palabra de Dios permanece para siempre."</p>
+            <p class="daily-ref" id="daily-ref">1 Pedro 1:25</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Proyecto Evangelista - Un mensaje de paz para tu vida</p>
+    </footer>
+
     <script>
+        // 1. LÓGICA DE TEMAS POR QR
         const contenidos = {
-            "estres": {
-                t: '"No se inquieten por nada; más bien, en toda ocasión presenten sus peticiones a Dios."',
-                r: "Filipenses 4:6",
-                i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80"
-            },
-            "miedo": {
-                t: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."',
-                r: "Isaías 41:10",
-                i: "https://images.unsplash.com/photo-1470252646218-d7a3634fb5c8?auto=format&fit=crop&w=1600&q=80"
-            },
-            "familia": {
-                t: '"Cree en el Señor Jesús, y serás salvo, tú y tu casa."',
-                r: "Hechos 16:31",
-                i: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1600&q=80"
-            },
-            "paz": {
-                t: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da."',
-                r: "Juan 14:27",
-                i: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=1600&q=80"
-            }
+            "estres": { t: '"No se inquieten por nada; más bien, en toda ocasión presenten sus peticiones a Dios."', r: "Filipenses 4:6", i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80" },
+            "miedo": { t: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."', r: "Isaías 41:10", i: "https://images.unsplash.com/photo-1470252646218-d7a3634fb5c8?auto=format&fit=crop&w=1600&q=80" },
+            "familia": { t: '"Cree en el Señor Jesús, y serás salvo, tú y tu casa."', r: "Hechos 16:31", i: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1600&q=80" },
+            "paz": { t: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da."', r: "Juan 14:27", i: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=1600&q=80" }
         };
 
         const params = new URLSearchParams(window.location.search);
-        const tema = params.get('tema') || 'paz'; // Si no hay tema, usa 'paz' por defecto
-        
+        const tema = params.get('tema') || 'paz';
         const data = contenidos[tema] || contenidos["paz"];
 
-        // Aplicar cambios
         document.getElementById('texto-biblico').innerText = data.t;
-        document.getElementById('referencia').innerText = data.r;
+        document.getElementById('referencia').innerText = data.ref;
         document.getElementById('main-bg').style.backgroundImage = `url('${data.i}')`;
+
+        // 2. LÓGICA DE VERSÍCULO DIARIO (Cambia según el día del mes)
+        const versiculosDiarios = [
+            { t: "Todo lo puedo en Cristo que me fortalece.", r: "Filipenses 4:13" },
+            { t: "El Señor es mi luz y mi salvación; ¿de quién temeré?", r: "Salmo 27:1" },
+            { t: "Tu palabra es una lámpara a mis pies y una luz en mi camino.", r: "Salmo 119:105" },
+            { t: "Dios es nuestro amparo y nuestra fortaleza.", r: "Salmo 46:1" },
+            { t: "Pidan, y se les dará; busquen, y encontrarán.", r: "Mateo 7:7" }
+            // ... Aquí puedes agregar hasta 31 versículos
+        ];
+
+        const diaDelMes = new Date().getDate(); // Obtiene el día actual (1-31)
+        const indice = diaDelMes % versiculosDiarios.length; // Ciclo simple
+        
+        document.getElementById('daily-text').innerText = `"${versiculosDiarios[indice].t}"`;
+        document.getElementById('daily-ref').innerText = versiculosDiarios[indice].r;
     </script>
 </body>
 </html>
