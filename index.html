@@ -150,8 +150,13 @@
         // Aplicar textos e imagen de fondo
         document.getElementById('mensaje-principal').innerText = contenido.t;
         document.getElementById('referencia-principal').innerText = contenido.r;
-        document.getElementById('pantalla-fondo').style.backgroundImage = "url('" + contenido.i + "')";
+        // 1. Definimos una imagen bonita de respaldo (un amanecer tranquilo)
+        const imagenRespaldo = "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=1600";
 
+        // 2. Aplicamos la imagen del tema, pero si no existe, ponemos la de respaldo
+        const fondoFinal = contenido.i || imagenRespaldo;
+        
+        document.getElementById('pantalla-fondo').style.backgroundImage = "url('" + fondoFinal + "')";
         // Lógica del Versículo Diario (Rotación automática)
         const listaDiaria = [
             { t: "Todo lo puedo en Cristo que me fortalece.", r: "Filipenses 4:13" },
@@ -166,5 +171,6 @@
     </script>
 </body>
 </html>
+
 
 
