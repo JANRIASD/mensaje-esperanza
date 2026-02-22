@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Un momento de Paz</title>
+    <title>Paz en su Palabra</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0; padding: 0; height: 100%;
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        /* Contenedor de la imagen y mensaje */
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Montserrat', sans-serif; background-color: #222; }
+        
         .hero {
             height: 100vh;
             display: flex;
@@ -22,44 +16,46 @@
             text-align: center;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             position: relative;
             color: white;
-            transition: 1s ease-in-out;
+            transition: background-image 0.8s ease-in-out;
         }
 
-        .hero::before {
-            content: "";
+        /* Capa oscura para que el texto resalte siempre */
+        .overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Oscurece el fondo para leer mejor */
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
         }
 
         .container {
             position: relative;
             z-index: 2;
-            padding: 20px;
-            max-width: 800px;
+            padding: 25px;
+            max-width: 850px;
         }
 
         h1 {
             font-family: 'Lora', serif;
-            font-size: 2.2rem;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
             font-style: italic;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             line-height: 1.4;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .ref {
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             font-size: 0.9rem;
-            color: #d4af37; /* Dorado */
+            color: #d4af37;
+            margin-bottom: 40px;
         }
 
-        /* Botones de acción */
         .actions {
-            margin-top: 30px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -67,24 +63,25 @@
         }
 
         .btn {
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 14px 28px;
+            border-radius: 50px;
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 400;
+            font-size: 0.85rem;
+            font-weight: 600;
             transition: 0.3s;
-            border: 1px solid white;
+            border: 1px solid rgba(255,255,255,0.4);
             color: white;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
         }
 
         .btn:hover {
             background: white;
             color: #333;
+            transform: translateY(-3px);
         }
 
-        .btn-primary {
+        .btn-gold {
             background: #d4af37;
             border-color: #d4af37;
             color: white;
@@ -94,63 +91,53 @@
 <body>
 
     <section class="hero" id="main-bg">
+        <div class="overlay"></div>
         <div class="container">
-            <h1 id="texto-biblico">"Buscad y hallaréis..."</h1>
-            <p class="ref" id="referencia">Mateo 7:7</p>
+            <h1 id="texto-biblico">Cargando mensaje de esperanza...</h1>
+            <p class="ref" id="referencia"></p>
 
             <div class="actions">
-                <a href="https://www.bible.com/es/app" target="_blank" class="btn btn-primary">📖 Descargar Biblia Gratis</a>
-                <a href="#oracion" class="btn">🙏 Pedir Oración</a>
-                <a href="#estudio" class="btn">🤝 Estudiar juntos</a>
-                <a href="https://www.google.com/maps/search/iglesia+cristiana+cercana" target="_blank" class="btn">📍 Iglesias cercanas</a>
+                <a href="https://www.bible.com/es" target="_blank" class="btn btn-gold">📖 Biblia Gratis</a>
+                <a href="https://wa.me/TU_NUMERO_AQUI" id="link-oracion" class="btn">🙏 Pedir Oración</a>
+                <a href="#" class="btn">🤝 Estudiar Juntos</a>
+                <a href="https://www.google.com/maps/search/iglesias+cristianas+cerca+de+mi" target="_blank" class="btn">📍 Iglesias Cercanas</a>
             </div>
         </div>
     </section>
 
     <script>
-        // Base de datos de temas
-       const contenidos = {
-    "estres": {
-        texto: '"No se inquieten por nada; más bien, en toda ocasión... presenten sus peticiones a Dios."',
-        ref: "Filipenses 4:6",
-        img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2000" // Meditación/Paz
-    },
-    "cansancio": {
-        texto: '"Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar."',
-        ref: "Mateo 11:28",
-        img: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2000" // Cielo despejado
-    },
-    "miedo": {
-        texto: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."',
-        ref: "Isaías 41:10",
-        img: "https://images.unsplash.com/photo-1470252646218-d7a3634fb5c8?q=80&w=2000" // Amanecer
-    },
-    "proposito": {
-        texto: '"Porque yo sé los planes que tengo para vosotros, planes de bienestar y no de mal."',
-        ref: "Jeremías 29:11",
-        img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000" // Bosque con luz
-    },
-    "default": {
-        texto: '"Lámpara es a mis pies tu palabra, y lumbrera a mi camino."',
-        ref: "Salmo 119:105",
-        img: "https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=2000" // Luz suave
-    }
-};
+        const contenidos = {
+            "estres": {
+                t: '"No se inquieten por nada; más bien, en toda ocasión presenten sus peticiones a Dios."',
+                r: "Filipenses 4:6",
+                i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80"
+            },
+            "miedo": {
+                t: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."',
+                r: "Isaías 41:10",
+                i: "https://images.unsplash.com/photo-1470252646218-d7a3634fb5c8?auto=format&fit=crop&w=1600&q=80"
+            },
+            "familia": {
+                t: '"Cree en el Señor Jesús, y serás salvo, tú y tu casa."',
+                r: "Hechos 16:31",
+                i: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1600&q=80"
+            },
+            "paz": {
+                t: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da."',
+                r: "Juan 14:27",
+                i: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=1600&q=80"
+            }
+        };
 
-        // Leer parámetro de la URL
         const params = new URLSearchParams(window.location.search);
-        const tema = params.get('tema');
+        const tema = params.get('tema') || 'paz'; // Si no hay tema, usa 'paz' por defecto
         
-        // Si el tema existe en nuestra lista, cambiar contenido
-        if(contenidos[tema]) {
-            document.getElementById('texto-biblico').innerText = contenidos[tema].t;
-            document.getElementById('referencia').innerText = contenidos[tema].r;
-            document.getElementById('main-bg').style.backgroundImage = `url('${contenidos[tema].i}')`;
-        } else {
-            // Fondo por defecto
-            document.getElementById('main-bg').style.backgroundImage = `url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2000')`;
-        }
+        const data = contenidos[tema] || contenidos["paz"];
+
+        // Aplicar cambios
+        document.getElementById('texto-biblico').innerText = data.t;
+        document.getElementById('referencia').innerText = data.r;
+        document.getElementById('main-bg').style.backgroundImage = `url('${data.i}')`;
     </script>
 </body>
 </html>
-
