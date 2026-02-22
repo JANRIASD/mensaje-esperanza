@@ -1,24 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Un Mensaje para Ti</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap" rel="stylesheet">
-
-<style>
-body {
-  margin:0;
-  font-family: Inter;
-  background:#f8f5ef;
-  text-align:center;
-}
-
-header {
-  background:#2a1f15;
-  color:white;
-  padding:12px;
+padding:12px;
   font-family:Playfair Display;
 }
 
@@ -52,72 +32,4 @@ footer {
   padding:20px;
 }
 
-.whatsapp {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:white;
-  padding:14px 18px;
-  border-radius:50px;
-  text-decoration:none;
-}
-</style>
-</head>
-
-<body>
-
-<header>Un Mensaje para Ti</header>
-
-<img id="carouselImage">
-
-<div class="section">
-<h2 id="dailyVerse"></h2>
-</div>
-
-<div class="section">
-<a class="button" href="https://www.bible.com/es" target="_blank">📖 Descargar Biblia</a>
-<a class="button" href="https://wa.me/529831255281" target="_blank">📚 Estudio Bíblico</a>
-</div>
-
-<div class="section">
-<h3>Almas alcanzadas:</h3>
-<h1 id="counter">0</h1>
-</div>
-
-<footer>
-Iglesia Adventista del Séptimo Día · Cancún<br>
-Juan 8:32
-</footer>
-
-<a class="whatsapp" href="https://wa.me/529831255281">💬 Oración</a>
-
-<script>
-// IMÁGENES
-let images = ["mensaje1.jpg"];
-let index = 0;
-const img = document.getElementById("carouselImage");
-
-function changeImage() {
-  img.src = images[index];
-  index = (index + 1) % images.length;
-}
-changeImage();
-setInterval(changeImage, 5000);
-
-// Versículo diario
-let verses = [
-"El Señor es mi pastor; nada me faltará. Salmo 23:1",
-"Porque de tal manera amó Dios al mundo. Juan 3:16",
-"Todo lo puedo en Aquel que me fortalece. Filipenses 4:13"
-];
-document.getElementById("dailyVerse").innerText = verses[new Date().getDate() % verses.length];
-
-// Contador GLOBAL real
-fetch("https://api.countapi.xyz/hit/distrito8-cancun-biblia/visits")
-.then(res=>res.json())
-.then(res=>document.getElementById("counter").innerText=res.value);
-</script>
-
-</body>
-</html>
+.w
