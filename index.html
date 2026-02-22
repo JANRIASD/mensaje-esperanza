@@ -109,23 +109,33 @@
 
     <script>
         // Base de datos de temas
-        const contenidos = {
-            "estres": {
-                t: '"No se inquieten por nada; más bien, en toda ocasión presenten sus peticiones a Dios."',
-                r: "Filipenses 4:6",
-                i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2000"
-            },
-            "miedo": {
-                t: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."',
-                r: "Isaías 41:10",
-                i: "https://images.unsplash.com/photo-1470252646218-d7a3634fb5c8?q=80&w=2000"
-            },
-            "familia": {
-                t: '"Cree en el Señor Jesús, y serás salvo, tú y tu casa."',
-                r: "Hechos 16:31",
-                i: "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=2000"
-            }
-        };
+       const contenidos = {
+    "estres": {
+        texto: '"No se inquieten por nada; más bien, en toda ocasión... presenten sus peticiones a Dios."',
+        ref: "Filipenses 4:6",
+        img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2000" // Meditación/Paz
+    },
+    "cansancio": {
+        texto: '"Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar."',
+        ref: "Mateo 11:28",
+        img: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=2000" // Cielo despejado
+    },
+    "miedo": {
+        texto: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."',
+        ref: "Isaías 41:10",
+        img: "https://images.unsplash.com/photo-1470252646218-d7a3634fb5c8?q=80&w=2000" // Amanecer
+    },
+    "proposito": {
+        texto: '"Porque yo sé los planes que tengo para vosotros, planes de bienestar y no de mal."',
+        ref: "Jeremías 29:11",
+        img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000" // Bosque con luz
+    },
+    "default": {
+        texto: '"Lámpara es a mis pies tu palabra, y lumbrera a mi camino."',
+        ref: "Salmo 119:105",
+        img: "https://images.unsplash.com/photo-1519817650390-64a93db51149?q=80&w=2000" // Luz suave
+    }
+};
 
         // Leer parámetro de la URL
         const params = new URLSearchParams(window.location.search);
@@ -143,3 +153,4 @@
     </script>
 </body>
 </html>
+
