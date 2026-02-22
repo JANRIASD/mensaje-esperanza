@@ -6,139 +6,64 @@
     <title>Paz en su Palabra</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body, html { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: #f8f9fa; scroll-behavior: smooth; }
-        
-        /* SECCIÓN PRINCIPAL */
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Montserrat', sans-serif; background-color: #2c3e50; }
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            /* Fondo de respaldo por si falla la imagen */
-            background: #2c3e50 linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            background-color: #2c3e50;
             background-size: cover;
             background-position: center;
             position: relative;
             color: white;
-            transition: background-image 1s ease-in-out;
         }
-
         .overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1;
         }
-
-        .container { position: relative; z-index: 2; padding: 25px; max-width: 850px; }
-
-        h1 { font-family: 'Lora', serif; font-size: clamp(1.6rem, 5vw, 2.5rem); font-style: italic; margin-bottom: 20px; line-height: 1.4; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
-
-        .ref-principal { font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; color: #d4af37; margin-bottom: 40px; }
-
-        /* BOTONES */
-        .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 50px; }
-
+        .container { position: relative; z-index: 2; padding: 25px; max-width: 800px; }
+        h1 { font-family: 'Lora', serif; font-size: 2.2rem; font-style: italic; line-height: 1.4; margin-bottom: 20px; }
+        .ref { font-weight: 600; color: #d4af37; text-transform: uppercase; letter-spacing: 2px; }
+        .actions { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
         .btn {
-            padding: 12px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.5);
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
+            padding: 12px 20px; border-radius: 50px; text-decoration: none; font-size: 0.8rem;
+            border: 1px solid white; color: white; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
         }
-
-        .btn:hover { background: white; color: #333; transform: translateY(-2px); }
-        .btn-gold { background: #d4af37; border-color: #d4af37; color: white; }
-
-        /* SECCIÓN DIARIA */
-        .daily-verse-section { padding: 60px 20px; text-align: center; background: white; }
-        .daily-card { max-width: 500px; margin: 0 auto; padding: 30px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        .daily-text { font-family: 'Lora', serif; font-size: 1.2rem; font-style: italic; color: #444; }
-        .daily-ref { font-weight: 600; color: #d4af37; margin-top: 15px; font-size: 0.9rem; }
-
-        /* REDES SOCIALES */
-        .social-links { margin-top: 30px; padding-bottom: 40px; text-align: center; }
-        .social-links a { margin: 0 15px; color: #999; text-decoration: none; font-weight: 600; font-size: 0.8rem; }
-        .social-links a:hover { color: #d4af37; }
+        .btn-gold { background: #d4af37; border: none; }
     </style>
 </head>
 <body>
-
-    <section class="hero" id="main-bg">
+    <section class="hero" id="bg">
         <div class="overlay"></div>
         <div class="container">
-            <h1 id="texto-biblico">"Buscad y hallaréis, llamad y se os abrirá"</h1>
-            <p class="ref-principal" id="referencia">Mateo 7:7</p>
-
+            <h1 id="txt">Cargando...</h1>
+            <p class="ref" id="rf"></p>
             <div class="actions">
-                <a href="https://www.bible.com/es" target="_blank" class="btn btn-gold">📖 Biblia Gratis</a>
-                <a href="https://wa.me/TU_NUMERO" class="btn">🙏 Pedir Oración</a>
-                <a href="#" class="btn">🤝 Estudiar Juntos</a>
-                <a href="https://www.google.com/maps/search/iglesia+cristiana+cerca+de+mi" target="_blank" class="btn">📍 Iglesias Cercanas</a>
+                <a href="#" class="btn btn-gold">📖 Biblia Gratis</a>
+                <a href="#" class="btn">🙏 Oración</a>
+                <a href="#" class="btn">🤝 Estudiar</a>
             </div>
         </div>
     </section>
 
-    <section class="daily-verse-section" id="diario">
-        <div class="daily-card">
-            <small style="color:#bbb; letter-spacing:2px">MENSAJE DEL DÍA</small>
-            <p class="daily-text" id="daily-text">Cargando...</p>
-            <p class="daily-ref" id="daily-ref"></p>
-        </div>
-        
-        <div class="social-links">
-            <a href="TU_FACEBOOK">FACEBOOK</a>
-            <a href="TU_YOUTUBE">YOUTUBE</a>
-        </div>
-    </section>
-
     <script>
-        // CONTENIDOS CON IMÁGENES DE ALTA DISPONIBILIDAD
-        const contenidos = {
-            "estres": { 
-                t: '"No se inquieten por nada; más bien, en toda ocasión presenten sus peticiones a Dios."', 
-                r: "Filipenses 4:6", 
-                i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600" 
-            },
-            "miedo": { 
-                t: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."', 
-                r: "Isaías 41:10", 
-                i: "https://images.unsplash.com/photo-1470252646218-d7a3634fb5c8?w=1600" 
-            },
-            "paz": { 
-                t: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da."', 
-                r: "Juan 14:27", 
-                i: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?w=1600" 
-            }
+        const info = {
+            "estres": { t: '"No se inquieten por nada..."', r: "Filipenses 4:6", i: "https://images.unsplash.com/photo-1499209974431-9dac3adaf477?w=1200" },
+            "miedo": { t: '"No temas, yo estoy contigo..."', r: "Isaías 41:10", i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200" },
+            "paz": { t: '"Mi paz os dejo, mi paz os doy..."', r: "Juan 14:27", i: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200" }
         };
 
-        const params = new URLSearchParams(window.location.search);
-        const tema = params.get('tema') || 'paz';
-        const data = contenidos[tema] || contenidos["paz"];
+        const query = new URLSearchParams(window.location.search);
+        const t = query.get('tema') || 'paz';
+        const d = info[t] || info['paz'];
 
-        // Aplicar texto
-        document.getElementById('texto-biblico').innerText = data.t;
-        document.getElementById('referencia').innerText = data.r;
-        
-        // Aplicar Imagen con un pequeño retraso para asegurar carga
-        const hero = document.getElementById('main-bg');
-        hero.style.backgroundImage = "url('" + data.i + "')";
-
-        // LÓGICA DIARIA
-        const versiculos = [
-            { t: "Todo lo puedo en Cristo que me fortalece.", r: "Filipenses 4:13" },
-            { t: "El Señor es mi luz y mi salvación.", r: "Salmo 27:1" },
-            { t: "Jehová es mi pastor, nada me faltará.", r: "Salmo 23:1" }
-        ];
-        const dia = new Date().getDate() % versiculos.length;
-        document.getElementById('daily-text').innerText = '"' + versiculos[dia].t + '"';
-        document.getElementById('daily-ref').innerText = versiculos[dia].r;
+        document.getElementById('txt').innerText = d.t;
+        document.getElementById('rf').innerText = d.r;
+        document.getElementById('bg').style.backgroundImage = "url('" + d.i + "')";
     </script>
 </body>
 </html>
