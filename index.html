@@ -108,33 +108,40 @@
             const urlParams = new URLSearchParams(window.location.search);
             const temaUrl = urlParams.get('tema');
             
-            // Imagen por defecto si algo falla
             const imgRespaldo = "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=1600";
 
-            // Si el tema no existe en la URL o no está en la lista, usamos "estres"
-            const contenido = datos[temaUrl] || datos["estres"];
+            // Buscamos el tema, si no existe usamos "paz" por defecto
+            const contenido = datos[temaUrl] || datos["paz"];
 
-            // Cambiar textos
-            document.getElementById('texto-biblico').innerText = contenido.t;
-            document.getElementById('referencia-biblica').innerText = contenido.r;
+            // CORRECCIÓN DE IDs: Ahora coinciden con tu HTML
+            document.getElementById('mensaje-principal').innerText = contenido.t;
+            document.getElementById('referencia-principal').innerText = contenido.r;
 
             // Cambiar fondo
             const fondo = document.getElementById('pantalla-fondo');
             const urlImagen = contenido.i || imgRespaldo;
             fondo.style.backgroundImage = "url('" + urlImagen + "')";
+
+            // --- FUNCIÓN PARA EL VERSÍCULO DIARIO ---
+            const versiculosDiarios = [
+                {t: "Jehová es mi pastor; nada me faltará.", r: "Salmo 23:1"},
+                {t: "Todo lo puedo en Cristo que me fortalece.", r: "Filipenses 4:13"},
+                {t: "Echen toda su ansiedad sobre él, porque él tiene cuidado de ustedes.", r: "1 Pedro 5:7"}
+            ];
+            const hoy = new Date().getDate() % versiculosDiarios.length;
+            document.getElementById('v-diario-txt').innerText = versiculosDiarios[hoy].t;
+            document.getElementById('v-diario-ref').innerText = versiculosDiarios[hoy].r;
             
         } catch (error) {
-            console.error("Error cargando el tema:", error);
-            // Si hay un error crítico, al menos mostramos el de estrés para que no se quede vacío
-            document.getElementById('texto-biblico').innerText = datos["estres"].t;
+            console.error("Error:", error);
         }
     }
 
-    // Ejecutar al cargar la página
     window.onload = cargarContenido;
 </script>
 </body>
 </html>
+
 
 
 
