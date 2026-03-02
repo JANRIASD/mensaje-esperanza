@@ -90,99 +90,52 @@
     </section>
 
     <script>
-        const datos = {
-            "estres": { 
-                t: '"No se inquieten por nada; más bien, en toda ocasión presenten sus peticiones a Dios."', 
-                r: "Filipenses 4:6", 
-                i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600" 
-            },
-            "miedo": { 
-                t: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."', 
-                r: "Isaías 41:10", 
-                i: "https://images.unsplash.com/photo-1483366759022-7a7d4b417eaf?q=80&w=1600" 
-            },
-            "paz": { 
-                t: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da."', 
-                r: "Juan 14:27", 
-                i: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=1600" 
-            },
-            "cansancio": {
-                t: '"Él fortalece al cansado y acrecienta las fuerzas del débil."',
-                r: "Isaías 40:29",
-                i: "https://images.unsplash.com/photo-1516534775068-ba3e7458af70?q=80&w=1600"
-            },
-            "soledad": {
-                t: '"Aunque mi padre y mi madre me abandonen, el Señor me recibirá."',
-                r: "Salmo 27:10",
-                i: "https://images.unsplash.com/photo-1509023464722-18d996393ca8?q=80&w=1600"
-            },
-            "finanzas": {
-                t: '"Mi Dios, pues, suplirá todo lo que os falte conforme a sus riquezas en gloria."',
-                r: "Filipenses 4:19",
-                i: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1600"
-            },
-            "duelo": {
-                t: '"Bienaventurados los que lloran, porque ellos recibirán consolación."',
-                r: "Mateo 5:4",
-                i: "https://images.unsplash.com/photo-1463171359019-27b658bc288c?q=80&w=1600"
-            },
-            "proposito": {
-                t: '"Porque yo sé los planes que tengo para vosotros... planes de paz y no de mal."',
-                r: "Jeremías 29:11",
-                i: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1600"
-            },
-            "culpa": {
-                t: '"Si confesamos nuestros pecados, él es fiel y justo para perdonar nuestros pecados."',
-                r: "1 Juan 1:9",
-                i: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600"
-            },
-            "familia": {
-                t: '"Cree en el Señor Jesús, y serás salvo, tú y tu casa."',
-                r: "Hechos 16:31",
-                i: "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1600"
-            }
-        };
+    const datos = {
+        "estres": { t: '"No se inquieten por nada; más bien, en toda ocasión presenten sus peticiones a Dios."', r: "Filipenses 4:6", i: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600" },
+        "miedo": { t: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios."', r: "Isaías 41:10", i: "https://images.unsplash.com/photo-1483366759022-7a7d4b417eaf?q=80&w=1600" },
+        "paz": { t: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da."', r: "Juan 14:27", i: "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=1600" },
+        "cansancio": { t: '"Él fortalece al cansado y acrecienta las fuerzas del débil."', r: "Isaías 40:29", i: "https://images.unsplash.com/photo-1516534775068-ba3e7458af70?q=80&w=1600" },
+        "soledad": { t: '"Aunque mi padre y mi madre me abandonen, el Señor me recibirá."', r: "Salmo 27:10", i: "https://images.unsplash.com/photo-1509023464722-18d996393ca8?q=80&w=1600" },
+        "finanzas": { t: '"Mi Dios, pues, suplirá todo lo que os falte conforme a sus riquezas en gloria."', r: "Filipenses 4:19", i: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1600" },
+        "duelo": { t: '"Bienaventurados los que lloran, porque ellos recibirán consolación."', r: "Mateo 5:4", i: "https://images.unsplash.com/photo-1463171359019-27b658bc288c?q=80&w=1600" },
+        "proposito": { t: '"Porque yo sé los planes que tengo para vosotros... planes de paz y no de mal."', r: "Jeremías 29:11", i: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1600" },
+        "culpa": { t: '"Si confesamos nuestros pecados, él es fiel y justo para perdonar nuestros pecados."', r: "1 Juan 1:9", i: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600" },
+        "familia": { t: '"Cree en el Señor Jesús, y serás salvo, tú y tu casa."', r: "Hechos 16:31", i: "https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1600" }
+    };
 
-        // 1. Obtener el tema de la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const tema = urlParams.get('tema');
+    function cargarContenido() {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const temaUrl = urlParams.get('tema');
+            
+            // Imagen por defecto si algo falla
+            const imgRespaldo = "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=1600";
 
-        // 2. Imagen de respaldo (amanecer tranquilo) por si falla alguna
-        const imagenRespaldo = "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=1600";
+            // Si el tema no existe en la URL o no está en la lista, usamos "estres"
+            const contenido = datos[temaUrl] || datos["estres"];
 
-        // 3. Buscar el contenido. Si no existe el tema, usa "estres" por defecto.
-        const contenido = datos[tema] || datos["estres"];
+            // Cambiar textos
+            document.getElementById('texto-biblico').innerText = contenido.t;
+            document.getElementById('referencia-biblica').innerText = contenido.r;
 
-        // 4. Aplicar los textos
-        document.getElementById('texto-biblico').innerText = contenido.t;
-        document.getElementById('referencia-biblica').innerText = contenido.r;
+            // Cambiar fondo
+            const fondo = document.getElementById('pantalla-fondo');
+            const urlImagen = contenido.i || imgRespaldo;
+            fondo.style.backgroundImage = "url('" + urlImagen + "')";
+            
+        } catch (error) {
+            console.error("Error cargando el tema:", error);
+            // Si hay un error crítico, al menos mostramos el de estrés para que no se quede vacío
+            document.getElementById('texto-biblico').innerText = datos["estres"].t;
+        }
+    }
 
-        // 5. Aplicar el fondo con "Red de Seguridad"
-        const fondoPantalla = document.getElementById('pantalla-fondo');
-        
-        // Intentamos cargar la imagen del tema; si no tiene (como en Duelo/Miedo), usa el respaldo.
-        const urlFinal = contenido.i || imagenRespaldo;
-        fondoPantalla.style.backgroundImage = "url('" + urlFinal + "')";
-
-        // Extra: Forzar que se vea bien en móviles
-        fondoPantalla.style.backgroundSize = "cover";
-        fondoPantalla.style.backgroundPosition = "center";
-        
-        document.getElementById('pantalla-fondo').style.backgroundImage = "url('" + fondoFinal + "')";
-        // Lógica del Versículo Diario (Rotación automática)
-        const listaDiaria = [
-            { t: "Todo lo puedo en Cristo que me fortalece.", r: "Filipenses 4:13" },
-            { t: "El Señor es mi luz y mi salvación; ¿de quién temeré?", r: "Salmo 27:1" },
-            { t: "Tu palabra es una lámpara a mis pies y una luz en mi camino.", r: "Salmo 119:105" },
-            { t: "En paz me acostaré y asimismo dormiré.", r: "Salmo 4:8" },
-            { t: "Si Dios es por nosotros, ¿quién contra nosotros?", r: "Romanos 8:31" }
-        ];
-        const hoy = new Date().getDate() % listaDiaria.length;
-        document.getElementById('v-diario-txt').innerText = '"' + listaDiaria[hoy].t + '"';
-        document.getElementById('v-diario-ref').innerText = listaDiaria[hoy].r;
-    </script>
+    // Ejecutar al cargar la página
+    window.onload = cargarContenido;
+</script>
 </body>
 </html>
+
 
 
 
