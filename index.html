@@ -143,18 +143,30 @@
             }
         };
 
+        // 1. Obtener el tema de la URL
         const urlParams = new URLSearchParams(window.location.search);
-        const temaSeleccionado = urlParams.get('tema') || 'paz';
-        const contenido = datos[temaSeleccionado] || datos['paz'];
+        const tema = urlParams.get('tema');
 
-        // Aplicar textos e imagen de fondo
-        document.getElementById('mensaje-principal').innerText = contenido.t;
-        document.getElementById('referencia-principal').innerText = contenido.r;
-        // 1. Definimos una imagen bonita de respaldo (un amanecer tranquilo)
+        // 2. Imagen de respaldo (amanecer tranquilo) por si falla alguna
         const imagenRespaldo = "https://images.unsplash.com/photo-1499346030926-9a72daac6c63?q=80&w=1600";
 
-        // 2. Aplicamos la imagen del tema, pero si no existe, ponemos la de respaldo
-        const fondoFinal = contenido.i || imagenRespaldo;
+        // 3. Buscar el contenido. Si no existe el tema, usa "estres" por defecto.
+        const contenido = datos[tema] || datos["estres"];
+
+        // 4. Aplicar los textos
+        document.getElementById('texto-biblico').innerText = contenido.t;
+        document.getElementById('referencia-biblica').innerText = contenido.r;
+
+        // 5. Aplicar el fondo con "Red de Seguridad"
+        const fondoPantalla = document.getElementById('pantalla-fondo');
+        
+        // Intentamos cargar la imagen del tema; si no tiene (como en Duelo/Miedo), usa el respaldo.
+        const urlFinal = contenido.i || imagenRespaldo;
+        fondoPantalla.style.backgroundImage = "url('" + urlFinal + "')";
+
+        // Extra: Forzar que se vea bien en móviles
+        fondoPantalla.style.backgroundSize = "cover";
+        fondoPantalla.style.backgroundPosition = "center";
         
         document.getElementById('pantalla-fondo').style.backgroundImage = "url('" + fondoFinal + "')";
         // Lógica del Versículo Diario (Rotación automática)
@@ -171,6 +183,7 @@
     </script>
 </body>
 </html>
+
 
 
 
