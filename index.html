@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paz en su Palabra - Mensaje de Esperanza Cancún</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Colores Institucionales IASD y Cristal Blanco */
+      --adventist-blue: #0A587F;      /* Azul Marino Oficial IASD */
+      --adventist-blue-dark: #003A5D; /* Azul Profundo para Textos */
+      --gold-accent: #C8963E;         /* Dorado Elegante */
+      --gold-hover: #b28230;
+      --crimson-accent: #C0392B;      /* Carmesí de contraste */
+      --green-wa: #25d366;
+      
+      /* Transparencias Glassmorphism Claro */
+      --glass-overlay: rgba(245, 248, 252, 0.75);
+      --glass-card: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(200, 150, 62, 0.35);
+      --text-main: #0B2545;
+      --text-muted: #4A607A;
+      
+      /* Fondo por defecto (Playa Cancún) */
+      --bg-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80');
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(var(--glass-overlay), var(--glass-overlay)), var(--bg-image) center/cover no-repeat fixed;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 15px;
+      transition: background 0.5s ease-in-out;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    header {
+      text-align: center;
+      padding: 15px 0 10px 0;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      color: var(--adventist-blue);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      text-shadow: 0 1px 3px rgba(255,255,255,0.9);
+    }
+
+    header p {
+      font-size: 0.85rem;
+      color: var(--adventist-blue-dark);
+      font-weight: 600;
+    }
+
+    /* CAJA DE PROMESA TIPO CRISTAL BLANCO */
+    .promise-box {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 25px rgba(10, 88, 127, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .promise-text {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--adventist-blue-dark);
+      margin-bottom: 10px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .promise-ref {
+      font-size: 0.88rem;
+      color: var(--gold-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-draw {
+      background: linear-gradient(135deg, #D4AF37, #C8963E);
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      font-weight: 700;
+      border-radius: 25px;
+      margin-top: 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 15px rgba(200, 150, 62, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .btn-draw:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(200, 150, 62, 0.45);
+    }
+
+    /* PESTAÑAS DE NAVEGACIÓN EN CRISTAL */
+    .nav-tabs {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      margin-bottom: 15px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .tab-btn.active {
+      background: var(--adventist-blue);
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(10, 88, 127, 0.3);
+    }
+
+    /* CONTENIDO TIPO GLASS */
+    .tab-content {
+      display: none;
+      background: var(--glass-card);
+      padding: 22px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TARJETAS DE EMOCIONES */
+    .emotion-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .emotion-card {
+      background: rgba(240, 246, 252, 0.75);
+      border: 1px solid rgba(10, 88, 127, 0.15);
+      padding: 12px;
+      border-radius: 12px;
+      color: var(--adventist-blue-dark);
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+
+    .emotion-card:hover {
+      border-color: var(--gold-accent);
+      background: rgba(200, 150, 62, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* TARJETAS DE RECURSOS */
+    .resource-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(240, 246, 252, 0.65);
+      border: 1px solid rgba(10, 88, 127, 0.12);
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: 0.3s;
+    }
+
+    .resource-card:hover {
+      border-color: var(--adventist-blue);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 12px rgba(10, 88, 127, 0.1);
+    }
+
+    .resource-icon {
+      font-size: 1.4rem;
+    }
+
+    .resource-info h4 {
+      font-size: 0.9rem;
+      color: var(--adventist-blue);
+      font-weight: 700;
+    }
+
+    .resource-info p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .audio-item {
+      background: rgba(240, 246, 252, 0.7);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(10, 88, 127, 0.12);
+    }
+
+    .audio-item h4 {
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: var(--adventist-blue-dark);
+      font-weight: 600;
+    }
+
+    audio {
+      width: 100%;
+      height: 35px;
+    }
+
+    .btn-wa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--green-wa);
+      color: white;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      transition: 0.3s;
+    }
+
+    .btn-wa:hover {
+      transform: translateY(-2px);
+    }
+
+    /* ESTILOS DEL CARRUSEL DE ANUNCIOS */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(10, 88, 127, 0.15);
+      background: #000;
+    }
+
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+      width: 100%;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .carousel-prev, .carousel-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10, 88, 127, 0.65);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: 0.3s;
+      user-select: none;
+    }
+
+    .carousel-prev:hover, .carousel-next:hover {
+      background: var(--adventist-blue);
+    }
+
+    .carousel-prev { left: 10px; }
+    .carousel-next { right: 10px; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 8px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .dot.active {
+      background: #ffffff;
+      transform: scale(1.3);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--adventist-blue-dark);
+      padding: 15px 0 5px 0;
+      font-weight: 600;
+    }
+
+    footer a {
+      color: var(--adventist-blue);
+      font-weight: 700;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    /* FORMULARIO DE ORACIÓN */
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 11px;
+      margin-bottom: 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(10, 88, 127, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      border-color: var(--adventist-blue);
+      box-shadow: 0 0 5px rgba(10, 88, 127, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Paz en su Palabra</h1>
+      <p>Mensaje de Esperanza • Cancún</p>
+    </header>
+
+    <!-- CAJA DE PROMESAS DIARIAS -->
+    <div class="promise-box">
+      <div id="promiseCard">
+        <p class="promise-text" id="promiseText">"Cierra tus ojos, respira profundo y toca el botón para recibir tu promesa de hoy."</p>
+        <p class="promise-ref" id="promiseRef">-- Clic abajo --</p>
+      </div>
+      <button class="btn-draw" onclick="obtenerPromesa()">✨ RECIBIR MI PROMESA DIARIA</button>
+    </div>
+
+    <!-- PESTAÑAS DE NAVEGACIÓN -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" id="btnTabSiente" onclick="openTab(event, 'siente')">🧘 ¿Cómo estás?</button>
+      <button class="tab-btn" onclick="openTab(event, 'recursos')">📚 Recursos</button>
+      <button class="tab-btn" id="btnTabAudios" onclick="openTab(event, 'audios')">🎧 Audios</button>
+      <button class="tab-btn" onclick="openTab(event, 'evento')">📍 Eventos</button>
+      <button class="tab-btn" onclick="openTab(event, 'oracion')">🙏 Oración</button>
+    </div>
+
+    <!-- PESTAÑA 1: ¿CÓMO ESTÁS? / EMOCIONES -->
+    <div id="siente" class="tab-content active">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">¿Qué necesita tu corazón hoy?</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Selecciona el tema por el cual escaneaste o sientes necesidad:</p>
+
+      <div class="emotion-grid">
+        <div class="emotion-card" onclick="cargarTema('paz')">🕊️ Paz</div>
+        <div class="emotion-card" onclick="cargarTema('estres')">🧘 Estrés</div>
+        <div class="emotion-card" onclick="cargarTema('miedo')">🛡️ Miedo</div>
+        <div class="emotion-card" onclick="cargarTema('culpa')">❤️‍🩹 Culpa</div>
+        <div class="emotion-card" onclick="cargarTema('duelo')">🩹 Duelo</div>
+        <div class="emotion-card" onclick="cargarTema('soledad')">🫂 Soledad</div>
+        <div class="emotion-card" onclick="cargarTema('finanzas')">💸 Finanzas</div>
+        <div class="emotion-card" onclick="cargarTema('familia')">🏠 Familia</div>
+        <div class="emotion-card" onclick="cargarTema('cansancio')">🏃 Cansancio</div>
+        <div class="emotion-card" onclick="cargarTema('proposito')">🎯 Propósito</div>
+      </div>
+
+      <div id="temaDetalle" style="display:none; margin-top: 15px; padding: 14px; background: rgba(200, 150, 62, 0.08); border-radius: 12px; border: 1px solid var(--gold-accent);">
+        <h4 id="temaTitulo" style="color: var(--adventist-blue); font-size: 0.92rem; margin-bottom: 5px; font-weight: 700;"></h4>
+        <p id="temaVersiculo" style="font-size: 0.85rem; font-style: italic; margin-bottom: 8px; color: var(--text-main);"></p>
+        <a id="temaWa" href="#" target="_blank" class="btn-wa">💬 Hablar con alguien sobre este tema por WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- PESTAÑA 2: RECURSOS -->
+    <div id="recursos" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 12px; font-size: 0.95rem; font-weight: 700;">Recursos para fortalecer tu fe</h3>
+
+      <a href="https://www.bible.com/es" target="_blank" class="resource-card">
+        <span class="resource-icon">📖</span>
+        <div class="resource-info">
+          <h4>Biblia Gratis</h4>
+          <p>Lee o escucha la Biblia en tu celular.</p>
+        </div>
+      </a>
+
+      <a href="https://wa.me/5219831255281?text=Hola,%20¡quiero%20estudiar%20la%20Biblia!" target="_blank" class="resource-card">
+        <span class="resource-icon">📚</span>
+        <div class="resource-info">
+          <h4>Curso Bíblico por WhatsApp</h4>
+          <p>Aprende paso a paso a tu propio ritmo.</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/playlist?list=PLl8axwj0Ys0Fk0MjeaYJAiWkBGQXbhIbS" target="_blank" class="resource-card">
+        <span class="resource-icon">🧐</span>
+        <div class="resource-info">
+          <h4>¿En qué creemos?</h4>
+          <p>Descubre las creencias fundamentales de la iglesia.</p>
+        </div>
+      </a>
+
+      <a href="https://www.google.com/maps/search/?api=1&query=Iglesia+Adventista+del+Septimo+Dia" target="_blank" rel="noopener noreferrer" class="resource-card">
+        <span class="resource-icon">📍</span>
+        <div class="resource-info">
+          <h4>Iglesias Cercanas</h4>
+          <p>Encuentra un lugar de adoración cerca de ti.</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- PESTAÑA 3: AUDIOS Y BIBLIOTECA -->
+    <div id="audios" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Píldoras y Mensajes en Audio</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Escucha reflexiones y series sin salir de la página.</p>
+
+      <div style="margin-bottom: 15px;">
+        <!-- AUDIO 1: DINÁMICO POR QR -->
+        <div style="margin-bottom: 10px;">
+          <span style="font-size: 0.72rem; background: var(--gold-accent); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 700; text-transform: uppercase;">Especial para ti</span>
+          <div class="audio-item" style="margin-top: 6px;">
+            <h4 id="audioDinamicoTitulo">🎧 Un Minuto de Calma para el Estrés</h4>
+            <audio id="audioDinamicoPlayer" controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
+          </div>
+        </div>
+
+        <!-- AUDIO 2: DESTACADO IGLESIA -->
+        <div>
+          <span style="font-size: 0.72rem; background: var(--adventist-blue); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 700; text-transform: uppercase;">Destacado de la Semana</span>
+          <div class="audio-item" style="margin-top: 6px;">
+            <h4>📻 Mensaje Semanal: El Amor de Jesús en Cancún</h4>
+            <audio controls src="destacado-semanal.mp3"></audio>
+          </div>
+        </div>
+      </div>
+
+      <hr style="border: 0; height: 1px; background: rgba(10, 88, 127, 0.15); margin: 15px 0;">
+
+      <!-- BIBLIOTECA DESPLEGABLE -->
+      <h4 style="color: var(--adventist-blue); font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;">📚 Biblioteca por Temas</h4>
+
+      <details style="background: rgba(240, 246, 252, 0.6); padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(10, 88, 127, 0.12);">
+        <summary style="cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--adventist-blue-dark);">🕊️ Serie: Paz & Ansiedad</summary>
+        <div style="margin-top: 10px;">
+          <div class="audio-item">
+            <h4 style="font-size: 0.8rem;">Parte 1: Entregando tus cargas</h4>
+            <audio controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
+          </div>
+        </div>
+      </details>
+
+      <details style="background: rgba(240, 246, 252, 0.6); padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(10, 88, 127, 0.12);">
+        <summary style="cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--adventist-blue-dark);">💸 Serie: Finanzas con Propósito</summary>
+        <div style="margin-top: 10px;">
+          <div class="audio-item">
+            <h4 style="font-size: 0.8rem;">Parte 1: Dios y tus necesidades materiales</h4>
+            <audio controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
+          </div>
+        </div>
+      </details>
+
+      <details style="background: rgba(240, 246, 252, 0.6); padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(10, 88, 127, 0.12);">
+        <summary style="cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--adventist-blue-dark);">🏠 Serie: Restauración Familiar</summary>
+        <div style="margin-top: 10px;">
+          <div class="audio-item">
+            <h4 style="font-size: 0.8rem;">Parte 1: El perdón en el hogar</h4>
+            <audio controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- PESTAÑA 4: ANUNCIOS Y EVENTOS (CARRUSEL) -->
+    <div id="evento" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Eventos y Anuncios de la Iglesia</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Descubre las próximas actividades de nuestros departamentos:</p>
+
+      <!-- CONTENEDOR DEL CARRUSEL -->
+      <div class="carousel-container">
+        <div class="carousel-slide" id="carouselSlide"></div>
+        <button class="carousel-prev" onclick="moverCarrusel(-1)">&#10094;</button>
+        <button class="carousel-next" onclick="moverCarrusel(1)">&#10095;</button>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
+
+      <!-- Tarjeta informativa del anuncio actual -->
+      <div id="infoAnuncio" style="margin-top: 12px; padding: 14px; background: rgba(240, 246, 252, 0.75); border-radius: 12px; border: 1px solid rgba(10, 88, 127, 0.15); text-align: center;">
+        <h4 id="tituloAnuncio" style="color: var(--adventist-blue); font-size: 0.95rem; font-weight: 700; margin-bottom: 4px;"></h4>
+        <p id="descAnuncio" style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px;"></p>
+        <a id="btnInfoAnuncio" href="#" target="_blank" class="btn-wa" style="margin-top: 0; padding: 10px 16px; font-size: 0.8rem; background: var(--adventist-blue);">📲 Más información por WhatsApp</a>
+      </div>
+    </div>
+
+    <!-- PESTAÑA 5: MURO Y PETICIONES DE ORACIÓN -->
+    <div id="oracion" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Muro de Oración • Cancún</h3>
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">No estás solo. Comparte tu petición y nuestro equipo y comunidad estarán orando por ti.</p>
+
+      <!-- FORMULARIO DE ENVÍO -->
+      <div style="background: rgba(240, 246, 252, 0.65); padding: 14px; border-radius: 14px; border: 1px solid rgba(10, 88, 127, 0.15); margin-bottom: 18px;">
+        <input type="text" id="oracionNombre" placeholder="Tu Nombre (o deja vacío para Anónimo)">
+        
+        <textarea id="oracionMensaje" placeholder="Escribe aquí tu petición de oración..." rows="3"></textarea>
+
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 0.75rem; color: var(--text-muted);">
+          <input type="checkbox" id="oracionPrivada">
+          <label for="oracionPrivada">Mantener mi petición 100% confidencial (solo para los pastores)</label>
+        </div>
+
+        <button onclick="enviarPeticionOracion()" class="btn-draw" style="width: 100%; margin-top: 0; background: var(--adventist-blue); box-shadow: 0 4px 12px rgba(10, 88, 127, 0.3);">🙏 ENVIAR PETICIÓN DE ORACIÓN</button>
+      </div>
+
+      <hr style="border: 0; height: 1px; background: rgba(10, 88, 127, 0.15); margin: 15px 0;">
+
+      <!-- LISTA DE PETICIONES PÚBLICAS / COMUNIDAD -->
+      <h4 style="color: var(--adventist-blue); font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;">🤍 Peticiones Recientes de la Comunidad</h4>
+
+      <div class="audio-item" style="margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--adventist-blue); font-weight: 700; margin-bottom: 4px;">
+          <span>M. Cancún</span>
+          <span style="color: var(--text-muted); font-weight: normal;">Hace 2 horas</span>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-main); margin-bottom: 8px;">"Pido oración por la salud física de mi mamá y para que Dios llene de paz nuestro hogar en Cancún."</p>
+        <button onclick="sumarOracion(this)" style="background: rgba(10, 88, 127, 0.08); border: 1px solid var(--adventist-blue); color: var(--adventist-blue); padding: 5px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: 700; cursor: pointer;">
+          🙏 Unirme en oración (<span class="count">14</span>)
+        </button>
+      </div>
+
+      <div class="audio-item">
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--adventist-blue); font-weight: 700; margin-bottom: 4px;">
+          <span>Familia R. (Región 516)</span>
+          <span style="color: var(--text-muted); font-weight: normal;">Ayer</span>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-main); margin-bottom: 8px;">"Oración por un empleo y dirección financiera para tomar buenas decisiones este mes."</p>
+        <button onclick="sumarOracion(this)" style="background: rgba(10, 88, 127, 0.08); border: 1px solid var(--adventist-blue); color: var(--adventist-blue); padding: 5px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: 700; cursor: pointer;">
+          🙏 Unirme en oración (<span class="count">23</span>)
+        </button>
+      </div>
+
+    </div>
+
+    <footer>
+      <p><a href="https://facebook.com/share/1NkKZCCNns/" target="_blank">Facebook</a> • <a href="https://wa.me/5219831255281" target="_blank">WhatsApp Directo</a></p>
+      <p style="margin-top: 5px;">Proyecto Evangelístico • Distrito 8 Cancún © 2026</p>
+    </footer>
+  </div>
+
+  <script>
+    const contenidos = {
+      paz: {
+        t: "Paz que sobrepasa todo entendimiento",
+        v: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da. No se turbe vuestro corazón, ni tenga miedo." - Juan 14:27',
+        bg: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80' /* Playa serena */
+      },
+      estres: { 
+        t: "Paz para el Estrés", 
+        v: '"Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar." - Mateo 11:28',
+        bg: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=80' /* Bosque pacífico */
+      },
+      miedo: { 
+        t: "Protección en el Miedo", 
+        v: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios." - Isaías 41:10',
+        bg: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1000&q=80' /* Luz sobre árboles */
+      },
+      culpa: {
+        t: "Perdón y Libertad de la Culpa",
+        v: '"Si confesamos nuestros pecados, él es fiel y justo para perdonar nuestros pecados, y limpiarnos de toda maldad." - 1 Juan 1:9',
+        bg: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1000&q=80' /* Amanecer nuevo comienzo */
+      },
+      duelo: { 
+        t: "Consuelo en la Pérdida", 
+        v: '"Cercano está Jehová a los quebrantados de corazón." - Salmo 34:18',
+        bg: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=1000&q=80' /* Atardecer suave */
+      },
+      soledad: { 
+        t: "Compañía en la Soledad", 
+        v: '"He aquí yo estoy con vosotros todos los días, hasta el fin del mundo." - Mateo 28:20',
+        bg: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1000&q=80' /* Camino iluminado */
+      },
+      finanzas: { 
+        t: "Provisión y Confianza", 
+        v: '"Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas." - Filipenses 4:19',
+        bg: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80' /* Montaña firme */
+      },
+      familia: { 
+        t: "Bendición para tu Hogar", 
+        v: '"Pero yo y mi casa serviremos a Jehová." - Josué 24:15',
+        bg: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1000&q=80' /* Familia */
+      },
+      cansancio: { 
+        t: "Fuerza para el Cansado", 
+        v: '"Él da esfuerzo al cansado, y multiplica las fuerzas al que no tiene ningunas." - Isaías 40:29',
+        bg: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80' /* Cielo despejado */
+      },
+      proposito: { 
+        t: "Un Propósito para tu Vida", 
+        v: '"Porque yo sé los pensamientos que tengo acerca de vosotros... pensamientos de paz." - Jeremías 29:11',
+        bg: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80' /* Naturaleza abierta */
+      }
+    };
+
+    const audiosPorTema = {
+      paz: { titulo: "🕊️ Audio: Recibiendo la Paz de Dios", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      estres: { titulo: "🎧 Audio: Paz para el Estrés y la Carga", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      miedo: { titulo: "🛡️ Audio: Venciendo el Miedo con la Fe", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      culpa: { titulo: "❤️‍🩹 Audio: El Perdón que Restaura", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      duelo: { titulo: "🩹 Audio: Consuelo en Momentos de Pérdida", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      soledad: { titulo: "🫂 Audio: Dios Nunca Te Deja Solo", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      finanzas: { titulo: "💸 Audio: Paz y Provisión en tus Finanzas", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      familia: { titulo: "🏠 Audio: Sanidad y Unión Familiar", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      cansancio: { titulo: "🏃 Audio: Renovando Tus Fuerzas", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
+      proposito: { titulo: "🎯 Audio: Descubriendo tu Propósito", archivo: "paz_y_provision_en_tus_finanzas.mp3" }
+    };
+
+    const promesas = Object.values(contenidos).map(c => ({ t: c.v.split(' - ')[0], r: c.v.split(' - ')[1] }));
+
+    function obtenerPromesa() {
+      const card = document.getElementById('promiseCard');
+      card.style.opacity = 0;
+      setTimeout(() => {
+        const azar = Math.floor(Math.random() * promesas.length);
+        document.getElementById('promiseText').innerText = promesas[azar].t;
+        document.getElementById('promiseRef').innerText = promesas[azar].r;
+        card.style.opacity = 1;
+      }, 300);
+    }
+
+    function cargarTema(key) {
+      if(contenidos[key]) {
+        /* 1. Actualizar Textos y WhatsApp */
+        document.getElementById('temaTitulo').innerText = contenidos[key].t;
+        document.getElementById('temaVersiculo').innerText = contenidos[key].v;
+        const msgWa = encodeURIComponent(`Hola, escaneé el código sobre "${contenidos[key].t}" y me gustaría platicar o recibir oración.`);
+        document.getElementById('temaWa').href = `https://wa.me/5219831255281?text=${msgWa}`;
+        document.getElementById('temaDetalle').style.display = 'block';
+
+        /* 2. Actualizar Fondo Dinámico de la Página */
+        if (contenidos[key].bg) {
+          document.body.style.backgroundImage = `linear-gradient(var(--glass-overlay), var(--glass-overlay)), url('${contenidos[key].bg}')`;
+        }
+
+        /* 3. Actualizar Audio Dinámico */
+        if (audiosPorTema[key]) {
+          const player = document.getElementById('audioDinamicoPlayer');
+          const titulo = document.getElementById('audioDinamicoTitulo');
+          titulo.innerText = audiosPorTema[key].titulo;
+          player.src = audiosPorTema[key].archivo;
+          player.load();
+        }
+      }
+    }
+
+    function openTab(evt, tabName) {
+      const contents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+      const buttons = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
+      document.getElementById(tabName).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+
+    function enviarPeticionOracion() {
+      const nom = document.getElementById('oracionNombre').value.trim() || 'Anónimo';
+      const msg = document.getElementById('oracionMensaje').value.trim();
+      const esPrivado = document.getElementById('oracionPrivada').checked;
+
+      if(!msg) {
+        alert('Por favor escribe tu motivo de oración.');
+        return;
+      }
+
+      const tipo = esPrivado ? '🔒 CONFIDENCIAL (Solo Pastores)' : '🌐 PÚBLICA (Para Muro/Comunidad)';
+      const textoWhatsApp = encodeURIComponent(`🙏 *NUEVA PETICIÓN DE ORACIÓN*\n\n👤 *Nombre:* ${nom}\n📋 *Tipo:* ${tipo}\n💬 *Petición:* ${msg}`);
+
+      window.open(`https://wa.me/5219831255281?text=${textoWhatsApp}`, '_blank');
+
+      document.getElementById('oracionMensaje').value = '';
+      document.getElementById('oracionNombre').value = '';
+      document.getElementById('oracionPrivada').checked = false;
+
+      alert('¡Tu petición ha sido enviada! Nuestro equipo y la iglesia estarán orando por ti.');
+    }
+
+    function sumarOracion(btn) {
+      const countSpan = btn.querySelector('.count');
+      let actual = parseInt(countSpan.innerText);
+      
+      if (!btn.classList.contains('orado')) {
+        countSpan.innerText = actual + 1;
+        btn.style.background = 'var(--adventist-blue)';
+        btn.style.color = '#ffffff';
+        btn.classList.add('orado');
+        btn.innerHTML = `✨ ¡Te uniste en oración! (<span class="count">${actual + 1}</span>)`;
+      }
+    }
+
+    /* CARRUSEL DE EVENTOS */
+    const anuncios = [
+      {
+        titulo: " Gran Campaña: El Amor de Jesús",
+        desc: "Iglesia Región 516 • 23 al 29 de Mayo • 7:00 PM",
+        imagen: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80",
+        waMsg: "Hola, me gustaría más información sobre la Campaña El Amor de Jesús."
+      },
+      {
+        titulo: " Culto de Jóvenes JA",
+        desc: "Todos los Sábados a las 5:00 PM en el templo",
+        imagen: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80",
+        waMsg: "Hola, quisiera saber los horarios y actividades de la Sociedad de Jóvenes."
+      },
+      {
+        titulo: " Club de Conquistadores y Aventureros",
+        desc: "Reuniones de instrucción y campamentos • Domingos 9:00 AM",
+        imagen: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80",
+        waMsg: "Hola, quisiera inscribir a mi hijo(a) al Club de Conquistadores/Aventureros."
+      }
+    ];
+
+    let indexAnuncioActual = 0;
+    let carruselTimer = null;
+
+    function inicializarCarrusel() {
+      const slide = document.getElementById('carouselSlide');
+      const dots = document.getElementById('carouselDots');
+      if (!slide || !dots) return;
+
+      slide.innerHTML = '';
+      dots.innerHTML = '';
+
+      anuncios.forEach((anuncio, i) => {
+        const img = document.createElement('img');
+        img.src = anuncio.imagen;
+        img.alt = anuncio.titulo;
+        slide.appendChild(img);
+
+        const dot = document.createElement('span');
+        dot.className = `dot ${i === 0 ? 'active' : ''}`;
+        dot.onclick = () => irAAnuncio(i);
+        dots.appendChild(dot);
+      });
+
+      mostrarAnuncio(0);
+      reiniciarTimerCarrusel();
+    }
+
+    function mostrarAnuncio(index) {
+      indexAnuncioActual = index;
+      const slide = document.getElementById('carouselSlide');
+      const dots = document.querySelectorAll('.dot');
+      if (!slide) return;
+
+      slide.style.transform = `translateX(-${index * 100}%)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+
+      const anuncio = anuncios[index];
+      document.getElementById('tituloAnuncio').innerText = anuncio.titulo;
+      document.getElementById('descAnuncio').innerText = anuncio.desc;
+      document.getElementById('btnInfoAnuncio').href = `https://wa.me/5219831255281?text=${encodeURIComponent(anuncio.waMsg)}`;
+    }
+
+    function moverCarrusel(direccion) {
+      let nuevoIndex = indexAnuncioActual + direccion;
+      if (nuevoIndex >= anuncios.length) nuevoIndex = 0;
+      if (nuevoIndex < 0) nuevoIndex = anuncios.length - 1;
+      mostrarAnuncio(nuevoIndex);
+      reiniciarTimerCarrusel();
+    }
+
+    function irAAnuncio(index) {
+      mostrarAnuncio(index);
+      reiniciarTimerCarrusel();
+    }
+
+    function reiniciarTimerCarrusel() {
+      if (carruselTimer) clearInterval(carruselTimer);
+      carruselTimer = setInterval(() => {
+        moverCarrusel(1);
+      }, 4000);
+    }
+
+    window.onload = function() {
+      inicializarCarrusel();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const temaParam = urlParams.get('tema');
+      if (temaParam && contenidos[temaParam]) {
+        cargarTema(temaParam);
+      }
+    };
+  </script>
+</body>
+</html>
