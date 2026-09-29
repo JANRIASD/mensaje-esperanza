@@ -765,7 +765,7 @@
         document.getElementById('temaTitulo').innerText = contenidos[key].t;
         document.getElementById('temaVersiculo').innerText = contenidos[key].v;
         const msgWa = encodeURIComponent(`Hola, escaneé el código sobre "${contenidos[key].t}" y me gustaría platicar o recibir oración.`);
-        document.getElementById('temaWa').href = `https://wa.me/5219831255281?text=${msgWa}`;
+        document.getElementById('temaWa').href = `https://wa.me/529986428817?text=${msgWa}`;
         document.getElementById('temaDetalle').style.display = 'block';
 
         if (contenidos[key].bg) {
@@ -991,7 +991,7 @@
 
         if(esPrivado) {
           const textoWhatsApp = encodeURIComponent(`🔒 *PETICIÓN CONFIDENCIAL*\n\n👤 *Nombre:* ${nom}\n💬 *Petición:* ${msg}`);
-          window.open(`https://wa.me/5219831255281?text=${textoWhatsApp}`, '_blank');
+          window.open(`https://wa.me/529986428817?text=${textoWhatsApp}`, '_blank');
         }
 
         document.getElementById('oracionMensaje').value = '';
