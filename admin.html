@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Pastoral - Mensaje de Esperanza</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f4f6f8; margin: 0; padding: 20px; color: #333; }
+    .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    h1 { color: #0a587f; font-size: 1.4rem; margin-top: 0; }
+    .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+    .badge-private { background: #fee2e2; color: #991b1b; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+    .badge-public { background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+    .badge-testimony { background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>📋 Panel Pastoral de Oraciones y Confidenciales</h1>
+  <p style="font-size: 0.85rem; color: #666;">Visualiza las peticiones registradas, incluidas las peticiones confidenciales que solo son accesibles desde este panel.</p>
+  <hr style="border:0; border-top: 1px solid #eee; margin: 15px 0;">
+
+  <div id="listaAdmin">Cargando oraciones...</div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDkjrM6LBCdlE0xhIR9zn2XU4iLsIKv9pg",
+    authDomain: "mensaje-esperanza.firebaseapp.com",
+    projectId: "mensaje-esperanza",
+    storageBucket: "mensaje-esperanza.firebasestorage.app",
+    messagingSenderId: "702356455765",
+    appId: "1:702356455765:web:733b573f6d35aea2a4efdc",
+    measurementId: "G-HF7VGFXGDZ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const q = query(collection(db, "oraciones"), orderBy("fecha", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    const contenedor = document.getElementById("listaAdmin");
+    contenedor.innerHTML = "";
+
+    snapshot.forEach((docSnap) => {
+      const p = docSnap.data();
+      const div = document.createElement("div");
+      div.className = "card";
+
+      div.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+          <strong>👤 ${p.nombre || 'Anónimo'}</strong>
+          <span>
+            ${p.esPrivado ? '<span class="badge-private">🔒 CONFIDENCIAL</span>' : '<span class="badge-public">🌐 PÚBLICA</span>'}
+            ${p.esTestimonio ? '<span class="badge-testimony">✨ TESTIMONIO</span>' : ''}
+          </span>
+        </div>
+        <p style="margin: 6px 0; font-size: 0.9rem;">"${p.mensaje}"</p>
+        ${p.respuestaTexto ? `<p style="font-size:0.8rem; color:#0a587f; background:#edf2f7; padding:6px; border-radius:6px;"><strong>Respuesta registrada:</strong> ${p.respuestaTexto}</p>` : ''}
+        <div style="font-size: 0.75rem; color: #888; margin-top: 6px;">
+          📅 ${p.fecha ? new Date(p.fecha.toDate()).toLocaleString() : 'Sin fecha'} | 🙏 Intercesiones: ${p.apoyos || 0}
+        </div>
+      `;
+      contenedor.appendChild(div);
+    });
+  });
+</script>
+
+</body>
+</html>
