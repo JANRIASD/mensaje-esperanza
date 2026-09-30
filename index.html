@@ -667,7 +667,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // 1. Cambio de Pestañas
+    // 1. Manejo de Pestañas
     function openTab(evt, tabName) {
       const tabContents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < tabContents.length; i++) {
@@ -677,11 +677,12 @@
       for (let i = 0; i < tabBtns.length; i++) {
         tabBtns[i].classList.remove("active");
       }
-      document.getElementById(tabName).classList.add("active");
-      evt.currentTarget.classList.add("active");
+      const targetTab = document.getElementById(tabName);
+      if (targetTab) targetTab.classList.add("active");
+      if (evt && evt.currentTarget) evt.currentTarget.classList.add("active");
     }
 
-    // 2. Escape de caracteres de seguridad
+    // 2. Escape HTML
     function escapeHTML(str) {
       if (!str) return '';
       return str.replace(/[&<>'"]/g, 
@@ -689,23 +690,23 @@
       );
     }
 
-    // 3. Promesas Bíblicas por Tema / Emoción
+    // 3. Promesas Bíblicas
     const promesas = {
       estres: [
-        { cita: "Matenete en paz", texto: "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios...", ref: "Filipenses 4:6-7" },
-        { cita: "Descanso prometido", texto: "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.", ref: "Mateo 11:28" }
+        { texto: "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego...", ref: "Filipenses 4:6-7" },
+        { texto: "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.", ref: "Mateo 11:28" }
       ],
       paz: [
-        { cita: "La paz de Dios", texto: "La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da...", ref: "Juan 14:27" },
-        { cita: "En paz me acostaré", texto: "En paz me acostaré, y asimismo dormiré; porque solo tú, Jehová, me haces vivir confiado.", ref: "Salmos 4:8" }
+        { texto: "La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da...", ref: "Juan 14:27" },
+        { texto: "En paz me acostaré, y asimismo dormiré; porque solo tú, Jehová, me haces vivir confiado.", ref: "Salmos 4:8" }
       ],
       finanzas: [
-        { cita: "Provisión divina", texto: "Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas en gloria...", ref: "Filipenses 4:19" },
-        { cita: "Confianza en Dios", texto: "Jehová es mi pastor; nada me faltará.", ref: "Salmos 23:1" }
+        { texto: "Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas en gloria...", ref: "Filipenses 4:19" },
+        { texto: "Jehová es mi pastor; nada me faltará.", ref: "Salmos 23:1" }
       ],
       familia: [
-        { cita: "Bendición para tu hogar", texto: "Creed en el Señor Jesucristo, y serás salvo, tú y tu casa.", ref: "Hechos 16:31" },
-        { cita: "Unidad y Amor", texto: "Y sobre todas estas cosas vestíos de amor, que es el vínculo perfecto.", ref: "Colosenses 3:14" }
+        { texto: "Creed en el Señor Jesucristo, y serás salvo, tú y tu casa.", ref: "Hechos 16:31" },
+        { texto: "Y sobre todas estas cosas vestíos de amor, que es el vínculo perfecto.", ref: "Colosenses 3:14" }
       ]
     };
 
@@ -725,7 +726,7 @@
       }
     }
 
-    // 4. Cargar Anuncios desde Firestore
+    // 4. Anuncios desde Firestore
     function cargarAnunciosDesdeFirestore() {
       const track = document.getElementById("carouselTrack");
       if (!track) return;
@@ -758,10 +759,12 @@
           `;
           track.appendChild(slide);
         });
+      }, error => {
+        console.error("Error cargando anuncios:", error);
       });
     }
 
-    // 5. Cargar Oraciones
+    // 5. Oraciones en Tiempo Real
     function cargarOracionesEnTiempoReal() {
       const muro = document.getElementById('muroOraciones');
       if (!muro) return;
@@ -788,6 +791,8 @@
           `;
           muro.appendChild(card);
         });
+      }, error => {
+        console.error("Error cargando oraciones:", error);
       });
     }
 
@@ -797,18 +802,18 @@
         const ref = db.collection("oraciones").doc(docId);
         await ref.update({ unidos: firebase.firestore.FieldValue.increment(1) });
       } catch (e) {
-        console.error("Error al actualizar contador: ", e);
+        console.error("Error al actualizar contador:", e);
       }
     }
 
     // 7. Enviar Petición
     async function enviarPeticion(event) {
-      event.preventDefault();
+      if (event) event.preventDefault();
       const nombre = document.getElementById('oracionNombre').value.trim();
       const peticion = document.getElementById('oracionTexto').value.trim();
       const tipo = document.getElementById('oracionTipo').value;
 
-      if (!nombre || !peticion) return alert("Por favor completa los campos.");
+      if (!nombre || !peticion) return alert("Por favor completa los campos de nombre y petición.");
 
       if (tipo === 'privada') {
         const mensajeWA = `Hola Pastor, comparto una petición confidencial:%0A%0A*Nombre:* ${encodeURIComponent(nombre)}%0A*Petición:* ${encodeURIComponent(peticion)}`;
@@ -830,7 +835,7 @@
       }
     }
 
-    // 8. Cargar Audios desde Firestore
+    // 8. Audios desde Firestore
     function cargarAudiosDesdeFirestore() {
       const contenedor = document.getElementById('contenedorAudiosNube');
       if (!contenedor) return;
@@ -854,10 +859,12 @@
           `;
           contenedor.appendChild(item);
         });
+      }, error => {
+        console.error("Error cargando audios:", error);
       });
     }
 
-    // 9. Modales de Imagen
+    // 9. Modal de Imágenes
     function ampliarImagen(src) {
       const modal = document.getElementById("imageModal");
       const modalImg = document.getElementById("imgAmpliada");
