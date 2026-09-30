@@ -6,7 +6,6 @@
   <title>Panel de Administración - Mensaje de Esperanza</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Firebase SDKs Compat v10 -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -36,7 +35,6 @@
     }
 
     .container { width: 100%; max-width: 650px; }
-
     header { text-align: center; padding: 15px 0; }
     header h1 { font-size: 1.5rem; color: var(--adventist-blue); text-transform: uppercase; font-weight: 700; }
     header p { font-size: 0.85rem; color: var(--adventist-blue-dark); font-weight: 600; }
@@ -78,7 +76,7 @@
     }
 
     .btn:hover { background: var(--adventist-blue-dark); }
-    .btn-danger { background: var(--danger-color); padding: 5px 10px; font-size: 0.75rem; border-radius: 10px; width: auto; }
+    .btn-danger { background: var(--danger-color); padding: 5px 10px; font-size: 0.75rem; border-radius: 10px; width: auto; color: white; border: none; cursor: pointer; }
 
     .item-list { margin-top: 10px; }
     .item-row {
@@ -112,32 +110,47 @@
       <button class="btn" onclick="iniciarSesion()">INGRESAR AL PANEL</button>
     </div>
 
-    <!-- CONTENIDO DEL PANEL (SOLO VISIBLE AL INICIAR SESIÓN) -->
+    <!-- CONTENIDO DEL PANEL -->
     <div id="adminDashboard" class="hidden">
       
-      <!-- BOTÓN CERRAR SESIÓN -->
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
         <span id="userEmailTag" style="font-size: 0.8rem; font-weight: 600; color: var(--adventist-blue);"></span>
         <button onclick="cerrarSesion()" class="btn-danger">Cerrar Sesión</button>
       </div>
 
-      <!-- SECCIÓN 1: ANUNCIOS Y EVENTOS -->
+      <!-- SECCIÓN 1: EVENTOS -->
       <div class="card">
-        <h3>📢 Publicar Nuevo Evento / Anuncio</h3>
-        <input type="text" id="eventTitulo" placeholder="Título del Evento (ej: Gran Campaña)">
+        <h3>📢 Publicar Evento / Anuncio</h3>
+        <input type="text" id="eventTitulo" placeholder="Título del Evento">
         <input type="text" id="eventDesc" placeholder="Descripción / Fecha / Hora">
         <input type="text" id="eventImagen" placeholder="URL de la Imagen (https://...)">
         <input type="text" id="eventWaMsg" placeholder="Mensaje predeterminado para WhatsApp">
-        <button class="btn" onclick="guardarAnuncio()">PUBLICAR EN CUALQUIER MOMENTO</button>
+        <button class="btn" onclick="guardarAnuncio()">PUBLICAR ANUNCIO</button>
 
-        <h4 style="font-size: 0.85rem; margin-top: 15px; color: var(--adventist-blue);">Anuncios Activos en la Web:</h4>
+        <h4 style="font-size: 0.85rem; margin-top: 15px; color: var(--adventist-blue);">Anuncios Activos:</h4>
         <div id="listaAnuncios" class="item-list">Cargando...</div>
       </div>
 
-      <!-- SECCIÓN 2: MODERACIÓN DE ORACIONES -->
+      <!-- SECCIÓN 2: GESTIÓN DE AUDIOS -->
+      <div class="card">
+        <h3>🎧 Publicar Audio / Serie</h3>
+        <input type="text" id="audioTitulo" placeholder="Título del Audio (ej: Parte 1: El Perdón)">
+        <input type="text" id="audioUrl" placeholder="URL o nombre del archivo MP3 (ej: mi_audio.mp3 o enlace web)">
+        <select id="audioCategoria">
+          <option value="destacado">📻 Destacado de la Semana</option>
+          <option value="paz">🕊️ Serie: Paz & Ansiedad</option>
+          <option value="finanzas">💸 Serie: Finanzas con Propósito</option>
+          <option value="familia">🏠 Serie: Restauración Familiar</option>
+        </select>
+        <button class="btn" onclick="guardarAudio()">PUBLICAR AUDIO</button>
+
+        <h4 style="font-size: 0.85rem; margin-top: 15px; color: var(--adventist-blue);">Audios en la Nube:</h4>
+        <div id="listaAudios" class="item-list">Cargando...</div>
+      </div>
+
+      <!-- SECCIÓN 3: MODERACIÓN DE ORACIONES -->
       <div class="card">
         <h3>🙏 Moderación del Muro de Oraciones</h3>
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px;">Elimina peticiones inapropiadas del muro público:</p>
         <div id="listaOracionesAdmin" class="item-list">Cargando oraciones...</div>
       </div>
 
@@ -145,7 +158,6 @@
   </div>
 
   <script>
-    // Configuración Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDkjrM6LBCdlE0xhIR9zn2XU4iLsIKv9pg",
       authDomain: "mensaje-esperanza.firebaseapp.com",
@@ -159,13 +171,13 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
 
-    // Comprobar estado de autenticación
     auth.onAuthStateChanged(user => {
       if (user) {
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('adminDashboard').classList.remove('hidden');
         document.getElementById('userEmailTag').innerText = `👤 Admin: ${user.email}`;
         cargarAdminAnuncios();
+        cargarAdminAudios();
         cargarAdminOraciones();
       } else {
         document.getElementById('loginSection').classList.remove('hidden');
@@ -173,7 +185,6 @@
       }
     });
 
-    // Iniciar Sesión
     async function iniciarSesion() {
       const email = document.getElementById('loginEmail').value;
       const pass = document.getElementById('loginPass').value;
@@ -184,77 +195,97 @@
       }
     }
 
-    // Cerrar Sesión
-    function cerrarSesion() {
-      auth.signOut();
-    }
+    function cerrarSesion() { auth.signOut(); }
 
-    // Guardar Nuevo Anuncio
+    // Anuncios
     async function guardarAnuncio() {
       const titulo = document.getElementById('eventTitulo').value;
       const desc = document.getElementById('eventDesc').value;
       const imagen = document.getElementById('eventImagen').value;
       const waMsg = document.getElementById('eventWaMsg').value;
 
-      if (!titulo || !imagen) return alert("El título y la URL de imagen son obligatorios.");
+      if (!titulo || !imagen) return alert("El título y la imagen son obligatorios.");
 
       try {
         await db.collection("anuncios").add({
           titulo, desc, imagen, waMsg,
           creado: firebase.firestore.FieldValue.serverTimestamp()
         });
-        alert("¡Evento publicado exitosamente!");
+        alert("¡Evento publicado!");
         document.getElementById('eventTitulo').value = '';
         document.getElementById('eventDesc').value = '';
         document.getElementById('eventImagen').value = '';
         document.getElementById('eventWaMsg').value = '';
-        cargarAdminAnuncios();
-      } catch(e) {
-        alert("Error al guardar anuncio: " + e.message);
-      }
+      } catch(e) { alert("Error: " + e.message); }
     }
 
-    // Cargar Lista de Anuncios para Borrar
     function cargarAdminAnuncios() {
       const container = document.getElementById('listaAnuncios');
       db.collection("anuncios").onSnapshot(snapshot => {
         container.innerHTML = '';
         snapshot.forEach(doc => {
           const d = doc.data();
-          const row = document.createElement('div');
-          row.className = 'item-row';
-          row.innerHTML = `
-            <div><strong>${d.titulo}</strong><br><small>${d.desc || ''}</small></div>
-            <button class="btn-danger" onclick="eliminarDoc('anuncios', '${doc.id}')">Eliminar</button>
-          `;
-          container.appendChild(row);
+          container.innerHTML += `
+            <div class="item-row">
+              <div><strong>${d.titulo}</strong></div>
+              <button class="btn-danger" onclick="eliminarDoc('anuncios', '${doc.id}')">Eliminar</button>
+            </div>`;
         });
       });
     }
 
-    // Cargar Oraciones para Moderar
+    // Audios
+    async function guardarAudio() {
+      const titulo = document.getElementById('audioTitulo').value;
+      const url = document.getElementById('audioUrl').value;
+      const categoria = document.getElementById('audioCategoria').value;
+
+      if (!titulo || !url) return alert("Ingresa el título y la ruta o URL del archivo MP3.");
+
+      try {
+        await db.collection("audios").add({
+          titulo, url, categoria,
+          creado: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("¡Audio publicado!");
+        document.getElementById('audioTitulo').value = '';
+        document.getElementById('audioUrl').value = '';
+      } catch(e) { alert("Error: " + e.message); }
+    }
+
+    function cargarAdminAudios() {
+      const container = document.getElementById('listaAudios');
+      db.collection("audios").onSnapshot(snapshot => {
+        container.innerHTML = '';
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          container.innerHTML += `
+            <div class="item-row">
+              <div><strong>[${d.categoria}]</strong> ${d.titulo}</div>
+              <button class="btn-danger" onclick="eliminarDoc('audios', '${doc.id}')">Eliminar</button>
+            </div>`;
+        });
+      });
+    }
+
+    // Oraciones
     function cargarAdminOraciones() {
       const container = document.getElementById('listaOracionesAdmin');
       db.collection("oraciones").orderBy("fecha", "desc").limit(30).onSnapshot(snapshot => {
         container.innerHTML = '';
         snapshot.forEach(doc => {
           const d = doc.data();
-          const row = document.createElement('div');
-          row.className = 'item-row';
-          row.innerHTML = `
-            <div>
-              <strong>${d.nombre}:</strong> "${d.peticion}"
-            </div>
-            <button class="btn-danger" onclick="eliminarDoc('oraciones', '${doc.id}')">Borrar</button>
-          `;
-          container.appendChild(row);
+          container.innerHTML += `
+            <div class="item-row">
+              <div><strong>${d.nombre}:</strong> "${d.peticion}"</div>
+              <button class="btn-danger" onclick="eliminarDoc('oraciones', '${doc.id}')">Borrar</button>
+            </div>`;
         });
       });
     }
 
-    // Función Genérica para Eliminar
     async function eliminarDoc(coleccion, id) {
-      if (confirm("¿Estás seguro de que deseas eliminar este registro?")) {
+      if (confirm("¿Deseas eliminar este elemento?")) {
         await db.collection(coleccion).doc(id).delete();
       }
     }
