@@ -3,73 +3,261 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Pastoral - Mensaje de Esperanza</title>
+  <title>Panel de Administración - Mensaje de Esperanza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDKs Compat v10 -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
   <style>
-    body { font-family: system-ui, sans-serif; background: #f4f6f8; margin: 0; padding: 20px; color: #333; }
-    .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    h1 { color: #0a587f; font-size: 1.4rem; margin-top: 0; }
-    .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
-    .badge-private { background: #fee2e2; color: #991b1b; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
-    .badge-public { background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
-    .badge-testimony { background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+    :root {
+      --adventist-blue: #0A587F;
+      --adventist-blue-dark: #003A5D;
+      --gold-accent: #C8963E;
+      --glass-card: rgba(255, 255, 255, 0.92);
+      --glass-border: rgba(200, 150, 62, 0.35);
+      --text-main: #0B2545;
+      --text-muted: #4A607A;
+      --danger-color: #e74c3c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+    body {
+      background: linear-gradient(rgba(245, 248, 252, 0.85), rgba(245, 248, 252, 0.85)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat fixed;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 15px;
+    }
+
+    .container { width: 100%; max-width: 650px; }
+
+    header { text-align: center; padding: 15px 0; }
+    header h1 { font-size: 1.5rem; color: var(--adventist-blue); text-transform: uppercase; font-weight: 700; }
+    header p { font-size: 0.85rem; color: var(--adventist-blue-dark); font-weight: 600; }
+
+    .card {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(10, 88, 127, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    h3 { color: var(--adventist-blue); font-size: 1rem; margin-bottom: 12px; font-weight: 700; }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(10, 88, 127, 0.2);
+      background: #ffffff;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .btn {
+      background: var(--adventist-blue);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .btn:hover { background: var(--adventist-blue-dark); }
+    .btn-danger { background: var(--danger-color); padding: 5px 10px; font-size: 0.75rem; border-radius: 10px; width: auto; }
+
+    .item-list { margin-top: 10px; }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(240, 246, 252, 0.8);
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      border: 1px solid rgba(10, 88, 127, 0.1);
+    }
+
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>📋 Panel Pastoral de Oraciones y Confidenciales</h1>
-  <p style="font-size: 0.85rem; color: #666;">Visualiza las peticiones registradas, incluidas las peticiones confidenciales que solo son accesibles desde este panel.</p>
-  <hr style="border:0; border-top: 1px solid #eee; margin: 15px 0;">
+  <div class="container">
+    <header>
+      <h1>⚙️ Panel de Control</h1>
+      <p>Mensaje de Esperanza • Cancún</p>
+    </header>
 
-  <div id="listaAdmin">Cargando oraciones...</div>
-</div>
+    <!-- FORMULARIO DE LOGIN -->
+    <div id="loginSection" class="card">
+      <h3>🔐 Iniciar Sesión de Administrador</h3>
+      <input type="email" id="loginEmail" placeholder="Correo electrónico">
+      <input type="password" id="loginPass" placeholder="Contraseña">
+      <button class="btn" onclick="iniciarSesion()">INGRESAR AL PANEL</button>
+    </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <!-- CONTENIDO DEL PANEL (SOLO VISIBLE AL INICIAR SESIÓN) -->
+    <div id="adminDashboard" class="hidden">
+      
+      <!-- BOTÓN CERRAR SESIÓN -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <span id="userEmailTag" style="font-size: 0.8rem; font-weight: 600; color: var(--adventist-blue);"></span>
+        <button onclick="cerrarSesion()" class="btn-danger">Cerrar Sesión</button>
+      </div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDkjrM6LBCdlE0xhIR9zn2XU4iLsIKv9pg",
-    authDomain: "mensaje-esperanza.firebaseapp.com",
-    projectId: "mensaje-esperanza",
-    storageBucket: "mensaje-esperanza.firebasestorage.app",
-    messagingSenderId: "702356455765",
-    appId: "1:702356455765:web:733b573f6d35aea2a4efdc",
-    measurementId: "G-HF7VGFXGDZ"
-  };
+      <!-- SECCIÓN 1: ANUNCIOS Y EVENTOS -->
+      <div class="card">
+        <h3>📢 Publicar Nuevo Evento / Anuncio</h3>
+        <input type="text" id="eventTitulo" placeholder="Título del Evento (ej: Gran Campaña)">
+        <input type="text" id="eventDesc" placeholder="Descripción / Fecha / Hora">
+        <input type="text" id="eventImagen" placeholder="URL de la Imagen (https://...)">
+        <input type="text" id="eventWaMsg" placeholder="Mensaje predeterminado para WhatsApp">
+        <button class="btn" onclick="guardarAnuncio()">PUBLICAR EN CUALQUIER MOMENTO</button>
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+        <h4 style="font-size: 0.85rem; margin-top: 15px; color: var(--adventist-blue);">Anuncios Activos en la Web:</h4>
+        <div id="listaAnuncios" class="item-list">Cargando...</div>
+      </div>
 
-  const q = query(collection(db, "oraciones"), orderBy("fecha", "desc"));
+      <!-- SECCIÓN 2: MODERACIÓN DE ORACIONES -->
+      <div class="card">
+        <h3>🙏 Moderación del Muro de Oraciones</h3>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px;">Elimina peticiones inapropiadas del muro público:</p>
+        <div id="listaOracionesAdmin" class="item-list">Cargando oraciones...</div>
+      </div>
 
-  onSnapshot(q, (snapshot) => {
-    const contenedor = document.getElementById("listaAdmin");
-    contenedor.innerHTML = "";
+    </div>
+  </div>
 
-    snapshot.forEach((docSnap) => {
-      const p = docSnap.data();
-      const div = document.createElement("div");
-      div.className = "card";
+  <script>
+    // Configuración Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDkjrM6LBCdlE0xhIR9zn2XU4iLsIKv9pg",
+      authDomain: "mensaje-esperanza.firebaseapp.com",
+      projectId: "mensaje-esperanza",
+      storageBucket: "mensaje-esperanza.firebasestorage.app",
+      messagingSenderId: "702356455765",
+      appId: "1:702356455765:web:733b573f6d35aea2a4efdc"
+    };
 
-      div.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
-          <strong>👤 ${p.nombre || 'Anónimo'}</strong>
-          <span>
-            ${p.esPrivado ? '<span class="badge-private">🔒 CONFIDENCIAL</span>' : '<span class="badge-public">🌐 PÚBLICA</span>'}
-            ${p.esTestimonio ? '<span class="badge-testimony">✨ TESTIMONIO</span>' : ''}
-          </span>
-        </div>
-        <p style="margin: 6px 0; font-size: 0.9rem;">"${p.mensaje}"</p>
-        ${p.respuestaTexto ? `<p style="font-size:0.8rem; color:#0a587f; background:#edf2f7; padding:6px; border-radius:6px;"><strong>Respuesta registrada:</strong> ${p.respuestaTexto}</p>` : ''}
-        <div style="font-size: 0.75rem; color: #888; margin-top: 6px;">
-          📅 ${p.fecha ? new Date(p.fecha.toDate()).toLocaleString() : 'Sin fecha'} | 🙏 Intercesiones: ${p.apoyos || 0}
-        </div>
-      `;
-      contenedor.appendChild(div);
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    // Comprobar estado de autenticación
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('adminDashboard').classList.remove('hidden');
+        document.getElementById('userEmailTag').innerText = `👤 Admin: ${user.email}`;
+        cargarAdminAnuncios();
+        cargarAdminOraciones();
+      } else {
+        document.getElementById('loginSection').classList.remove('hidden');
+        document.getElementById('adminDashboard').classList.add('hidden');
+      }
     });
-  });
-</script>
 
+    // Iniciar Sesión
+    async function iniciarSesion() {
+      const email = document.getElementById('loginEmail').value;
+      const pass = document.getElementById('loginPass').value;
+      try {
+        await auth.signInWithEmailAndPassword(email, pass);
+      } catch (e) {
+        alert("Error al iniciar sesión: " + e.message);
+      }
+    }
+
+    // Cerrar Sesión
+    function cerrarSesion() {
+      auth.signOut();
+    }
+
+    // Guardar Nuevo Anuncio
+    async function guardarAnuncio() {
+      const titulo = document.getElementById('eventTitulo').value;
+      const desc = document.getElementById('eventDesc').value;
+      const imagen = document.getElementById('eventImagen').value;
+      const waMsg = document.getElementById('eventWaMsg').value;
+
+      if (!titulo || !imagen) return alert("El título y la URL de imagen son obligatorios.");
+
+      try {
+        await db.collection("anuncios").add({
+          titulo, desc, imagen, waMsg,
+          creado: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("¡Evento publicado exitosamente!");
+        document.getElementById('eventTitulo').value = '';
+        document.getElementById('eventDesc').value = '';
+        document.getElementById('eventImagen').value = '';
+        document.getElementById('eventWaMsg').value = '';
+        cargarAdminAnuncios();
+      } catch(e) {
+        alert("Error al guardar anuncio: " + e.message);
+      }
+    }
+
+    // Cargar Lista de Anuncios para Borrar
+    function cargarAdminAnuncios() {
+      const container = document.getElementById('listaAnuncios');
+      db.collection("anuncios").onSnapshot(snapshot => {
+        container.innerHTML = '';
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          const row = document.createElement('div');
+          row.className = 'item-row';
+          row.innerHTML = `
+            <div><strong>${d.titulo}</strong><br><small>${d.desc || ''}</small></div>
+            <button class="btn-danger" onclick="eliminarDoc('anuncios', '${doc.id}')">Eliminar</button>
+          `;
+          container.appendChild(row);
+        });
+      });
+    }
+
+    // Cargar Oraciones para Moderar
+    function cargarAdminOraciones() {
+      const container = document.getElementById('listaOracionesAdmin');
+      db.collection("oraciones").orderBy("fecha", "desc").limit(30).onSnapshot(snapshot => {
+        container.innerHTML = '';
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          const row = document.createElement('div');
+          row.className = 'item-row';
+          row.innerHTML = `
+            <div>
+              <strong>${d.nombre}:</strong> "${d.peticion}"
+            </div>
+            <button class="btn-danger" onclick="eliminarDoc('oraciones', '${doc.id}')">Borrar</button>
+          `;
+          container.appendChild(row);
+        });
+      });
+    }
+
+    // Función Genérica para Eliminar
+    async function eliminarDoc(coleccion, id) {
+      if (confirm("¿Estás seguro de que deseas eliminar este registro?")) {
+        await db.collection(coleccion).doc(id).delete();
+      }
+    }
+  </script>
 </body>
 </html>
