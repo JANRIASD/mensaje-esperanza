@@ -297,6 +297,43 @@
       margin-bottom: 4px;
     }
 
+    .btn-pray-action {
+      background: rgba(10, 88, 127, 0.08);
+      border: 1px solid var(--adventist-blue);
+      color: var(--adventist-blue);
+      padding: 6px 14px;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 6px;
+    }
+
+    .btn-pray-action.orado {
+      background: var(--adventist-blue);
+      color: #ffffff;
+    }
+
+    /* ANUNCIOS / EVENTOS */
+    .evento-card {
+      background: rgba(240, 246, 252, 0.8);
+      border: 1px solid rgba(10, 88, 127, 0.15);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .evento-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .evento-content {
+      padding: 12px 15px;
+    }
+
     footer {
       text-align: center;
       font-size: 0.78rem;
@@ -330,6 +367,7 @@
       <button class="tab-btn active" onclick="openTab(event, 'siente')">🧘 ¿Cómo estás?</button>
       <button class="tab-btn" onclick="openTab(event, 'recursos')">📚 Recursos</button>
       <button class="tab-btn" onclick="openTab(event, 'audios')">🎧 Audios</button>
+      <button class="tab-btn" onclick="openTab(event, 'eventos')">📍 Eventos</button>
       <button class="tab-btn" onclick="openTab(event, 'oracion')">🙏 Oración</button>
     </div>
 
@@ -378,6 +416,14 @@
         </div>
       </a>
 
+      <a href="https://www.youtube.com/playlist?list=PLl8axwj0Ys0Fk0MjeaYJAiWkBGQXbhIbS" target="_blank" class="resource-card">
+        <span class="resource-icon">🧐</span>
+        <div class="resource-info">
+          <h4>¿En qué creemos?</h4>
+          <p>Descubre las creencias fundamentales de la iglesia.</p>
+        </div>
+      </a>
+
       <a href="https://www.google.com/maps/search/?api=1&query=Iglesia+Adventista+del+Septimo+Dia" target="_blank" class="resource-card">
         <span class="resource-icon">📍</span>
         <div class="resource-info">
@@ -390,13 +436,27 @@
     <!-- PESTAÑA 3: AUDIOS -->
     <div id="audios" class="tab-content">
       <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Píldoras y Mensajes en Audio</h3>
-      <div class="audio-item" style="margin-top: 10px;">
-        <h4 id="audioDinamicoTitulo">🎧 Un Minuto de Calma para el Estrés</h4>
-        <audio id="audioDinamicoPlayer" controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Escucha reflexiones y mensajes para el alma:</p>
+      
+      <div id="muroAudiosLista">
+        <div class="audio-item">
+          <h4>🎧 Un Minuto de Calma para el Estrés</h4>
+          <audio controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
+        </div>
       </div>
     </div>
 
-    <!-- PESTAÑA 4: ORACIÓN -->
+    <!-- PESTAÑA 4: EVENTOS -->
+    <div id="eventos" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Eventos y Anuncios</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Actividades recientes de la comunidad:</p>
+
+      <div id="muroEventosLista">
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando eventos...</p>
+      </div>
+    </div>
+
+    <!-- PESTAÑA 5: ORACIÓN -->
     <div id="oracion" class="tab-content">
       <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Muro de Oración • Cancún</h3>
       <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">Comparte tu petición y nuestra comunidad estará orando por ti.</p>
@@ -426,6 +486,9 @@
   </div>
 
   <script>
+    // Configura aquí tu número pastoral principal si deseas cambiarlo
+    const numeroWhatsApp = "5219831255281";
+
     // Inicializar Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDkjrM6LBCdlE0xhIR9zn2XU4iLsIKv9pg",
@@ -471,7 +534,7 @@
         document.getElementById('temaTitulo').innerText = contenidos[key].t;
         document.getElementById('temaVersiculo').innerText = contenidos[key].v;
         const msgWa = encodeURIComponent(`Hola, estuve leyendo sobre "${contenidos[key].t}" y me gustaría hablar con alguien.`);
-        document.getElementById('temaWa').href = `https://wa.me/5219831255281?text=${msgWa}`;
+        document.getElementById('temaWa').href = `https://wa.me/${numeroWhatsApp}?text=${msgWa}`;
         document.getElementById('temaDetalle').style.display = 'block';
 
         if (contenidos[key].bg) {
@@ -499,11 +562,12 @@
 
       if (esPrivado) {
         const textoWA = encodeURIComponent(`🙏 *PETICIÓN CONFIDENCIAL*\n\n👤 *Nombre:* ${nom}\n💬 *Petición:* ${msg}`);
-        window.open(`https://wa.me/5219831255281?text=${textoWA}`, '_blank');
+        window.open(`https://wa.me/${numeroWhatsApp}?text=${textoWA}`, '_blank');
       } else {
         await db.collection("oraciones").add({
           nombre: nom,
           peticion: msg,
+          apoyos: 1,
           fecha: firebase.firestore.FieldValue.serverTimestamp()
         });
         alert('¡Tu petición ha sido compartida!');
@@ -532,6 +596,80 @@
               <span>${escapeHTML(data.nombre)}</span>
             </div>
             <p style="font-size: 0.82rem; color: var(--text-main);">"${escapeHTML(data.peticion)}"</p>
+            <button class="btn-pray-action" onclick="sumarOracionEnNube('${doc.id}', this)">
+              🙏 Unirme en oración (<span class="count">${data.apoyos || 1}</span>)
+            </button>
+          `;
+          contenedor.appendChild(item);
+        });
+      });
+    }
+
+    async function sumarOracionEnNube(idDoc, btn) {
+      if (btn.classList.contains('orado')) return;
+
+      try {
+        btn.classList.add('orado');
+        const countSpan = btn.querySelector('.count');
+        let actual = parseInt(countSpan.innerText) || 0;
+        countSpan.innerText = actual + 1;
+
+        const docRef = db.collection("oraciones").doc(idDoc);
+        await docRef.update({
+          apoyos: firebase.firestore.FieldValue.increment(1)
+        });
+      } catch (error) {
+        console.error("Error al sumar oración: ", error);
+      }
+    }
+
+    // Cargar Eventos/Anuncios desde Firestore
+    function cargarEventosEnTiempoReal() {
+      db.collection("anuncios").onSnapshot((snapshot) => {
+        const contenedor = document.getElementById('muroEventosLista');
+        if (snapshot.empty) {
+          contenedor.innerHTML = `
+            <div class="evento-card">
+              <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80" alt="Evento">
+              <div class="evento-content">
+                <h4 style="color: var(--adventist-blue); font-size: 0.9rem;">Gran Campaña Evangelística</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">Te invitamos a nuestras reuniones semanales de esperanza.</p>
+              </div>
+            </div>`;
+          return;
+        }
+
+        contenedor.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const item = document.createElement('div');
+          item.className = 'evento-card';
+          item.innerHTML = `
+            <img src="${escapeHTML(data.imagen)}" alt="${escapeHTML(data.titulo)}">
+            <div class="evento-content">
+              <h4 style="color: var(--adventist-blue); font-size: 0.9rem;">${escapeHTML(data.titulo)}</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">${escapeHTML(data.desc || '')}</p>
+            </div>
+          `;
+          contenedor.appendChild(item);
+        });
+      });
+    }
+
+    // Cargar Audios desde Firestore
+    function cargarAudiosEnTiempoReal() {
+      db.collection("audios").onSnapshot((snapshot) => {
+        const contenedor = document.getElementById('muroAudiosLista');
+        if (snapshot.empty) return;
+
+        contenedor.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const item = document.createElement('div');
+          item.className = 'audio-item';
+          item.innerHTML = `
+            <h4>🎧 ${escapeHTML(data.titulo)}</h4>
+            <audio controls src="${escapeHTML(data.url)}"></audio>
           `;
           contenedor.appendChild(item);
         });
@@ -544,6 +682,8 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       cargarOracionesEnTiempoReal();
+      cargarEventosEnTiempoReal();
+      cargarAudiosEnTiempoReal();
     });
   </script>
 </body>
