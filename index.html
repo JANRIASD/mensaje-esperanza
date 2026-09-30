@@ -3,472 +3,202 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mensaje de Esperanza - Cancún</title>
+  <title>Paz en su Palabra - Mensaje de Esperanza Cancún</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Firebase Scripts Core & Firestore -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <!-- Firebase JS SDKs Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
   <style>
     :root {
-      --adventist-blue: #002f6c;
-      --adventist-gold: #d4af37;
-      --adventist-light: #f4f6f9;
-      --text-color: #333333;
-      --text-muted: #666666;
-      --card-bg: #ffffff;
-      --border-radius: 12px;
+      --adventist-blue: #0A587F;
+      --adventist-blue-dark: #003A5D;
+      --gold-accent: #C8963E;
+      --glass-overlay: rgba(245, 248, 252, 0.75);
+      --glass-card: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(200, 150, 62, 0.35);
+      --text-main: #0B2545;
+      --text-muted: #4A607A;
+      --bg-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80');
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
     body {
-      background-color: var(--adventist-light);
-      color: var(--text-color);
+      background: linear-gradient(var(--glass-overlay), var(--glass-overlay)), var(--bg-image) center/cover no-repeat fixed;
+      color: var(--text-main);
       display: flex;
       flex-direction: column;
+      align-items: center;
       min-height: 100vh;
+      padding: 15px;
     }
 
-    header {
-      background-color: var(--adventist-blue);
-      color: white;
-      padding: 20px;
+    .container { width: 100%; max-width: 600px; }
+
+    header { text-align: center; padding: 15px 0 10px 0; }
+    header h1 { font-size: 1.6rem; color: var(--adventist-blue); text-transform: uppercase; font-weight: 700; }
+    header p { font-size: 0.85rem; color: var(--adventist-blue-dark); font-weight: 600; }
+
+    .promise-box {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 22px;
       text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 18px;
+      box-shadow: 0 10px 25px rgba(10, 88, 127, 0.12);
+      backdrop-filter: blur(10px);
     }
 
-    header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 5px;
+    .promise-text { font-size: 1.05rem; font-style: italic; color: var(--adventist-blue-dark); margin-bottom: 10px; min-height: 50px; display: flex; align-items: center; justify-content: center; }
+    .promise-ref { font-size: 0.88rem; color: var(--gold-accent); font-weight: 700; text-transform: uppercase; }
+
+    .btn-draw {
+      background: linear-gradient(135deg, #D4AF37, #C8963E);
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      font-weight: 700;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 15px rgba(200, 150, 62, 0.35);
     }
 
-    header p {
-      font-size: 0.9rem;
-      color: var(--adventist-gold);
-      font-weight: 500;
-    }
-
-    /* Navegación por pestañas */
-    nav {
+    .nav-tabs {
       display: flex;
-      justify-content: center;
-      background: white;
-      border-bottom: 2px solid #e0e0e0;
-      overflow-x: auto;
+      justify-content: space-between;
+      gap: 5px;
+      margin-bottom: 15px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 6px;
+      border-radius: 14px;
+      backdrop-filter: blur(8px);
     }
 
     .tab-btn {
-      padding: 12px 20px;
-      border: none;
+      flex: 1;
       background: none;
-      font-size: 0.95rem;
-      font-weight: 600;
+      border: none;
       color: var(--text-muted);
+      padding: 10px 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      white-space: nowrap;
-    }
-
-    .tab-btn:hover {
-      color: var(--adventist-blue);
+      text-align: center;
     }
 
     .tab-btn.active {
-      color: var(--adventist-blue);
-      border-bottom: 3px solid var(--adventist-blue);
-    }
-
-    /* Contenedor Principal */
-    main {
-      flex: 1;
-      max-width: 900px;
-      width: 100%;
-      margin: 20px auto;
-      padding: 0 15px;
+      background: var(--adventist-blue);
+      color: #ffffff;
     }
 
     .tab-content {
       display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* Tarjetas y Contenedores */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--border-radius);
-      padding: 20px;
+      background: var(--glass-card);
+      padding: 22px;
+      border-radius: 18px;
       margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
     }
 
-    /* Sección ¿Cómo estás hoy? */
-    .mood-container {
-      text-align: center;
-    }
+    .tab-content.active { display: block; }
 
-    .mood-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin: 15px 0;
-    }
-
-    .btn-mood {
-      padding: 10px 18px;
-      border: 1px solid var(--adventist-blue);
-      border-radius: 20px;
-      background: white;
-      color: var(--adventist-blue);
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .btn-mood:hover, .btn-mood.active {
-      background: var(--adventist-blue);
-      color: white;
-    }
-
-    .promesa-box {
-      background: #eef4fc;
-      border-left: 4px solid var(--adventist-blue);
-      padding: 15px;
-      margin-top: 15px;
-      border-radius: 4px;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    /* Carrusel de Anuncios */
-    .carousel-track {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .carousel-slide {
-      position: relative;
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      display: block;
-      cursor: pointer;
-    }
-
-    .carousel-caption {
-      background: rgba(0, 47, 108, 0.85);
-      color: white;
-      padding: 12px 15px;
-    }
-
-    .carousel-caption h3 {
-      font-size: 1.1rem;
-      margin-bottom: 4px;
-    }
-
-    .carousel-caption p {
-      font-size: 0.85rem;
-    }
-
-    .carousel-btn {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 6px 12px;
-      background: var(--adventist-gold);
-      color: #000;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.8rem;
-      border-radius: 4px;
-    }
-
-    /* Formulario de Oración */
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 0.95rem;
-    }
-
-    .btn-submit {
-      width: 100%;
+    .emotion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .emotion-card {
+      background: rgba(240, 246, 252, 0.75);
+      border: 1px solid rgba(10, 88, 127, 0.15);
       padding: 12px;
-      background: var(--adventist-blue);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .btn-submit:hover {
-      background: #001f48;
-    }
-
-    /* Muro de Oraciones */
-    .muro-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 15px;
-    }
-
-    .card-oracion {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 15px;
-    }
-
-    .card-oracion h4 {
-      color: var(--adventist-blue);
-      font-size: 0.95rem;
-      margin-bottom: 5px;
-    }
-
-    .card-oracion p {
-      font-size: 0.9rem;
-      color: #4a5568;
-      margin-bottom: 10px;
-    }
-
-    .btn-unirme {
-      background: #edf2f7;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 15px;
-      font-size: 0.8rem;
-      color: var(--adventist-blue);
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    /* Estilos Pestaña Recursos (Alineación Mejorada) */
-    .recursos-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .recurso-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-    }
-
-    .recurso-info {
-      flex: 1;
-      padding-right: 15px;
-    }
-
-    .recurso-info h4 {
-      font-size: 1rem;
-      color: var(--adventist-blue);
-      margin-bottom: 4px;
-    }
-
-    .recurso-info p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .btn-recurso {
-      padding: 8px 16px;
-      background: var(--adventist-blue);
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    /* Modal de Imagen */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal img {
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 8px;
-    }
-
-    footer {
+      border-radius: 12px;
       text-align: center;
-      padding: 15px;
-      background: #e2e8f0;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: auto;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .prayer-card {
+      background: rgba(240, 246, 252, 0.8);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(10, 88, 127, 0.12);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 11px;
+      margin-bottom: 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(10, 88, 127, 0.2);
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Mensaje de Esperanza</h1>
-    <p>Cancún, Quintana Roo</p>
-  </header>
+  <div class="container">
+    <header>
+      <h1>Paz en su Palabra</h1>
+      <p>Mensaje de Esperanza • Cancún</p>
+    </header>
 
-  <nav>
-    <button class="tab-btn active" onclick="openTab(event, 'inicio')">Inicio</button>
-    <button class="tab-btn" onclick="openTab(event, 'oracion')">Oración</button>
-    <button class="tab-btn" onclick="openTab(event, 'audios')">Audios</button>
-    <button class="tab-btn" onclick="openTab(event, 'recursos')">Recursos</button>
-  </nav>
-
-  <main>
-    <!-- Pestaña INICIO -->
-    <div id="inicio" class="tab-content active">
-      <div class="card mood-container">
-        <h2>¿Cómo te sientes hoy?</h2>
-        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:5px;">Haz clic para recibir una promesa bíblica para tu día:</p>
-        <div class="mood-buttons">
-          <button class="btn-mood active" onclick="cargarTema('estres', this)">Con Estrés / Cansado</button>
-          <button class="btn-mood" onclick="cargarTema('paz', this)">Necesito Paz</button>
-          <button class="btn-mood" onclick="cargarTema('finanzas', this)">Preocupado por Finanzas</button>
-          <button class="btn-mood" onclick="cargarTema('familia', this)">Por mi Familia</button>
-        </div>
-        <div class="promesa-box" id="promesaTexto">
-          Cargando palabra de esperanza...
-        </div>
+    <div class="promise-box">
+      <div id="promiseCard">
+        <p class="promise-text" id="promiseText">"Cierra tus ojos, respira profundo y toca el botón para recibir tu promesa de hoy."</p>
+        <p class="promise-ref" id="promiseRef">-- Clic abajo --</p>
       </div>
+      <button class="btn-draw" onclick="obtenerPromesa()">✨ RECIBIR MI PROMESA DIARIA</button>
+    </div>
 
-      <div class="card">
-        <h3>Anuncios y Eventos</h3>
-        <div class="carousel-track" id="carouselTrack" style="margin-top: 15px;">
-          <p style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Cargando novedades...</p>
-        </div>
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="openTab(event, 'siente')">🧘 ¿Cómo estás?</button>
+      <button class="tab-btn" onclick="openTab(event, 'recursos')">📚 Recursos</button>
+      <button class="tab-btn" onclick="openTab(event, 'audios')">🎧 Audios</button>
+      <button class="tab-btn" onclick="openTab(event, 'oracion')">🙏 Oración</button>
+    </div>
+
+    <!-- PESTAÑA EMOCIONES -->
+    <div id="siente" class="tab-content active">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem;">¿Qué necesita tu corazón hoy?</h3>
+      <div class="emotion-grid">
+        <div class="emotion-card" onclick="cargarTema('paz')">🕊️ Paz</div>
+        <div class="emotion-card" onclick="cargarTema('estres')">🧘 Estrés</div>
+        <div class="emotion-card" onclick="cargarTema('miedo')">🛡️ Miedo</div>
+        <div class="emotion-card" onclick="cargarTema('familia')">🏠 Familia</div>
+      </div>
+      <div id="temaDetalle" style="display:none; margin-top: 15px; padding: 14px; background: rgba(200, 150, 62, 0.08); border-radius: 12px;">
+        <h4 id="temaTitulo" style="color: var(--adventist-blue);"></h4>
+        <p id="temaVersiculo" style="font-size: 0.85rem; font-style: italic;"></p>
       </div>
     </div>
 
-    <!-- Pestaña ORACIÓN -->
-    <div id="oracion" class="tab-content">
-      <div class="card">
-        <h3>Petición de Oración</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
-          Comparte tu carga. Puedes hacerla pública para que la iglesia ore por ti o enviarla de manera confidencial.
-        </p>
-        <form id="formOracion" onsubmit="enviarPeticion(event)">
-          <div class="form-group">
-            <label for="oracionNombre">Tu Nombre:</label>
-            <input type="text" id="oracionNombre" placeholder="Ej. María López" required>
-          </div>
-          <div class="form-group">
-            <label for="oracionTexto">Petición:</label>
-            <textarea id="oracionTexto" rows="3" placeholder="Escribe aquí tu motivo de oración..." required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="oracionTipo">Privacidad:</label>
-            <select id="oracionTipo">
-              <option value="publica">Publicar en el Muro de Oración</option>
-              <option value="privada">Enviar solo al Pastor (Confidencial por WhatsApp)</option>
-            </select>
-          </div>
-          <button type="submit" class="btn-submit">Enviar Petición</button>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3>Muro de Oración</h3>
-        <div class="muro-grid" id="muroOraciones">
-          <p style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Cargando peticiones...</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pestaña AUDIOS -->
-    <div id="audios" class="tab-content">
-      <div class="card">
-        <h3>Biblioteca de Audios y Temas</h3>
-        <div id="contenedorAudiosNube" style="margin-top:15px;">
-          <p style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Cargando audios...</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pestaña RECURSOS -->
+    <!-- PESTAÑA RECURSOS -->
     <div id="recursos" class="tab-content">
-      <div class="card">
-        <h3>Recursos y Enlaces Utiles</h3>
-        <div class="recursos-list" style="margin-top: 15px;">
-          <div class="recurso-item">
-            <div class="recurso-info">
-              <h4>Escuela Sabática</h4>
-              <p>Lecciones y estudios bíblicos semanales.</p>
-            </div>
-            <a href="https://escuelasabatica.adventistas.org/es" target="_blank" class="btn-recurso">Visitar</a>
-          </div>
-          <div class="recurso-item">
-            <div class="recurso-info">
-              <h4>Hope Channel en Español</h4>
-              <p>Televisión e inspiración cristiana en vivo.</p>
-            </div>
-            <a href="https://www.hopetv.org" target="_blank" class="btn-recurso">Ver En Vivo</a>
-          </div>
-          <div class="recurso-item">
-            <div class="recurso-info">
-              <h4>Biblia Online</h4>
-              <p>Lectura y consulta de las Sagradas Escrituras.</p>
-            </div>
-            <a href="https://www.biblegateway.com" target="_blank" class="btn-recurso">Consultar</a>
-          </div>
-        </div>
-      </div>
+      <h3 style="color: var(--adventist-blue); margin-bottom: 12px;">Recursos para fortalecer tu fe</h3>
+      <p style="font-size:0.85rem;"><a href="https://www.bible.com/es" target="_blank">📖 Biblia Gratis Online</a></p>
     </div>
-  </main>
 
-  <!-- Modal Ampliar Imagen -->
-  <div id="imageModal" class="modal" onclick="cerrarModal()">
-    <img id="imgAmpliada" src="" alt="Imagen Ampliada">
+    <!-- PESTAÑA AUDIOS -->
+    <div id="audios" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px;">Píldoras y Mensajes en Audio</h3>
+      <audio controls src="paz_y_provision_en_tus_finanzas.mp3" style="width: 100%; margin-top: 10px;"></audio>
+    </div>
+
+    <!-- PESTAÑA ORACIÓN -->
+    <div id="oracion" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px;">Muro de Oración • Cancún</h3>
+      <input type="text" id="oracionNombre" placeholder="Tu Nombre (opcional)">
+      <textarea id="oracionMensaje" placeholder="Escribe tu petición aquí..." rows="3"></textarea>
+      <button class="btn-draw" style="width:100%; background:var(--adventist-blue);" onclick="enviarOracion()">🙏 ENVIAR PETICIÓN</button>
+      <div id="muroLista" style="margin-top: 15px;"></div>
+    </div>
   </div>
 
-  <footer>
-    <p>&copy; Mensaje de Esperanza - Cancún | Adventistas del Séptimo Día</p>
-  </footer>
-
   <script>
-    // Configuración Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDkjrM6LBCdlE0xhIR9zn2XU4iLsIKv9pg",
       authDomain: "mensaje-esperanza.firebaseapp.com",
@@ -481,214 +211,63 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Cambiar Pestañas
     function openTab(evt, tabName) {
       const contents = document.getElementsByClassName("tab-content");
-      for (let i = 0; i < contents.length; i++) {
-        contents[i].classList.remove("active");
-      }
-      const btns = document.getElementsByClassName("tab-btn");
-      for (let i = 0; i < btns.length; i++) {
-        btns[i].classList.remove("active");
-      }
+      for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+      const buttons = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
       document.getElementById(tabName).classList.add("active");
-      if (evt) evt.currentTarget.classList.add("active");
+      evt.currentTarget.classList.add("active");
     }
 
-    // Escapar texto HTML
-    function escapeHTML(str) {
-      if (!str) return '';
-      return str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-      );
-    }
-
-    // Promesas Bíblicas
-    const promesas = {
-      estres: [
-        { texto: "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego...", ref: "Filipenses 4:6-7" },
-        { texto: "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.", ref: "Mateo 11:28" }
-      ],
-      paz: [
-        { texto: "La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da...", ref: "Juan 14:27" },
-        { texto: "En paz me acostaré, y asimismo dormiré; porque solo tú, Jehová, me haces vivir confiado.", ref: "Salmos 4:8" }
-      ],
-      finanzas: [
-        { texto: "Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas en gloria...", ref: "Filipenses 4:19" },
-        { texto: "Jehová es mi pastor; nada me faltará.", ref: "Salmos 23:1" }
-      ],
-      familia: [
-        { texto: "Creed en el Señor Jesucristo, y serás salvo, tú y tu casa.", ref: "Hechos 16:31" },
-        { texto: "Y sobre todas estas cosas vestíos de amor, que es el vínculo perfecto.", ref: "Colosenses 3:14" }
-      ]
+    const temas = {
+      paz: { t: "Paz de Dios", v: "Juan 14:27 - La paz os dejo, mi paz os doy." },
+      estres: { t: "Descanso", v: "Mateo 11:28 - Venid a mí los trabajados y cargados." },
+      miedo: { t: "Protección", v: "Isaías 41:10 - No temas, porque yo estoy contigo." },
+      familia: { t: "Bendición", v: "Josué 24:15 - Yo y mi casa serviremos a Jehová." }
     };
 
-    let temaActual = 'estres';
-
-    function cargarTema(tema, btn) {
-      temaActual = tema;
-      const btns = document.querySelectorAll('.btn-mood');
-      btns.forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      obtenerPromesa();
+    function cargarTema(key) {
+      if (temas[key]) {
+        document.getElementById('temaTitulo').innerText = temas[key].t;
+        document.getElementById('temaVersiculo').innerText = temas[key].v;
+        document.getElementById('temaDetalle').style.display = 'block';
+      }
     }
 
     function obtenerPromesa() {
-      const lista = promesas[temaActual] || promesas['estres'];
-      const aleatoria = lista[Math.floor(Math.random() * lista.length)];
-      const display = document.getElementById("promesaTexto");
-      if (display) {
-        display.innerHTML = `<strong>"${escapeHTML(aleatoria.texto)}"</strong><br><em style="font-size:0.85rem; color:var(--adventist-blue); font-weight:600;">${escapeHTML(aleatoria.ref)}</em>`;
-      }
+      const keys = Object.keys(temas);
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+      document.getElementById('promiseText').innerText = temas[randomKey].v;
+      document.getElementById('promiseRef').innerText = temas[randomKey].t;
     }
 
-    // Anuncios Firestore
-    function cargarAnunciosDesdeFirestore() {
-      const track = document.getElementById("carouselTrack");
-      if (!track) return;
+    async function enviarOracion() {
+      const nom = document.getElementById('oracionNombre').value || 'Anónimo';
+      const msg = document.getElementById('oracionMensaje').value;
+      if (!msg) return alert('Escribe tu mensaje');
 
-      db.collection("anuncios").onSnapshot(snapshot => {
-        if (snapshot.empty) {
-          track.innerHTML = `
-            <div class="carousel-slide">
-              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Bienvenido">
-              <div class="carousel-caption">
-                <h3>Bienvenidos a Mensaje de Esperanza</h3>
-                <p>Cancún, Quintana Roo</p>
-              </div>
-            </div>`;
-          return;
-        }
+      await db.collection("oraciones").add({
+        nombre: nom,
+        peticion: msg,
+        fecha: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      alert('¡Petición enviada!');
+      document.getElementById('oracionMensaje').value = '';
+    }
 
-        track.innerHTML = "";
+    function cargarOraciones() {
+      db.collection("oraciones").orderBy("fecha", "desc").limit(10).onSnapshot(snapshot => {
+        const list = document.getElementById('muroLista');
+        list.innerHTML = '';
         snapshot.forEach(doc => {
           const d = doc.data();
-          const slide = document.createElement("div");
-          slide.className = "carousel-slide";
-          slide.innerHTML = `
-            <img src="${escapeHTML(d.imagen)}" alt="${escapeHTML(d.titulo)}" onclick="ampliarImagen(this.src)">
-            <div class="carousel-caption">
-              <h3>${escapeHTML(d.titulo)}</h3>
-              <p>${escapeHTML(d.desc || '')}</p>
-              ${d.waMsg ? `<a href="https://wa.me/529983802377?text=${encodeURIComponent(d.waMsg)}" class="carousel-btn" target="_blank">Más información</a>` : ''}
-            </div>
-          `;
-          track.appendChild(slide);
+          list.innerHTML += `<div class="prayer-card"><strong>${d.nombre}:</strong> "${d.peticion}"</div>`;
         });
-      }, error => console.error("Error anuncios:", error));
+      });
     }
 
-    // Oraciones Firestore
-    function cargarOracionesEnTiempoReal() {
-      const muro = document.getElementById('muroOraciones');
-      if (!muro) return;
-
-      db.collection("oraciones").orderBy("fecha", "desc").limit(20).onSnapshot(snapshot => {
-        muro.innerHTML = '';
-        if (snapshot.empty) {
-          muro.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">Sé el primero en compartir una petición pública.</p>';
-          return;
-        }
-
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const card = document.createElement('div');
-          card.className = 'card-oracion';
-          card.innerHTML = `
-            <h4>${escapeHTML(data.nombre)}</h4>
-            <p>"${escapeHTML(data.peticion)}"</p>
-            <button class="btn-unirme" onclick="unirmeEnOracion('${doc.id}')">
-              🙏 Unirme en oración (<span id="count-${doc.id}">${data.unidos || 0}</span>)
-            </button>
-          `;
-          muro.appendChild(card);
-        });
-      }, error => console.error("Error oraciones:", error));
-    }
-
-    async function unirmeEnOracion(docId) {
-      try {
-        const ref = db.collection("oraciones").doc(docId);
-        await ref.update({ unidos: firebase.firestore.FieldValue.increment(1) });
-      } catch (e) {
-        console.error("Error al unirse:", e);
-      }
-    }
-
-    async function enviarPeticion(event) {
-      event.preventDefault();
-      const nombre = document.getElementById('oracionNombre').value.trim();
-      const peticion = document.getElementById('oracionTexto').value.trim();
-      const tipo = document.getElementById('oracionTipo').value;
-
-      if (!nombre || !peticion) return alert("Por favor completa tu nombre y la petición.");
-
-      if (tipo === 'privada') {
-        const mensajeWA = `Hola Pastor, comparto una petición confidencial:%0A%0A*Nombre:* ${encodeURIComponent(nombre)}%0A*Petición:* ${encodeURIComponent(peticion)}`;
-        window.open(`https://wa.me/529983802377?text=${mensajeWA}`, '_blank');
-        document.getElementById('formOracion').reset();
-      } else {
-        try {
-          await db.collection("oraciones").add({
-            nombre: nombre,
-            peticion: peticion,
-            unidos: 0,
-            fecha: firebase.firestore.FieldValue.serverTimestamp()
-          });
-          alert("¡Tu petición ha sido enviada con éxito y publicada en el muro!");
-          document.getElementById('formOracion').reset();
-        } catch (error) {
-          alert("Error al enviar la petición: " + error.message);
-        }
-      }
-    }
-
-    // Audios Firestore
-    function cargarAudiosDesdeFirestore() {
-      const contenedor = document.getElementById('contenedorAudiosNube');
-      if (!contenedor) return;
-
-      db.collection("audios").onSnapshot(snapshot => {
-        if (snapshot.empty) {
-          contenedor.innerHTML = '<p style="font-size: 0.85rem; color: var(--text-muted); text-align: center;">No hay audios disponibles aún.</p>';
-          return;
-        }
-
-        contenedor.innerHTML = '';
-        snapshot.forEach(doc => {
-          const d = doc.data();
-          const item = document.createElement('div');
-          item.style.marginBottom = '15px';
-          item.style.padding = '10px';
-          item.style.background = '#f8fafc';
-          item.style.borderRadius = '8px';
-          item.style.border = '1px solid #e2e8f0';
-          item.innerHTML = `
-            <span style="font-size: 0.7rem; background: var(--adventist-blue); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 600;">${escapeHTML(d.categoria || 'GENERAL').toUpperCase()}</span>
-            <h4 style="margin-top: 5px; font-size: 0.95rem; color: var(--adventist-blue);">${escapeHTML(d.titulo)}</h4>
-            <audio controls src="${escapeHTML(d.url)}" style="width: 100%; margin-top: 8px;"></audio>
-          `;
-          contenedor.appendChild(item);
-        });
-      }, error => console.error("Error audios:", error));
-    }
-
-    function ampliarImagen(src) {
-      document.getElementById("imgAmpliada").src = src;
-      document.getElementById("imageModal").style.display = "flex";
-    }
-
-    function cerrarModal() {
-      document.getElementById("imageModal").style.display = "none";
-    }
-
-    // Inicialización
-    document.addEventListener("DOMContentLoaded", () => {
-      cargarAnunciosDesdeFirestore();
-      cargarOracionesEnTiempoReal();
-      cargarAudiosDesdeFirestore();
-      obtenerPromesa();
-    });
+    document.addEventListener("DOMContentLoaded", cargarOraciones);
   </script>
 </body>
 </html>
