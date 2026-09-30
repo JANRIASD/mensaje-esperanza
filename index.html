@@ -653,378 +653,159 @@
     <img id="modalImg" src="" alt="Evento Ampliado">
     <p style="color: white; font-size: 0.8rem; margin-top: 10px;">Toca en cualquier parte para cerrar</p>
   </div>
-
-  <script>
-    // -------------------------------------------------------------
-    // 1. CONFIGURACIÓN E INICIALIZACIÓN DE FIREBASE
-    // -------------------------------------------------------------
+<script>
+    // Configuración Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDkjrM6LBCdlE0xhIR9zn2XU4iLsIKv9pg",
       authDomain: "mensaje-esperanza.firebaseapp.com",
       projectId: "mensaje-esperanza",
       storageBucket: "mensaje-esperanza.firebasestorage.app",
       messagingSenderId: "702356455765",
-      appId: "1:702356455765:web:733b573f6d35aea2a4efdc",
-      measurementId: "G-HF7VGFXGDZ"
+      appId: "1:702356455765:web:733b573f6d35aea2a4efdc"
     };
 
-    // Inicializar Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // -------------------------------------------------------------
-    // 2. CONTENIDOS Y LÓGICA LOCAL
-    // -------------------------------------------------------------
-    const contenidos = {
-      paz: {
-        t: "Paz que sobrepasa todo entendimiento",
-        v: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da. No se turbe vuestro corazón, ni tenga miedo." - Juan 14:27',
-        bg: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80'
-      },
-      estres: { 
-        t: "Paz para el Estrés", 
-        v: '"Venid a mí todos los que estás trabajados y cargados, y yo os haré descansar." - Mateo 11:28',
-        bg: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=80'
-      },
-      miedo: { 
-        t: "Protección en el Miedo", 
-        v: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios." - Isaías 41:10',
-        bg: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1000&q=80'
-      },
-      culpa: {
-        t: "Perdón y Libertad de la Culpa",
-        v: '"Si confesamos nuestros pecados, él es fiel y justo para perdonar nuestros pecados, y limpiarnos de toda maldad." - 1 Juan 1:9',
-        bg: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1000&q=80'
-      },
-      duelo: { 
-        t: "Consuelo en la Pérdida", 
-        v: '"Cercano está Jehová a los quebrantados de corazón." - Salmo 34:18',
-        bg: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=1000&q=80'
-      },
-      soledad: { 
-        t: "Compañía en la Soledad", 
-        v: '"He aquí yo estoy con vosotros todos los días, hasta el fin del mundo." - Mateo 28:20',
-        bg: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1000&q=80'
-      },
-      finanzas: { 
-        t: "Provisión y Confianza", 
-        v: '"Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas." - Filipenses 4:19',
-        bg: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80'
-      },
-      familia: { 
-        t: "Bendición para tu Hogar", 
-        v: '"Pero yo y mi casa serviremos a Jehová." - Josué 24:15',
-        bg: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1000&q=80'
-      },
-      cansancio: { 
-        t: "Fuerza para el Cansado", 
-        v: '"Él da esfuerzo al cansado, y multiplica las fuerzas al que no tiene ningunas." - Isaías 40:29',
-        bg: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80'
-      },
-      proposito: { 
-        t: "Un Propósito para tu Vida", 
-        v: '"Porque yo sé los pensamientos que tengo acerca de vosotros... pensamientos de paz." - Jeremías 29:11',
-        bg: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80'
-      }
-    };
-
-    const audiosPorTema = {
-      paz: { titulo: "🕊️ Audio: Recibiendo la Paz de Dios", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      estres: { titulo: "🎧 Audio: Paz para el Estrés y la Carga", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      miedo: { titulo: "🛡️ Audio: Venciendo el Miedo con la Fe", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      culpa: { titulo: "❤️‍D Audio: El Perdón que Restaura", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      duelo: { titulo: "🩹 Audio: Consuelo en Momentos de Pérdida", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      soledad: { titulo: "🫂 Audio: Dios Nunca Te Deja Solo", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      finanzas: { titulo: "💸 Audio: Paz y Provisión en tus Finanzas", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      familia: { titulo: "🏠 Audio: Sanidad y Unión Familiar", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      cansancio: { titulo: "🏃 Audio: Renovando Tus Fuerzas", archivo: "paz_y_provision_en_tus_finanzas.mp3" },
-      proposito: { titulo: "🎯 Audio: Descubriendo tu Propósito", archivo: "paz_y_provision_en_tus_finanzas.mp3" }
-    };
-
-    const promesas = Object.values(contenidos).map(c => ({ t: c.v.split(' - ')[0], r: c.v.split(' - ')[1] }));
-
-    function obtenerPromesa() {
-      const card = document.getElementById('promiseCard');
-      card.style.opacity = 0;
-      setTimeout(() => {
-        const azar = Math.floor(Math.random() * promesas.length);
-        document.getElementById('promiseText').innerText = promesas[azar].t;
-        document.getElementById('promiseRef').innerText = promesas[azar].r;
-        card.style.opacity = 1;
-      }, 300);
-    }
-
-    function cargarTema(key) {
-      if(contenidos[key]) {
-        document.getElementById('temaTitulo').innerText = contenidos[key].t;
-        document.getElementById('temaVersiculo').innerText = contenidos[key].v;
-        const msgWa = encodeURIComponent(`Hola, escaneé el código sobre "${contenidos[key].t}" y me gustaría platicar o recibir oración.`);
-        document.getElementById('temaWa').href = `https://wa.me/529986428817?text=${msgWa}`;
-        document.getElementById('temaDetalle').style.display = 'block';
-
-        if (contenidos[key].bg) {
-          document.body.style.backgroundImage = `linear-gradient(var(--glass-overlay), var(--glass-overlay)), url('${contenidos[key].bg}')`;
-        }
-
-        if (audiosPorTema[key]) {
-          const player = document.getElementById('audioDinamicoPlayer');
-          const titulo = document.getElementById('audioDinamicoTitulo');
-          titulo.innerText = audiosPorTema[key].titulo;
-          player.src = audiosPorTema[key].archivo;
-          player.load();
-        }
-      }
-    }
-
+    // 1. Cambio de Pestañas
     function openTab(evt, tabName) {
-      const contents = document.getElementsByClassName("tab-content");
-      for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
-      const buttons = document.getElementsByClassName("tab-btn");
-      for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
+      const tabContents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove("active");
+      }
+      const tabBtns = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < tabBtns.length; i++) {
+        tabBtns[i].classList.remove("active");
+      }
       document.getElementById(tabName).classList.add("active");
       evt.currentTarget.classList.add("active");
     }
 
-    // -------------------------------------------------------------
-    // 3. INTEGRACIÓN CON CLOUD FIRESTORE (ORACIONES)
-    // -------------------------------------------------------------
+    // 2. Escape de caracteres de seguridad
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
 
-    // A) Guardar Petición de Oración
-    async function enviarPeticionOracion() {
-      const nom = document.getElementById('oracionNombre').value.trim() || 'Anónimo';
-      const msg = document.getElementById('oracionMensaje').value.trim();
-      const esPrivado = document.getElementById('oracionPrivada').checked;
-      const btn = document.getElementById('btnEnviarOracion');
+    // 3. Cargar Anuncios desde Firestore
+    function cargarAnunciosDesdeFirestore() {
+      const track = document.getElementById("carouselTrack");
+      if (!track) return;
 
-      if(!msg) {
-        alert('Por favor escribe tu motivo de oración.');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerText = "Guardando...";
-
-      try {
-        if (esPrivado) {
-          // Es privada: enviar por WhatsApp al pastor sin guardar públicamente
-          const textoWhatsApp = encodeURIComponent(`🙏 *NUEVA PETICIÓN CONFIDENCIAL*\n\n👤 *Nombre:* ${nom}\n💬 *Petición:* ${msg}`);
-          window.open(`https://wa.me/529986428817?text=${textoWhatsApp}`, '_blank');
-          alert('Tu petición confidencial ha sido preparada para enviar al equipo pastoral.');
-        } else {
-          // Es pública: guardar en Firestore
-          await db.collection("oraciones").add({
-            nombre: nom,
-            peticion: msg,
-            apoyos: 1,
-            fecha: firebase.firestore.FieldValue.serverTimestamp()
-          });
-          alert('¡Tu petición ha sido publicada en el muro! La comunidad estará orando por ti.');
+      db.collection("anuncios").onSnapshot(snapshot => {
+        if (snapshot.empty) {
+          track.innerHTML = `
+            <div class="carousel-slide">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Bienvenido">
+              <div class="carousel-caption">
+                <h3>Bienvenidos a Mensaje de Esperanza</h3>
+                <p>Cancún, Quintana Roo</p>
+              </div>
+            </div>`;
+          return;
         }
 
-        // Limpiar Formulario
-        document.getElementById('oracionMensaje').value = '';
-        document.getElementById('oracionNombre').value = '';
-        document.getElementById('oracionPrivada').checked = false;
+        track.innerHTML = "";
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          const slide = document.createElement("div");
+          slide.className = "carousel-slide";
+          slide.innerHTML = `
+            <img src="${escapeHTML(d.imagen)}" alt="${escapeHTML(d.titulo)}" onclick="ampliarImagen(this.src)">
+            <div class="carousel-caption">
+              <h3>${escapeHTML(d.titulo)}</h3>
+              <p>${escapeHTML(d.desc || '')}</p>
+              ${d.waMsg ? `<a href="https://wa.me/529983802377?text=${encodeURIComponent(d.waMsg)}" class="carousel-btn" target="_blank">Más información</a>` : ''}
+            </div>
+          `;
+          track.appendChild(slide);
+        });
+      });
+    }
 
-      } catch (error) {
-        console.error("Error al guardar la petición: ", error);
-        alert("Ocurrió un error al enviar tu petición. Inténtalo de nuevo.");
+    // 4. Cargar Oraciones
+    function cargarOracionesEnTiempoReal() {
+      const muro = document.getElementById('muroOraciones');
+      if (!muro) return;
+
+      db.collection("oraciones").orderBy("fecha", "desc").limit(20).onSnapshot(snapshot => {
+        muro.innerHTML = '';
+        if (snapshot.empty) {
+          muro.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">Sé el primero en compartir una petición pública.</p>';
+          return;
+        }
+
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const card = document.createElement('div');
+          card.className = 'card-oracion';
+          card.innerHTML = `
+            <h4>${escapeHTML(data.nombre)}</h4>
+            <p>"${escapeHTML(data.peticion)}"</p>
+            <div class="oracion-footer">
+              <button class="btn-unirme" onclick="unirmeEnOracion('${doc.id}', ${data.unidos || 0})">
+                🙏 Unirme en oración (<span id="count-${doc.id}">${data.unidos || 0}</span>)
+              </button>
+            </div>
+          `;
+          muro.appendChild(card);
+        });
+      });
+    }
+
+    // 5. Unirme en Oración
+    async function unirmeEnOracion(docId, contadorActual) {
+      const btn = event.currentTarget;
+      btn.disabled = true;
+      try {
+        const ref = db.collection("oraciones").doc(docId);
+        await ref.update({ unidos: firebase.firestore.FieldValue.increment(1) });
+      } catch (e) {
+        console.error("Error al actualizar contador: ", e);
       } finally {
         btn.disabled = false;
-        btn.innerText = "🙏 ENVIAR PETICIÓN DE ORACIÓN";
       }
     }
 
-    // B) Escuchar y Mostrar Peticiones en Tiempo Real
-    function cargarOracionesEnTiempoReal() {
-      const contenedor = document.getElementById('muroOracionesLista');
+    // 6. Enviar Petición
+    async function enviarPeticion(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('oracionNombre').value.trim();
+      const peticion = document.getElementById('oracionTexto').value.trim();
+      const tipo = document.getElementById('oracionTipo').value;
 
-      db.collection("oraciones")
-        .orderBy("fecha", "desc")
-        .limit(20)
-        .onSnapshot((snapshot) => {
-          if (snapshot.empty) {
-            contenedor.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Sé el primero en compartir una petición de oración.</p>';
-            return;
-          }
+      if (!nombre || !peticion) return alert("Por favor completa los campos.");
 
-          contenedor.innerHTML = '';
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            const id = doc.id;
-            
-            // Formatear Tiempo relativo simple
-            let fechaTexto = "Hace un momento";
-            if(data.fecha) {
-              const d = data.fecha.toDate();
-              fechaTexto = d.toLocaleDateString() + " " + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            }
-
-            const item = document.createElement('div');
-            item.className = 'prayer-card';
-            item.innerHTML = `
-              <div class="prayer-header">
-                <span>${escapeHTML(data.nombre)}</span>
-                <span style="color: var(--text-muted); font-weight: normal;">${fechaTexto}</span>
-              </div>
-              <p style="font-size: 0.82rem; color: var(--text-main); margin-bottom: 8px;">"${escapeHTML(data.peticion)}"</p>
-              <button class="btn-pray-action" onclick="sumarOracionEnNube('${id}', this)">
-                🙏 Unirme en oración (<span class="count">${data.apoyos || 1}</span>)
-              </button>
-            `;
-            contenedor.appendChild(item);
+      if (tipo === 'privada') {
+        const mensajeWA = `Hola Pastor, comparto una petición confidencial:%0A%0A*Nombre:* ${encodeURIComponent(nombre)}%0A*Petición:* ${encodeURIComponent(peticion)}`;
+        window.open(`https://wa.me/529983802377?text=${mensajeWA}`, '_blank');
+        document.getElementById('formOracion').reset();
+      } else {
+        try {
+          await db.collection("oraciones").add({
+            nombre: nombre,
+            peticion: peticion,
+            unidos: 0,
+            fecha: firebase.firestore.FieldValue.serverTimestamp()
           });
-        }, (error) => {
-          console.error("Error leyendo oraciones: ", error);
-          contenedor.innerHTML = '<p style="font-size: 0.8rem; color: red; text-align: center;">Error al cargar las oraciones.</p>';
-        });
-    }
-
-    // C) Incrementar Contador de Apoyos en Firestore
-    async function sumarOracionEnNube(idDoc, btn) {
-      if (btn.classList.contains('orado')) return;
-
-      try {
-        btn.classList.add('orado');
-        const countSpan = btn.querySelector('.count');
-        let actual = parseInt(countSpan.innerText) || 0;
-        countSpan.innerText = actual + 1;
-        btn.style.background = 'var(--adventist-blue)';
-        btn.style.color = '#ffffff';
-
-        const docRef = db.collection("oraciones").doc(idDoc);
-        await docRef.update({
-          apoyos: firebase.firestore.FieldValue.increment(1)
-        });
-      } catch (error) {
-        console.error("Error al actualizar contador: ", error);
-      }
-    }
-
-    // Auxiliar para evitar inyección de código
-    function escapeHTML(str) {
-      return str ? str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-      ) : '';
-    }
-
-    // -------------------------------------------------------------
-    // 4. CARRUSEL Y EVENTOS
-    // -------------------------------------------------------------
-    let anuncios = [
-      {
-        titulo: "Gran Campaña: El Amor de Jesús",
-        desc: "Iglesia Región 516 • del 04 al 11 de Octubre • 7:00 PM",
-        imagen: "anuncios/campana_salud_oct_2026.png",
-        waMsg: "Hola, me gustaría más información sobre la Campaña El Amor de Jesús."
-      },
-      {
-        titulo: "Culto de Jóvenes JA",
-        desc: "Todos los Sábados a las 5:00 PM en el templo",
-        imagen: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80",
-        waMsg: "Hola, quisiera saber los horarios y actividades de la Sociedad de Jóvenes."
-      },
-      {
-        titulo: "Club de Conquistadores y Aventureros",
-        desc: "Reuniones de instrucción y campamentos • Domingos 9:00 AM",
-        imagen: "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80",
-        waMsg: "Hola, deseo inscribir a mis hijos al Club de Conquistadores/Aventureros."
-      }
-    ];
-
-    let indiceAnuncio = 0;
-
-    async function cargarAnunciosDesdeFirestore() {
-      try {
-        const snapshot = await db.collection("anuncios").get();
-        if (!snapshot.empty) {
-          let listaNube = [];
-          snapshot.forEach(doc => listaNube.push(doc.data()));
-          anuncios = listaNube;
+          alert("¡Tu petición ha sido publicada en el muro!");
+          document.getElementById('formOracion').reset();
+        } catch (error) {
+          alert("Error al enviar: " + error.message);
         }
-      } catch (e) {
-        console.log("Cargando anuncios locales por defecto.");
       }
-      renderizarCarrusel();
     }
 
-    function renderizarCarrusel() {
-      const slide = document.getElementById('carouselSlide');
-      const dots = document.getElementById('carouselDots');
-      slide.innerHTML = '';
-      dots.innerHTML = '';
-
-      anuncios.forEach((item, i) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'carousel-item';
-        itemDiv.innerHTML = `
-          <img src="${item.imagen}" alt="${item.titulo}" onclick="abrirModal('${item.imagen}')">
-          <span class="zoom-hint">🔍 Toca para ampliar</span>
-        `;
-        slide.appendChild(itemDiv);
-
-        const dot = document.createElement('div');
-        dot.className = `dot ${i === 0 ? 'active' : ''}`;
-        dot.onclick = () => irAAnuncio(i);
-        dots.appendChild(dot);
-      });
-
-      actualizarInfoAnuncio();
-    }
-
-    function moverCarrusel(direccion) {
-      indiceAnuncio += direccion;
-      if (indiceAnuncio < 0) indiceAnuncio = anuncios.length - 1;
-      if (indiceAnuncio >= anuncios.length) indiceAnuncio = 0;
-      aplicarCambioCarrusel();
-    }
-
-    function irAAnuncio(index) {
-      indiceAnuncio = index;
-      aplicarCambioCarrusel();
-    }
-
-    function aplicarCambioCarrusel() {
-      const slide = document.getElementById('carouselSlide');
-      slide.style.transform = `translateX(-${indiceAnuncio * 100}%)`;
-
-      const dotsList = document.querySelectorAll('.dot');
-      dotsList.forEach((d, i) => d.classList.toggle('active', i === indiceAnuncio));
-
-      actualizarInfoAnuncio();
-    }
-
-    function actualizarInfoAnuncio() {
-      if (!anuncios[indiceAnuncio]) return;
-      const actual = anuncios[indiceAnuncio];
-      document.getElementById('tituloAnuncio').innerText = actual.titulo;
-      document.getElementById('descAnuncio').innerText = actual.desc;
-      const btnWa = document.getElementById('btnInfoAnuncio');
-      btnWa.href = `https://wa.me/529986428817?text=${encodeURIComponent(actual.waMsg || "Hola, requiero información del evento.")}`;
-    }
-
-    function abrirModal(src) {
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImg');
-      modal.style.display = "flex";
-      modalImg.src = src;
-    }
-
-    function cerrarModal() {
-      document.getElementById('imageModal').style.display = "none";
-    }
-
-    // Inicializar todo al cargar el DOM
-    document.addEventListener("DOMContentLoaded", () => {
-      cargarAnunciosDesdeFirestore();
-      cargarOracionesEnTiempoReal();
-    }
-
+    // 7. Cargar Audios desde Firestore
     function cargarAudiosDesdeFirestore() {
       const contenedor = document.getElementById('contenedorAudiosNube');
+      if (!contenedor) return;
+
       db.collection("audios").onSnapshot(snapshot => {
         if (snapshot.empty) {
-          contenedor.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">No hay audios publicados en la biblioteca.</p>';
+          contenedor.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">No hay audios en la biblioteca pública aún.</p>';
           return;
         }
 
@@ -1033,22 +814,38 @@
           const d = doc.data();
           const item = document.createElement('div');
           item.className = 'audio-item';
+          item.style.marginBottom = '10px';
           item.innerHTML = `
-            <span style="font-size: 0.68rem; background: var(--adventist-blue); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 600;">${d.categoria.toUpperCase()}</span>
-            <h4 style="margin-top: 5px;">${escapeHTML(d.titulo)}</h4>
-            <audio controls src="${d.url}"></audio>
+            <span style="font-size: 0.68rem; background: var(--adventist-blue); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 600;">${escapeHTML(d.categoria || 'GENERAL').toUpperCase()}</span>
+            <h4 style="margin-top: 5px; font-size: 0.88rem;">${escapeHTML(d.titulo)}</h4>
+            <audio controls src="${escapeHTML(d.url)}" style="width: 100%; margin-top: 5px;"></audio>
           `;
           contenedor.appendChild(item);
         });
       });
     }
 
-    // Agregar a los llamados de inicio:
+    // 8. Ampliar Imagen Modal
+    function ampliarImagen(src) {
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("imgAmpliada");
+      if (modal && modalImg) {
+        modal.style.display = "flex";
+        modalImg.src = src;
+      }
+    }
+
+    function cerrarModal() {
+      const modal = document.getElementById("imageModal");
+      if (modal) modal.style.display = "none";
+    }
+
+    // Inicializar todo al cargar el documento
     document.addEventListener("DOMContentLoaded", () => {
       cargarAnunciosDesdeFirestore();
       cargarOracionesEnTiempoReal();
-      cargarAudiosDesdeFirestore(); // <--- Carga los audios automáticamente
+      cargarAudiosDesdeFirestore();
     });
   </script>
-</body>
+  </body>
 </html>
