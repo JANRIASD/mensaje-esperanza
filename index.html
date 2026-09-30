@@ -574,67 +574,25 @@
       </a>
     </div>
 
-    <!-- PESTAÑA 3: AUDIOS Y BIBLIOTECA -->
+   <!-- PESTAÑA 3: AUDIOS Y BIBLIOTECA (DINÁMICOS DESDE FIRESTORE) -->
     <div id="audios" class="tab-content">
       <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Píldoras y Mensajes en Audio</h3>
       <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Escucha reflexiones y series sin salir de la página.</p>
 
+      <!-- AUDIO DINÁMICO POR QR / EMOCIÓN -->
       <div style="margin-bottom: 15px;">
-        <!-- AUDIO 1: DINÁMICO POR QR -->
-        <div style="margin-bottom: 10px;">
-          <span style="font-size: 0.72rem; background: var(--gold-accent); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 700; text-transform: uppercase;">Especial para ti</span>
-          <div class="audio-item" style="margin-top: 6px;">
-            <h4>🎧 Un Minuto de Calma para el Estrés</h4>
-            <audio  controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
-          </div>
-        </div>
-
-        <!-- AUDIO 2: DESTACADO IGLESIA -->
-        <div>
-          <span style="font-size: 0.72rem; background: var(--adventist-blue); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 700; text-transform: uppercase;">Destacado de la Semana</span>
-          <div class="audio-item" style="margin-top: 6px;">
-            <h4>📻 Mensaje Semanal: El Amor de Jesús en Cancún</h4>
-            <audio controls src="destacado-semanal.mp3"></audio>
-          </div>
+        <span style="font-size: 0.72rem; background: var(--gold-accent); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 700; text-transform: uppercase;">Especial para ti</span>
+        <div class="audio-item" style="margin-top: 6px;">
+          <h4 id="audioDinamicoTitulo">🎧 Mensaje Seleccionado</h4>
+          <audio id="audioDinamicoPlayer" controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
         </div>
       </div>
 
-      <hr style="border: 0; height: 1px; background: rgba(10, 88, 127, 0.15); margin: 15px 0;">
-
-      <!-- BIBLIOTECA DESPLEGABLE -->
-      <h4 style="color: var(--adventist-blue); font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;">📚 Biblioteca por Temas</h4>
-
-      <details style="background: rgba(240, 246, 252, 0.6); padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(10, 88, 127, 0.12);">
-        <summary style="cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--adventist-blue-dark);">🕊️ Serie: Paz & Ansiedad</summary>
-        <div style="margin-top: 10px;">
-          <div class="audio-item">
-            <h4 style="font-size: 0.8rem;">Parte 1: Entregando tus cargas</h4>
-            <audio controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
-          </div>
-        </div>
-      </details>
-
-      <details style="background: rgba(240, 246, 252, 0.6); padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(10, 88, 127, 0.12);">
-        <summary style="cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--adventist-blue-dark);">💸 Serie: Finanzas con Propósito</summary>
-        <div style="margin-top: 10px;">
-          <div class="audio-item">
-            <h4 style="font-size: 0.8rem;">Parte 1: Dios y tus necesidades materiales</h4>
-            <audio controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
-          </div>
-        </div>
-      </details>
-
-      <details style="background: rgba(240, 246, 252, 0.6); padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(10, 88, 127, 0.12);">
-        <summary style="cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--adventist-blue-dark);">🏠 Serie: Restauración Familiar</summary>
-        <div style="margin-top: 10px;">
-          <div class="audio-item">
-            <h4 style="font-size: 0.8rem;">Parte 1: El perdón en el hogar</h4>
-            <audio controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
-          </div>
-        </div>
-      </details>
+      <!-- AUDIOS DE DESTACADO Y SERIES (DESDE FIRESTORE) -->
+      <div id="contenedorAudiosNube">
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando audios...</p>
+      </div>
     </div>
-
     <!-- PESTAÑA 4: ANUNCIOS Y EVENTOS -->
     <div id="evento" class="tab-content">
       <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Eventos y Anuncios de la Iglesia</h3>
@@ -1060,6 +1018,36 @@
     document.addEventListener("DOMContentLoaded", () => {
       cargarAnunciosDesdeFirestore();
       cargarOracionesEnTiempoReal();
+    }
+
+    function cargarAudiosDesdeFirestore() {
+      const contenedor = document.getElementById('contenedorAudiosNube');
+      db.collection("audios").onSnapshot(snapshot => {
+        if (snapshot.empty) {
+          contenedor.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">No hay audios publicados en la biblioteca.</p>';
+          return;
+        }
+
+        contenedor.innerHTML = '';
+        snapshot.forEach(doc => {
+          const d = doc.data();
+          const item = document.createElement('div');
+          item.className = 'audio-item';
+          item.innerHTML = `
+            <span style="font-size: 0.68rem; background: var(--adventist-blue); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 600;">${d.categoria.toUpperCase()}</span>
+            <h4 style="margin-top: 5px;">${escapeHTML(d.titulo)}</h4>
+            <audio controls src="${d.url}"></audio>
+          `;
+          contenedor.appendChild(item);
+        });
+      });
+    }
+
+    // Agregar a los llamados de inicio:
+    document.addEventListener("DOMContentLoaded", () => {
+      cargarAnunciosDesdeFirestore();
+      cargarOracionesEnTiempoReal();
+      cargarAudiosDesdeFirestore(); // <--- Carga los audios automáticamente
     });
   </script>
 </body>
