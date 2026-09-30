@@ -689,7 +689,43 @@
       );
     }
 
-    // 3. Cargar Anuncios desde Firestore
+    // 3. Promesas Bíblicas por Tema / Emoción
+    const promesas = {
+      estres: [
+        { cita: "Matenete en paz", texto: "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios...", ref: "Filipenses 4:6-7" },
+        { cita: "Descanso prometido", texto: "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.", ref: "Mateo 11:28" }
+      ],
+      paz: [
+        { cita: "La paz de Dios", texto: "La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da...", ref: "Juan 14:27" },
+        { cita: "En paz me acostaré", texto: "En paz me acostaré, y asimismo dormiré; porque solo tú, Jehová, me haces vivir confiado.", ref: "Salmos 4:8" }
+      ],
+      finanzas: [
+        { cita: "Provisión divina", texto: "Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas en gloria...", ref: "Filipenses 4:19" },
+        { cita: "Confianza en Dios", texto: "Jehová es mi pastor; nada me faltará.", ref: "Salmos 23:1" }
+      ],
+      familia: [
+        { cita: "Bendición para tu hogar", texto: "Creed en el Señor Jesucristo, y serás salvo, tú y tu casa.", ref: "Hechos 16:31" },
+        { cita: "Unidad y Amor", texto: "Y sobre todas estas cosas vestíos de amor, que es el vínculo perfecto.", ref: "Colosenses 3:14" }
+      ]
+    };
+
+    let temaActual = 'estres';
+
+    function cargarTema(tema) {
+      temaActual = tema;
+      obtenerPromesa();
+    }
+
+    function obtenerPromesa() {
+      const lista = promesas[temaActual] || promesas['estres'];
+      const aleatoria = lista[Math.floor(Math.random() * lista.length)];
+      const display = document.getElementById("promesaTexto");
+      if (display) {
+        display.innerHTML = `<strong>"${escapeHTML(aleatoria.texto)}"</strong><br><em style="font-size:0.8rem; color:var(--adventist-blue);">${escapeHTML(aleatoria.ref)}</em>`;
+      }
+    }
+
+    // 4. Cargar Anuncios desde Firestore
     function cargarAnunciosDesdeFirestore() {
       const track = document.getElementById("carouselTrack");
       if (!track) return;
@@ -725,7 +761,7 @@
       });
     }
 
-    // 4. Cargar Oraciones
+    // 5. Cargar Oraciones
     function cargarOracionesEnTiempoReal() {
       const muro = document.getElementById('muroOraciones');
       if (!muro) return;
@@ -755,21 +791,17 @@
       });
     }
 
-    // 5. Unirme en Oración
+    // 6. Unirme en Oración
     async function unirmeEnOracion(docId, contadorActual) {
-      const btn = event.currentTarget;
-      btn.disabled = true;
       try {
         const ref = db.collection("oraciones").doc(docId);
         await ref.update({ unidos: firebase.firestore.FieldValue.increment(1) });
       } catch (e) {
         console.error("Error al actualizar contador: ", e);
-      } finally {
-        btn.disabled = false;
       }
     }
 
-    // 6. Enviar Petición
+    // 7. Enviar Petición
     async function enviarPeticion(event) {
       event.preventDefault();
       const nombre = document.getElementById('oracionNombre').value.trim();
@@ -798,7 +830,7 @@
       }
     }
 
-    // 7. Cargar Audios desde Firestore
+    // 8. Cargar Audios desde Firestore
     function cargarAudiosDesdeFirestore() {
       const contenedor = document.getElementById('contenedorAudiosNube');
       if (!contenedor) return;
@@ -825,7 +857,7 @@
       });
     }
 
-    // 8. Ampliar Imagen Modal
+    // 9. Modales de Imagen
     function ampliarImagen(src) {
       const modal = document.getElementById("imageModal");
       const modalImg = document.getElementById("imgAmpliada");
@@ -840,11 +872,12 @@
       if (modal) modal.style.display = "none";
     }
 
-    // Inicializar todo al cargar el documento
+    // Inicializar al cargar
     document.addEventListener("DOMContentLoaded", () => {
       cargarAnunciosDesdeFirestore();
       cargarOracionesEnTiempoReal();
       cargarAudiosDesdeFirestore();
+      obtenerPromesa();
     });
   </script>
   </body>
