@@ -27,12 +27,7 @@
       --bg-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80');
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
     body {
       background: linear-gradient(var(--glass-overlay), var(--glass-overlay)), var(--bg-image) center/cover no-repeat fixed;
@@ -45,30 +40,11 @@
       transition: background 0.5s ease-in-out;
     }
 
-    .container {
-      width: 100%;
-      max-width: 600px;
-    }
+    .container { width: 100%; max-width: 600px; }
 
-    header {
-      text-align: center;
-      padding: 15px 0 10px 0;
-    }
-
-    header h1 {
-      font-size: 1.6rem;
-      color: var(--adventist-blue);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 700;
-      text-shadow: 0 1px 3px rgba(255,255,255,0.9);
-    }
-
-    header p {
-      font-size: 0.85rem;
-      color: var(--adventist-blue-dark);
-      font-weight: 600;
-    }
+    header { text-align: center; padding: 15px 0 10px 0; }
+    header h1 { font-size: 1.6rem; color: var(--adventist-blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; text-shadow: 0 1px 3px rgba(255,255,255,0.9); }
+    header p { font-size: 0.85rem; color: var(--adventist-blue-dark); font-weight: 600; }
 
     /* CAJA DE PROMESA */
     .promise-box {
@@ -83,27 +59,8 @@
       -webkit-backdrop-filter: blur(10px);
     }
 
-    .promise-text {
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--adventist-blue-dark);
-      margin-bottom: 10px;
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1.45;
-      font-weight: 500;
-      transition: opacity 0.3s ease;
-    }
-
-    .promise-ref {
-      font-size: 0.88rem;
-      color: var(--gold-accent);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+    .promise-text { font-size: 1.05rem; font-style: italic; color: var(--adventist-blue-dark); margin-bottom: 10px; min-height: 50px; display: flex; align-items: center; justify-content: center; line-height: 1.45; font-weight: 500; }
+    .promise-ref { font-size: 0.88rem; color: var(--gold-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
     .btn-draw {
       background: linear-gradient(135deg, #D4AF37, #C8963E);
@@ -119,10 +76,7 @@
       transition: all 0.3s ease;
     }
 
-    .btn-draw:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(200, 150, 62, 0.45);
-    }
+    .btn-draw:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(200, 150, 62, 0.45); }
 
     /* PESTAÑAS DE NAVEGACIÓN */
     .nav-tabs {
@@ -172,9 +126,7 @@
       animation: fadeIn 0.4s ease-in-out;
     }
 
-    .tab-content.active {
-      display: block;
-    }
+    .tab-content.active { display: block; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
@@ -182,13 +134,7 @@
     }
 
     /* TARJETAS DE EMOCIONES */
-    .emotion-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
+    .emotion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
     .emotion-card {
       background: rgba(240, 246, 252, 0.75);
       border: 1px solid rgba(10, 88, 127, 0.15);
@@ -202,11 +148,7 @@
       transition: 0.3s;
     }
 
-    .emotion-card:hover {
-      border-color: var(--gold-accent);
-      background: rgba(200, 150, 62, 0.15);
-      transform: translateY(-2px);
-    }
+    .emotion-card:hover { border-color: var(--gold-accent); background: rgba(200, 150, 62, 0.15); transform: translateY(-2px); }
 
     /* TARJETAS DE RECURSOS */
     .resource-card {
@@ -223,12 +165,7 @@
       transition: 0.3s;
     }
 
-    .resource-card:hover {
-      border-color: var(--adventist-blue);
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 4px 12px rgba(10, 88, 127, 0.1);
-    }
-
+    .resource-card:hover { border-color: var(--adventist-blue); background: rgba(255, 255, 255, 0.95); box-shadow: 0 4px 12px rgba(10, 88, 127, 0.1); }
     .resource-icon { font-size: 1.4rem; }
     .resource-info h4 { font-size: 0.9rem; color: var(--adventist-blue); font-weight: 700; }
     .resource-info p { font-size: 0.78rem; color: var(--text-muted); }
@@ -241,107 +178,57 @@
       border: 1px solid rgba(10, 88, 127, 0.12);
     }
 
-    .audio-item h4 {
-      font-size: 0.85rem;
-      margin-bottom: 6px;
-      color: var(--adventist-blue-dark);
-      font-weight: 600;
-    }
-
+    .audio-item h4 { font-size: 0.85rem; margin-bottom: 6px; color: var(--adventist-blue-dark); font-weight: 600; }
     audio { width: 100%; height: 35px; }
 
     .btn-wa {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--green-wa);
-      color: white;
-      text-decoration: none;
-      padding: 12px;
-      border-radius: 25px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      margin-top: 12px;
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-      transition: 0.3s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--green-wa); color: white; text-decoration: none; padding: 12px;
+      border-radius: 25px; font-weight: 700; font-size: 0.85rem; margin-top: 12px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); transition: 0.3s;
     }
 
-    /* FORMULARIO Y MURO DE ORACIÓN */
+    /* MURO DE ORACIÓN Y EVENTOS */
     input[type="text"], textarea {
-      width: 100%;
-      padding: 11px;
-      margin-bottom: 8px;
-      border-radius: 10px;
-      border: 1px solid rgba(10, 88, 127, 0.2);
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--text-main);
-      font-size: 0.85rem;
-      outline: none;
+      width: 100%; padding: 11px; margin-bottom: 8px; border-radius: 10px;
+      border: 1px solid rgba(10, 88, 127, 0.2); background: rgba(255, 255, 255, 0.9);
+      color: var(--text-main); font-size: 0.85rem; outline: none;
     }
 
     .prayer-card {
-      background: rgba(240, 246, 252, 0.8);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 12px;
-      border: 1px solid rgba(10, 88, 127, 0.12);
-    }
-
-    .prayer-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--adventist-blue);
-      font-weight: 700;
-      margin-bottom: 4px;
+      background: rgba(240, 246, 252, 0.8); border-radius: 12px; padding: 12px;
+      margin-bottom: 12px; border: 1px solid rgba(10, 88, 127, 0.12);
     }
 
     .btn-pray-action {
-      background: rgba(10, 88, 127, 0.08);
-      border: 1px solid var(--adventist-blue);
-      color: var(--adventist-blue);
-      padding: 6px 14px;
-      border-radius: 15px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      margin-top: 6px;
+      background: rgba(10, 88, 127, 0.08); border: 1px solid var(--adventist-blue);
+      color: var(--adventist-blue); padding: 6px 14px; border-radius: 15px;
+      font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; margin-top: 6px;
     }
 
-    .btn-pray-action.orado {
-      background: var(--adventist-blue);
-      color: #ffffff;
-    }
+    .btn-pray-action.orado { background: var(--adventist-blue); color: #ffffff; }
 
-    /* ANUNCIOS / EVENTOS */
     .evento-card {
-      background: rgba(240, 246, 252, 0.8);
-      border: 1px solid rgba(10, 88, 127, 0.15);
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 15px;
+      background: rgba(240, 246, 252, 0.8); border: 1px solid rgba(10, 88, 127, 0.15);
+      border-radius: 14px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(10, 88, 127, 0.06);
     }
 
     .evento-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
+      width: 100%; max-height: 350px; object-fit: contain; background: #ffffff;
+      display: block; cursor: pointer; transition: transform 0.2s ease;
     }
 
-    .evento-content {
-      padding: 12px 15px;
+    .evento-content { padding: 12px 15px; }
+
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85); justify-content: center; align-items: center;
+      z-index: 1000; backdrop-filter: blur(5px);
     }
 
-    footer {
-      text-align: center;
-      font-size: 0.78rem;
-      color: var(--adventist-blue-dark);
-      padding: 15px 0 5px 0;
-      font-weight: 600;
-    }
+    .modal-overlay img { max-width: 92%; max-height: 88vh; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
+    footer { text-align: center; font-size: 0.78rem; color: var(--adventist-blue-dark); padding: 15px 0 5px 0; font-weight: 600; }
     footer a { color: var(--adventist-blue); font-weight: 700; text-decoration: none; margin: 0 5px; }
   </style>
 </head>
@@ -435,21 +322,26 @@
 
     <!-- PESTAÑA 3: AUDIOS -->
     <div id="audios" class="tab-content">
-      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Píldoras y Mensajes en Audio</h3>
-      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Escucha reflexiones y mensajes para el alma:</p>
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Biblioteca de Mensajes en Audio</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Reflexiones para cada momento de tu día:</p>
       
+      <!-- AUDIO PRINCIPAL SEGÚN TEMA / QR -->
+      <div style="margin-bottom: 15px; padding: 12px; background: rgba(200, 150, 62, 0.1); border-radius: 12px; border: 1px solid var(--gold-accent);">
+        <span style="font-size: 0.7rem; background: var(--gold-accent); color: white; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase;">Especial para ti</span>
+        <h4 id="audioDinamicoTitulo" style="margin-top: 6px; font-size: 0.88rem; color: var(--adventist-blue);">🎧 Mensaje de Paz y Esperanza</h4>
+        <audio id="audioDinamicoPlayer" controls src="paz_y_provision_en_tus_finanzas.mp3" style="margin-top: 6px;"></audio>
+      </div>
+
+      <h4 style="color: var(--adventist-blue); font-size: 0.88rem; margin: 15px 0 10px 0; font-weight: 700;">📻 Series y Mensajes en la Nube:</h4>
       <div id="muroAudiosLista">
-        <div class="audio-item">
-          <h4>🎧 Un Minuto de Calma para el Estrés</h4>
-          <audio controls src="paz_y_provision_en_tus_finanzas.mp3"></audio>
-        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando mensajes...</p>
       </div>
     </div>
 
     <!-- PESTAÑA 4: EVENTOS -->
     <div id="eventos" class="tab-content">
       <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Eventos y Anuncios</h3>
-      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Actividades recientes de la comunidad:</p>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Toca cualquier imagen para ampliarla:</p>
 
       <div id="muroEventosLista">
         <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando eventos...</p>
@@ -485,11 +377,14 @@
     </footer>
   </div>
 
+  <!-- MODAL PARA AMPLIAR IMAGEN -->
+  <div id="imageModal" class="modal-overlay" onclick="cerrarModal()">
+    <img id="imgAmpliada" src="" alt="Imagen Ampliada">
+  </div>
+
   <script>
-    // Configura aquí tu número pastoral principal si deseas cambiarlo
     const numeroWhatsApp = "5219831255281";
 
-    // Inicializar Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDkjrM6LBCdlE0xhIR9zn2XU4iLsIKv9pg",
       authDomain: "mensaje-esperanza.firebaseapp.com",
@@ -502,18 +397,17 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Lógica de Contenidos y Emociones
     const contenidos = {
-      paz: { t: "Paz que sobrepasa todo entendimiento", v: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da." - Juan 14:27', bg: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80' },
-      estres: { t: "Paz para el Estrés", v: '"Venid a mí todos los que estás trabajados y cargados, y yo os haré descansar." - Mateo 11:28', bg: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=80' },
-      miedo: { t: "Protección en el Miedo", v: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios." - Isaías 41:10', bg: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1000&q=80' },
-      culpa: { t: "Perdón y Libertad de la Culpa", v: '"Si confesamos nuestros pecados, él es fiel y justo para perdonar." - 1 Juan 1:9', bg: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1000&q=80' },
-      duelo: { t: "Consuelo en la Pérdida", v: '"Cercano está Jehová a los quebrantados de corazón." - Salmo 34:18', bg: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=1000&q=80' },
-      soledad: { t: "Compañía en la Soledad", v: '"He aquí yo estoy con vosotros todos los días, hasta el fin del mundo." - Mateo 28:20', bg: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1000&q=80' },
-      finanzas: { t: "Provisión y Confianza", v: '"Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas." - Filipenses 4:19', bg: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80' },
-      familia: { t: "Bendición para tu Hogar", v: '"Pero yo y mi casa serviremos a Jehová." - Josué 24:15', bg: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1000&q=80' },
-      cansancio: { t: "Fuerza para el Cansado", v: '"Él da esfuerzo al cansado, y multiplica las fuerzas." - Isaías 40:29', bg: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80' },
-      proposito: { t: "Un Propósito para tu Vida", v: '"Porque yo sé los pensamientos que tengo acerca de vosotros... de paz." - Jeremías 29:11', bg: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80' }
+      paz: { t: "Paz que sobrepasa todo entendimiento", v: '"La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da." - Juan 14:27', audio: 'paz.mp3', bg: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80' },
+      estres: { t: "Paz para el Estrés", v: '"Venid a mí todos los que estás trabajados y cargados, y yo os haré descansar." - Mateo 11:28', audio: 'estres.mp3', bg: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=80' },
+      miedo: { t: "Protección en el Miedo", v: '"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios." - Isaías 41:10', audio: 'miedo.mp3', bg: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1000&q=80' },
+      culpa: { t: "Perdón y Libertad de la Culpa", v: '"Si confesamos nuestros pecados, él es fiel y justo para perdonar." - 1 Juan 1:9', audio: 'culpa.mp3', bg: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1000&q=80' },
+      duelo: { t: "Consuelo en la Pérdida", v: '"Cercano está Jehová a los quebrantados de corazón." - Salmo 34:18', audio: 'duelo.mp3', bg: 'https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=1000&q=80' },
+      soledad: { t: "Compañía en la Soledad", v: '"He aquí yo estoy con vosotros todos los días, hasta el fin del mundo." - Mateo 28:20', audio: 'soledad.mp3', bg: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1000&q=80' },
+      finanzas: { t: "Provisión y Confianza", v: '"Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas." - Filipenses 4:19', audio: 'paz_y_provision_en_tus_finanzas.mp3', bg: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80' },
+      familia: { t: "Bendición para tu Hogar", v: '"Pero yo y mi casa serviremos a Jehová." - Josué 24:15', audio: 'familia.mp3', bg: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1000&q=80' },
+      cansancio: { t: "Fuerza para el Cansado", v: '"Él da esfuerzo al cansado, y multiplica las fuerzas." - Isaías 40:29', audio: 'cansancio.mp3', bg: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80' },
+      proposito: { t: "Un Propósito para tu Vida", v: '"Porque yo sé los pensamientos que tengo acerca de vosotros... de paz." - Jeremías 29:11', audio: 'proposito.mp3', bg: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80' }
     };
 
     const promesasArr = Object.values(contenidos).map(c => ({ t: c.v.split(' - ')[0], r: c.v.split(' - ')[1] || 'Promesa de Dios' }));
@@ -537,6 +431,14 @@
         document.getElementById('temaWa').href = `https://wa.me/${numeroWhatsApp}?text=${msgWa}`;
         document.getElementById('temaDetalle').style.display = 'block';
 
+        // Actualizar el Reproductor Dinámico de Audio según el Tema
+        const player = document.getElementById('audioDinamicoPlayer');
+        const titulo = document.getElementById('audioDinamicoTitulo');
+        if (player && titulo) {
+          titulo.innerText = `🎧 Audio Especial: ${contenidos[key].t}`;
+          player.src = contenidos[key].audio;
+        }
+
         if (contenidos[key].bg) {
           document.body.style.backgroundImage = `linear-gradient(var(--glass-overlay), var(--glass-overlay)), url('${contenidos[key].bg}')`;
         }
@@ -552,7 +454,6 @@
       evt.currentTarget.classList.add("active");
     }
 
-    // Funciones de Oración en Firestore
     async function enviarPeticionOracion() {
       const nom = document.getElementById('oracionNombre').value.trim() || 'Anónimo';
       const msg = document.getElementById('oracionMensaje').value.trim();
@@ -623,14 +524,13 @@
       }
     }
 
-    // Cargar Eventos/Anuncios desde Firestore
     function cargarEventosEnTiempoReal() {
       db.collection("anuncios").onSnapshot((snapshot) => {
         const contenedor = document.getElementById('muroEventosLista');
         if (snapshot.empty) {
           contenedor.innerHTML = `
             <div class="evento-card">
-              <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80" alt="Evento">
+              <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80" alt="Evento" onclick="ampliarImagen(this.src)">
               <div class="evento-content">
                 <h4 style="color: var(--adventist-blue); font-size: 0.9rem;">Gran Campaña Evangelística</h4>
                 <p style="font-size: 0.8rem; color: var(--text-muted);">Te invitamos a nuestras reuniones semanales de esperanza.</p>
@@ -645,10 +545,11 @@
           const item = document.createElement('div');
           item.className = 'evento-card';
           item.innerHTML = `
-            <img src="${escapeHTML(data.imagen)}" alt="${escapeHTML(data.titulo)}">
+            <img src="${escapeHTML(data.imagen)}" alt="${escapeHTML(data.titulo)}" onclick="ampliarImagen(this.src)" title="Haz clic para ampliar">
             <div class="evento-content">
               <h4 style="color: var(--adventist-blue); font-size: 0.9rem;">${escapeHTML(data.titulo)}</h4>
               <p style="font-size: 0.8rem; color: var(--text-muted);">${escapeHTML(data.desc || '')}</p>
+              ${data.waMsg ? `<a href="https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(data.waMsg)}" class="btn-wa" target="_blank" style="margin-top:8px; padding:8px 15px; font-size:0.78rem;">Más información por WhatsApp</a>` : ''}
             </div>
           `;
           contenedor.appendChild(item);
@@ -656,7 +557,6 @@
       });
     }
 
-    // Cargar Audios desde Firestore
     function cargarAudiosEnTiempoReal() {
       db.collection("audios").onSnapshot((snapshot) => {
         const contenedor = document.getElementById('muroAudiosLista');
@@ -668,7 +568,8 @@
           const item = document.createElement('div');
           item.className = 'audio-item';
           item.innerHTML = `
-            <h4>🎧 ${escapeHTML(data.titulo)}</h4>
+            <span style="font-size: 0.68rem; background: var(--adventist-blue); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 600; text-transform: uppercase;">${escapeHTML(data.categoria || 'SERIE')}</span>
+            <h4 style="margin-top: 5px; font-size: 0.88rem;">🎧 ${escapeHTML(data.titulo)}</h4>
             <audio controls src="${escapeHTML(data.url)}"></audio>
           `;
           contenedor.appendChild(item);
@@ -676,14 +577,35 @@
       });
     }
 
+    function ampliarImagen(src) {
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("imgAmpliada");
+      if (modal && modalImg) {
+        modalImg.src = src;
+        modal.style.display = "flex";
+      }
+    }
+
+    function cerrarModal() {
+      const modal = document.getElementById("imageModal");
+      if (modal) modal.style.display = "none";
+    }
+
     function escapeHTML(str) {
-      return str ? str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)) : '';
+      return str ? str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&#34;' }[tag] || tag)) : '';
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       cargarOracionesEnTiempoReal();
       cargarEventosEnTiempoReal();
       cargarAudiosEnTiempoReal();
+
+      // Detectar parámetro ?tema= en la URL (al escanear un QR específico)
+      const urlParams = new URLSearchParams(window.location.search);
+      const temaUrl = urlParams.get('tema');
+      if (temaUrl && contenidos[temaUrl]) {
+        cargarTema(temaUrl);
+      }
     });
   </script>
 </body>
