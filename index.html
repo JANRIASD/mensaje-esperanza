@@ -170,15 +170,59 @@
     .resource-info h4 { font-size: 0.9rem; color: var(--adventist-blue); font-weight: 700; }
     .resource-info p { font-size: 0.78rem; color: var(--text-muted); }
 
-    .audio-item {
-      background: rgba(240, 246, 252, 0.7);
-      padding: 12px;
+    /* ESTILOS PARA SERIES DESPLEGABLES (ACORDEÓN) */
+    .serie-accordion {
+      background: rgba(240, 246, 252, 0.75);
+      border: 1px solid rgba(10, 88, 127, 0.15);
       border-radius: 12px;
-      margin-bottom: 10px;
-      border: 1px solid rgba(10, 88, 127, 0.12);
+      margin-bottom: 12px;
+      overflow: hidden;
     }
 
-    .audio-item h4 { font-size: 0.85rem; margin-bottom: 6px; color: var(--adventist-blue-dark); font-weight: 600; }
+    .serie-header {
+      background: rgba(10, 88, 127, 0.08);
+      padding: 12px 15px;
+      font-weight: 700;
+      color: var(--adventist-blue);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+
+    .serie-header:hover {
+      background: rgba(10, 88, 127, 0.15);
+    }
+
+    .serie-body {
+      display: none;
+      padding: 12px 15px;
+      background: rgba(255, 255, 255, 0.6);
+      border-top: 1px solid rgba(10, 88, 127, 0.1);
+    }
+
+    .serie-body.active {
+      display: block;
+    }
+
+    .audio-capitulo-item {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(10, 88, 127, 0.08);
+    }
+
+    .audio-capitulo-item:last-child {
+      border-bottom: none;
+    }
+
+    .audio-capitulo-item h5 {
+      font-size: 0.85rem;
+      color: var(--adventist-blue-dark);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
     audio { width: 100%; height: 35px; }
 
     .btn-wa {
@@ -557,24 +601,80 @@
       });
     }
 
+    // AUDIOS DESPLEGABLES (ACORDEÓN) ORDENADOS Y DESTACADO ARRIBA
     function cargarAudiosEnTiempoReal() {
-      db.collection("audios").onSnapshot((snapshot) => {
+      db.collection("audios").orderBy("fecha", "asc").onSnapshot((snapshot) => {
         const contenedor = document.getElementById('muroAudiosLista');
-        if (snapshot.empty) return;
+        if (!contenedor) return;
 
-        contenedor.innerHTML = '';
+        if (snapshot.empty) {
+          contenedor.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">No hay audios disponibles aún.</p>';
+          return;
+        }
+
+        let destacadosHTML = '';
+        let seriesMap = {};
+
         snapshot.forEach((doc) => {
-          const data = doc.data();
-          const item = document.createElement('div');
-          item.className = 'audio-item';
-          item.innerHTML = `
-            <span style="font-size: 0.68rem; background: var(--adventist-blue); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 600; text-transform: uppercase;">${escapeHTML(data.categoria || 'SERIE')}</span>
-            <h4 style="margin-top: 5px; font-size: 0.88rem;">🎧 ${escapeHTML(data.titulo)}</h4>
-            <audio controls src="${escapeHTML(data.url)}"></audio>
-          `;
-          contenedor.appendChild(item);
+          const d = doc.data();
+          const cat = (d.categoria || 'general').toLowerCase().trim();
+
+          if (cat === 'destacado') {
+            destacadosHTML += `
+              <div style="margin-bottom: 15px; padding: 12px; background: rgba(200, 150, 62, 0.15); border-radius: 12px; border: 1px solid var(--gold-accent);">
+                <span style="font-size: 0.7rem; background: var(--gold-accent); color: white; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase;">📻 Destacado de la Semana</span>
+                <h4 style="margin-top: 6px; font-size: 0.88rem; color: var(--adventist-blue);">🎧 ${escapeHTML(d.titulo)}</h4>
+                <audio controls src="${escapeHTML(d.url)}" style="width: 100%; margin-top: 6px;"></audio>
+              </div>
+            `;
+          } else {
+            if (!seriesMap[cat]) {
+              seriesMap[cat] = [];
+            }
+            seriesMap[cat].push(d);
+          }
         });
+
+        let seriesHTML = '';
+        for (let categoria in seriesMap) {
+          let nombreSerie = categoria.toUpperCase();
+          if (categoria === 'paz') nombreSerie = '🕊️ Serie: Paz & Ansiedad';
+          if (categoria === 'finanzas') nombreSerie = '💸 Serie: Finanzas con Propósito';
+          if (categoria === 'familia') nombreSerie = '🏠 Serie: Restauración Familiar';
+
+          let listaCapitulos = '';
+          seriesMap[categoria].forEach(audio => {
+            listaCapitulos += `
+              <div class="audio-capitulo-item">
+                <h5>🎧 ${escapeHTML(audio.titulo)}</h5>
+                <audio controls src="${escapeHTML(audio.url)}"></audio>
+              </div>
+            `;
+          });
+
+          seriesHTML += `
+            <div class="serie-accordion">
+              <div class="serie-header" onclick="toggleSerie(this)">
+                <span>📂 ${nombreSerie} (${seriesMap[categoria].length} audios)</span>
+                <span>▼</span>
+              </div>
+              <div class="serie-body">
+                ${listaCapitulos}
+              </div>
+            </div>
+          `;
+        }
+
+        contenedor.innerHTML = destacadosHTML + seriesHTML;
       });
+    }
+
+    // Función para abrir/cerrar el acordeón de las series
+    function toggleSerie(header) {
+      const body = header.nextElementSibling;
+      body.classList.toggle('active');
+      const arrow = header.querySelector('span:last-child');
+      arrow.innerText = body.classList.contains('active') ? '▲' : '▼';
     }
 
     function ampliarImagen(src) {
