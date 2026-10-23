@@ -601,9 +601,9 @@
       });
     }
 
-    // AUDIOS DESPLEGABLES (ACORDEÓN) SEGURO Y DINÁMICO
+    // AUDIOS DESPLEGABLES (ACORDEÓN) ORDENADOS Y DESTACADO ARRIBA
     function cargarAudiosEnTiempoReal() {
-      db.collection("audios").onSnapshot((snapshot) => {
+      db.collection("audios").orderBy("fecha", "asc").onSnapshot((snapshot) => {
         const contenedor = document.getElementById('muroAudiosLista');
         if (!contenedor) return;
 
@@ -619,8 +619,7 @@
           const d = doc.data();
           const cat = (d.categoria || 'general').toLowerCase().trim();
 
-          // Identifica si es el destacado (por categoría 'destacado' o si el nombre del archivo contiene destacado)
-          if (cat === 'destacado' || (d.url && d.url.includes('destacado-semanal'))) {
+          if (cat === 'destacado') {
             destacadosHTML += `
               <div style="margin-bottom: 15px; padding: 12px; background: rgba(200, 150, 62, 0.15); border-radius: 12px; border: 1px solid var(--gold-accent);">
                 <span style="font-size: 0.7rem; background: var(--gold-accent); color: white; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase;">📻 Destacado de la Semana</span>
@@ -639,11 +638,7 @@
         let seriesHTML = '';
         for (let categoria in seriesMap) {
           let nombreSerie = categoria.toUpperCase();
-          
-          // Nombres bonitos para tus nuevas series
-          if (categoria === 'paz' || categoria.includes('ansiedad')) nombreSerie = '🕊️ Serie: Paz & Ansiedad';
-          if (categoria.includes('muertos') || categoria.includes('estado')) nombreSerie = '📜 Serie: El Estado de los Muertos';
-          if (categoria.includes('venida') || categoria.includes('preparados')) nombreSerie = '🎺 Serie: Preparados para su Venida';
+          if (categoria === 'paz') nombreSerie = '🕊️ Serie: Paz & Ansiedad';
           if (categoria === 'finanzas') nombreSerie = '💸 Serie: Finanzas con Propósito';
           if (categoria === 'familia') nombreSerie = '🏠 Serie: Restauración Familiar';
 
@@ -656,23 +651,6 @@
               </div>
             `;
           });
-
-          seriesHTML += `
-            <div class="serie-accordion">
-              <div class="serie-header" onclick="toggleSerie(this)">
-                <span>📂 ${nombreSerie} (${seriesMap[categoria].length} audios)</span>
-                <span>▼</span>
-              </div>
-              <div class="serie-body">
-                ${listaCapitulos}
-              </div>
-            </div>
-          `;
-        }
-
-        contenedor.innerHTML = destacadosHTML + seriesHTML;
-      });
-    }
 
           seriesHTML += `
             <div class="serie-accordion">
