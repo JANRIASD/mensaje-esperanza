@@ -720,13 +720,21 @@
 
         let seriesHTML = '';
         for (let categoria in seriesMap) {
-          let nombreSerie = categoria.toUpperCase();
+          if (categoria === 'destacado') continue; // Ignoramos los destacados porque van arriba
+
+          // Limpiamos el nombre de la categoría para que luzca ordenado como título de serie
+          let nombreLimpio = categoria.charAt(0).toUpperCase() + categoria.slice(1);
           
-          if (categoria === 'paz' || categoria.includes('ansiedad')) nombreSerie = '🕊️ Serie: Paz & Ansiedad';
-          if (categoria.includes('muertos') || categoria.includes('estado')) nombreSerie = '📜 Serie: El Estado de los Muertos';
-          if (categoria.includes('venida') || categoria.includes('preparados')) nombreSerie = '🎺 Serie: Preparados para su Venida';
-          if (categoria === 'finanzas') nombreSerie = '💸 Serie: Finanzas con Propósito';
-          if (categoria === 'familia') nombreSerie = '🏠 Serie: Restauración Familiar';
+          // Opcional: Si quieres personalizar algunas con emojis especiales según lo que escribas
+          let iconoSerie = '📂';
+          let catLower = categoria.toLowerCase();
+          if (catLower.includes('paz') || catLower.includes('ansiedad')) iconoSerie = '🕊️ Serie:';
+          else if (catLower.includes('muertos') || catLower.includes('estado')) iconoSerie = '📜 Serie:';
+          else if (catLower.includes('venida') || catLower.includes('preparados')) iconoSerie = '🎺 Serie:';
+          else if (catLower.includes('finanzas')) iconoSerie = '💸 Serie:';
+          else if (catLower.includes('familia')) iconoSerie = '🏠 Serie:';
+
+          let tituloFinal = `${iconoSerie} ${nombreLimpio}`;
 
           let listaCapitulos = '';
           seriesMap[categoria].forEach(audio => {
@@ -741,7 +749,7 @@
           seriesHTML += `
             <div class="serie-accordion" style="background: rgba(240, 246, 252, 0.75); border: 1px solid rgba(10, 88, 127, 0.15); border-radius: 12px; margin-bottom: 12px; overflow: hidden;">
               <div class="serie-header" onclick="toggleSerie(this)" style="background: rgba(10, 88, 127, 0.08); padding: 12px 15px; font-weight: 700; color: var(--adventist-blue); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;">
-                <span>📂 ${nombreSerie} (${seriesMap[categoria].length} audios)</span>
+                <span>📂 ${tituloFinal} (${seriesMap[categoria].length} audios)</span>
                 <span>▼</span>
               </div>
               <div class="serie-body" style="display: none; padding: 12px 15px; background: rgba(255, 255, 255, 0.6); border-top: 1px solid rgba(10, 88, 127, 0.1);">
