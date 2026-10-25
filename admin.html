@@ -135,13 +135,20 @@
       <div class="card">
         <h3>🎧 Publicar Audio / Serie</h3>
         <input type="text" id="audioTitulo" placeholder="Título del Audio (ej: Parte 1: El Perdón)">
-        <input type="text" id="audioUrl" placeholder="URL o nombre del archivo MP3 (ej: mi_audio.mp3 o enlace web)">
-        <select id="audioCategoria">
-          <option value="destacado">📻 Destacado de la Semana</option>
-          <option value="paz">🕊️ Serie: Paz & Ansiedad</option>
-          <option value="finanzas">💸 Serie: Finanzas con Propósito</option>
-          <option value="familia">🏠 Serie: Restauración Familiar</option>
-        </select>
+        <input type="text" id="audioUrl" placeholder="URL o nombre del archivo MP3 (ej: mi_audio.mp3)">
+        
+        <!-- CAMPO INTELIGENTE: SELECCIONAR O ESCRIBIR NUEVA SERIE -->
+        <div style="margin-bottom: 10px;">
+          <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Selecciona una serie existente o escribe una nueva:</label>
+          <input type="text" id="audioCategoria" list="sugerenciasSeries" placeholder="Ej. Preparados para su Venida (o escribe una nueva)">
+          <datalist id="sugerenciasSeries">
+            <option value="destacado">Destacado de la Semana</option>
+            <option value="paz">Paz & Ansiedad</option>
+            <option value="finanzas">Finanzas con Propósito</option>
+            <option value="familia">Restauración Familiar</option>
+          </datalist>
+        </div>
+
         <button class="btn" onclick="guardarAudio()">PUBLICAR AUDIO</button>
 
         <h4 style="font-size: 0.85rem; margin-top: 15px; color: var(--adventist-blue);">Audios en la Nube:</h4>
@@ -236,20 +243,22 @@
 
     // Audios
     async function guardarAudio() {
-      const titulo = document.getElementById('audioTitulo').value;
-      const url = document.getElementById('audioUrl').value;
-      const categoria = document.getElementById('audioCategoria').value;
+      const titulo = document.getElementById('audioTitulo').value.trim();
+      const url = document.getElementById('audioUrl').value.trim();
+      // Limpiamos y convertimos a minúsculas y sin espacios raros para unificar la categoría
+      let categoria = document.getElementById('audioCategoria').value.trim().toLowerCase();
 
-      if (!titulo || !url) return alert("Ingresa el título y la ruta o URL del archivo MP3.");
+      if (!titulo || !url || !categoria) return alert("Ingresa el título, la URL del MP3 y la serie o categoría.");
 
       try {
         await db.collection("audios").add({
           titulo, url, categoria,
           creado: firebase.firestore.FieldValue.serverTimestamp()
         });
-        alert("¡Audio publicado!");
+        alert("¡Audio publicado con éxito!");
         document.getElementById('audioTitulo').value = '';
         document.getElementById('audioUrl').value = '';
+        document.getElementById('audioCategoria').value = '';
       } catch(e) { alert("Error: " + e.message); }
     }
 
