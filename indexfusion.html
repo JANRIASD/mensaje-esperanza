@@ -338,13 +338,15 @@
           <audio id="audioDinamicoPlayer" controls src="audio-paz.mp3" style="margin-top: 6px; width: 100%;"></audio>
         </div>
 
-        <!-- Botón llamativo para saltar a la pestaña de Oración -->
-        <button onclick="irAPestanaOracion()" style="width: 100%; margin-top: 12px; background: rgba(10, 88, 127, 0.1); border: 1px dashed var(--adventist-blue); color: var(--adventist-blue); padding: 10px; border-radius: 12px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: 0.3s;">
-          🙏 ¿Deseas que oremos por tu necesidad? Compártenos tu petición aquí
-        >
+       <!-- BOTÓN VERDE PRINCIPAL: PARA LLEVARLO A LA PESTAÑA DE ORACIÓN -->
+        <button onclick="irAPestanaOracion()" class="btn-wa" style="width: 100%; border: none; cursor: pointer; margin-top: 12px;">
+          🙏 ¿Quieres que oremos por ti? Da clic aquí
+        </button>
 
-        <a id="temaWa" href="https://wa.me/5219831255281?text=Hola,%20estuve%20leyendo%20sobre%20%22Paz%20que%20sobrepasa%20todo%20entendimiento%22%20y%20me%20gustar%C3%ADa%20hablar%20con%20alguien." target="_blank" class="btn-wa">💬 Hablar con alguien sobre este tema por WhatsApp</a>
-      </div>
+        <!-- ENLACE O BOTÓN SECUNDARIO: PARA HABLAR POR WHATSAPP SOBRE EL TEMA -->
+        <a id="temaWa" href="#" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(10, 88, 127, 0.08); border: 1px solid var(--adventist-blue); color: var(--adventist-blue); text-decoration: none; padding: 10px; border-radius: 20px; font-weight: 600; font-size: 0.8rem; margin-top: 8px; transition: 0.3s;">
+          💬 O hablar con alguien sobre este tema por WhatsApp
+        </a>
 
       <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">¿Qué necesita tu corazón hoy?</h3>
       <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Selecciona el tema que estás sintiendo o necesitando:</p>
