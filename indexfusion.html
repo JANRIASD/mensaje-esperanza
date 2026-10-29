@@ -338,9 +338,9 @@
           <audio id="audioDinamicoPlayer" controls src="audio-paz.mp3" style="margin-top: 6px; width: 100%;"></audio>
         </div>
 
-       <!-- BOTÓN VERDE PRINCIPAL: PARA LLEVARLO A LA PESTAÑA DE ORACIÓN -->
-        <button onclick="irAPestanaOracion()" class="btn-wa" style="width: 100%; border: none; cursor: pointer; margin-top: 12px;">
-          🙏 ¿Quieres que oremos por ti? Da clic aquí
+       <!-- BOTÓN DE ORACIÓN EN LA TARJETA PRINCIPAL -->
+        <button onclick="irAPestanaOracion()" style="width: 100%; background: var(--adventist-blue); color: white; border: none; padding: 12px; border-radius: 25px; font-weight: 700; font-size: 0.85rem; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(10, 88, 127, 0.3); transition: 0.3s;">
+          🙏 ¿Quieres pedir Oración? Da clic aquí
         </button>
 
         <!-- ENLACE O BOTÓN SECUNDARIO: PARA HABLAR POR WHATSAPP SOBRE EL TEMA -->
@@ -581,12 +581,30 @@
     }
 
     function openTab(evt, tabName) {
+      // Ocultar todos los contenidos de pestañas
       const contents = document.getElementsByClassName("tab-content");
-      for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+        contents[i].style.display = "none"; // Forzamos ocultar
+      }
+
+      // Quitar la clase active de todos los botones
       const buttons = document.getElementsByClassName("tab-btn");
-      for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
-      document.getElementById(tabName).classList.add("active");
-      evt.currentTarget.classList.add("active");
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+      }
+
+      // Mostrar la pestaña seleccionada
+      const activeTab = document.getElementById(tabName);
+      if (activeTab) {
+        activeTab.style.display = "block"; // Forzamos mostrar
+        activeTab.classList.add("active");
+      }
+
+      // Activar el botón correspondiente
+      if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add("active");
+      }
     }
 
     async function enviarPeticionOracion() {
