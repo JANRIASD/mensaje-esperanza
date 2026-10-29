@@ -581,27 +581,25 @@
     }
 
     function openTab(evt, tabName) {
-      // Ocultar todos los contenidos de pestañas
+      // Ocultar todas las pestañas de forma explícita
       const contents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < contents.length; i++) {
         contents[i].classList.remove("active");
-        contents[i].style.display = "none"; // Forzamos ocultar
       }
 
-      // Quitar la clase active de todos los botones
+      // Quitar la clase active de todos los botones de navegación
       const buttons = document.getElementsByClassName("tab-btn");
       for (let i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("active");
       }
 
-      // Mostrar la pestaña seleccionada
+      // Mostrar únicamente la pestaña seleccionada
       const activeTab = document.getElementById(tabName);
       if (activeTab) {
-        activeTab.style.display = "block"; // Forzamos mostrar
         activeTab.classList.add("active");
       }
 
-      // Activar el botón correspondiente
+      // Activar visualmente el botón correspondiente
       if (evt && evt.currentTarget) {
         evt.currentTarget.classList.add("active");
       }
@@ -813,7 +811,7 @@
       return str ? str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&#34;' }[tag] || tag)) : '';
     }
     function irAPestanaOracion() {
-      // Simula el clic en el botón de la pestaña de oración
+      // Selecciona el segundo botón del menú (que ahora es Oración)
       const btnOracion = document.querySelector('.nav-tabs button:nth-child(2)');
       if (btnOracion) {
         openTab({ currentTarget: btnOracion }, 'oracion');
