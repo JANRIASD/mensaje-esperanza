@@ -314,13 +314,13 @@
       <button class="btn-draw" onclick="obtenerPromesa()">✨ RECIBIR MI PROMESA DIARIA</button>
     </div>
 
-    <!-- PESTAÑAS DE NAVEGACIÓN -->
+    <!-- PESTAÑAS DE NAVEGACIÓN (CON ORACIÓN EN SEGUNDO LUGAR) -->
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="openTab(event, 'siente')">🧘 ¿Cómo estás?</button>
-      <button class="tab-btn" onclick="openTab(event, 'recursos')">📚 Recursos</button>
-      <button class="tab-btn" onclick="openTab(event, 'audios')">🎧 Audios</button>
-      <button class="tab-btn" onclick="openTab(event, 'eventos')">📍 Eventos</button>
       <button class="tab-btn" onclick="openTab(event, 'oracion')">🙏 Oración</button>
+      <button class="tab-btn" onclick="openTab(event, 'audios')">🎧 Audios</button>
+      <button class="tab-btn" onclick="openTab(event, 'recursos')">📚 Recursos</button>
+      <button class="tab-btn" onclick="openTab(event, 'eventos')">📍 Eventos</button>
     </div>
 
     <!-- PESTAÑA 1: ¿CÓMO ESTÁS? / INICIO (CON EL NUEVO ORDEN PEDIDO) -->
@@ -337,6 +337,11 @@
           <h4 id="audioDinamicoTitulo" style="margin-top: 6px; font-size: 0.85rem; color: var(--adventist-blue);">🎧 Audio Especial: Paz que sobrepasa todo entendimiento</h4>
           <audio id="audioDinamicoPlayer" controls src="audio-paz.mp3" style="margin-top: 6px; width: 100%;"></audio>
         </div>
+
+        <!-- Botón llamativo para saltar a la pestaña de Oración -->
+        <button onclick="irAPestanaOracion()" style="width: 100%; margin-top: 12px; background: rgba(10, 88, 127, 0.1); border: 1px dashed var(--adventist-blue); color: var(--adventist-blue); padding: 10px; border-radius: 12px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: 0.3s;">
+          🙏 ¿Deseas que oremos por tu necesidad? Compártenos tu petición aquí
+        >
 
         <a id="temaWa" href="https://wa.me/5219831255281?text=Hola,%20estuve%20leyendo%20sobre%20%22Paz%20que%20sobrepasa%20todo%20entendimiento%22%20y%20me%20gustar%C3%ADa%20hablar%20con%20alguien." target="_blank" class="btn-wa">💬 Hablar con alguien sobre este tema por WhatsApp</a>
       </div>
@@ -786,6 +791,14 @@
 
     function escapeHTML(str) {
       return str ? str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&#34;' }[tag] || tag)) : '';
+    }
+    function irAPestanaOracion() {
+      // Simula el clic en el botón de la pestaña de oración
+      const btnOracion = document.querySelector('.nav-tabs button:nth-child(2)');
+      if (btnOracion) {
+        openTab({ currentTarget: btnOracion }, 'oracion');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
