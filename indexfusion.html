@@ -583,25 +583,33 @@
     }
 
     function openTab(evt, tabName) {
+      // Ocultar todas las pestañas explícitamente
       const contents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < contents.length; i++) {
         contents[i].classList.remove("active");
         contents[i].style.display = "none";
       }
 
+      // Quitar la clase active de todos los botones
       const buttons = document.getElementsByClassName("tab-btn");
       for (let i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("active");
       }
 
+      // Mostrar la pestaña seleccionada
       const activeTab = document.getElementById(tabName);
       if (activeTab) {
         activeTab.style.display = "block";
         activeTab.classList.add("active");
       }
 
+      // Activar el botón correspondiente
       if (evt && evt.currentTarget) {
         evt.currentTarget.classList.add("active");
+      } else {
+        // Por si se llama desde otra función sin evento, busca el botón que coincida
+        const matchingBtn = document.querySelector(`.nav-tabs button[onclick*="'${tabName}'"]`);
+        if (matchingBtn) matchingBtn.classList.add("active");
       }
     }
 
@@ -816,7 +824,11 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+   document.addEventListener("DOMContentLoaded", () => {
+      // Forzar que la pestaña inicial sea visible al cargar
+      const pestañaInicial = document.getElementById('siente');
+      if (pestañaInicial) pestañaInicial.style.display = 'block';
+
       cargarOracionesEnTiempoReal();
       cargarEventosEnTiempoReal();
       cargarAudiosEnTiempoReal();
