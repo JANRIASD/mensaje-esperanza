@@ -113,7 +113,7 @@
     }
 
     /* CONTENIDO PESTAÑAS */
-   .tab-content {
+    .tab-content {
       display: none !important;
       background: var(--glass-card);
       padding: 22px;
@@ -325,7 +325,7 @@
       <button class="tab-btn" onclick="openTab(event, 'eventos')">📍 Eventos</button>
     </div>
 
-    <!-- PESTAÑA 1: ¿CÓMO ESTÁS? / INICIO (CON EL NUEVO ORDEN PEDIDO) -->
+    <!-- PESTAÑA 1: ¿CÓMO ESTÁS? / INICIO -->
     <div id="siente" class="tab-content active">
       
       <!-- 1. EL VERSÍCULO CORRESPONDIENTE AL CÓDIGO ESCANEADO O TEMA SELECCIONADO -->
@@ -340,7 +340,7 @@
           <audio id="audioDinamicoPlayer" controls src="audio-paz.mp3" style="margin-top: 6px; width: 100%;"></audio>
         </div>
 
-       <!-- BOTÓN DE ORACIÓN EN LA TARJETA PRINCIPAL -->
+        <!-- BOTÓN DE ORACIÓN EN LA TARJETA PRINCIPAL -->
         <button onclick="irAPestanaOracion()" style="width: 100%; background: var(--adventist-blue); color: white; border: none; padding: 12px; border-radius: 25px; font-weight: 700; font-size: 0.85rem; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(10, 88, 127, 0.3); transition: 0.3s;">
           🙏 ¿Quieres pedir Oración? Da clic aquí
         </button>
@@ -349,6 +349,7 @@
         <a id="temaWa" href="#" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(10, 88, 127, 0.08); border: 1px solid var(--adventist-blue); color: var(--adventist-blue); text-decoration: none; padding: 10px; border-radius: 20px; font-weight: 600; font-size: 0.8rem; margin-top: 8px; transition: 0.3s;">
           💬 O hablar con alguien sobre este tema por WhatsApp
         </a>
+      </div>
 
       <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">¿Qué necesita tu corazón hoy?</h3>
       <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Selecciona el tema que estás sintiendo o necesitando:</p>
@@ -367,7 +368,7 @@
         <div class="emotion-card" onclick="cargarTema('proposito')"><img src="Proposito CL.png" alt="QR"><span>🎯 Propósito</span></div>
       </div>
 
-      <!-- 4. LISTA DESPLEGABLE DE LOS CÓDIGOS PARA COMPARTIR, DESCARGAR, ETC -->
+      <!-- 4. LISTA DESPLEGABLE DE LOS CÓDIGOS -->
       <div class="home-section">
         <h3>📱 Compartir Códigos QR de Esperanza</h3>
         <p class="section-intro">Selecciona un tema de la lista para ver su tarjeta QR, descargarlo o compartirlo:</p>
@@ -401,7 +402,47 @@
       </div>
     </div>
 
-    <!-- PESTAÑA 2: RECURSOS -->
+    <!-- PESTAÑA 2: ORACIÓN -->
+    <div id="oracion" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Muro de Oración • Cancún</h3>
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">Comparte tu petición y nuestra comunidad estará orando por ti.</p>
+
+      <div style="background: rgba(240, 246, 252, 0.65); padding: 14px; border-radius: 14px; border: 1px solid rgba(10, 88, 127, 0.15); margin-bottom: 18px;">
+        <input type="text" id="oracionNombre" placeholder="Tu Nombre (o deja vacío para Anónimo)">
+        <textarea id="oracionMensaje" placeholder="Escribe aquí tu petición..." rows="3"></textarea>
+
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 0.75rem; color: var(--text-muted);">
+          <input type="checkbox" id="oracionPrivada">
+          <label for="oracionPrivada">Petición confidencial (enviar solo al pastor por WhatsApp)</label>
+        </div>
+
+        <button id="btnEnviarOracion" onclick="enviarPeticionOracion()" class="btn-draw" style="width: 100%; margin-top: 0; background: var(--adventist-blue);">🙏 ENVIAR PETICIÓN DE ORACIÓN</button>
+      </div>
+
+      <h4 style="color: var(--adventist-blue); font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;">🤍 Peticiones Recientes</h4>
+      <div id="muroOracionesLista">
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando muro...</p>
+      </div>
+    </div>
+
+    <!-- PESTAÑA 3: AUDIOS -->
+    <div id="audios" class="tab-content">
+      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Biblioteca de Mensajes en Audio</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Reflexiones para cada momento de tu día:</p>
+      
+      <div style="margin-bottom: 15px; padding: 12px; background: rgba(200, 150, 62, 0.1); border-radius: 12px; border: 1px solid var(--gold-accent);">
+        <span style="font-size: 0.7rem; background: var(--gold-accent); color: white; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase;">Especial para ti</span>
+        <h4 style="margin-top: 6px; font-size: 0.88rem; color: var(--adventist-blue);">🎧 Mensaje de Paz y Esperanza</h4>
+        <audio controls src="audio-paz.mp3" style="margin-top: 6px;"></audio>
+      </div>
+
+      <h4 style="color: var(--adventist-blue); font-size: 0.88rem; margin: 15px 0 10px 0; font-weight: 700;">📻 Series y Mensajes en la Nube:</h4>
+      <div id="muroAudiosLista">
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando mensajes...</p>
+      </div>
+    </div>
+
+    <!-- PESTAÑA 4: RECURSOS -->
     <div id="recursos" class="tab-content">
       <h3 style="color: var(--adventist-blue); margin-bottom: 12px; font-size: 0.95rem; font-weight: 700;">Recursos para fortalecer tu fe</h3>
 
@@ -438,53 +479,13 @@
       </a>
     </div>
 
-    <!-- PESTAÑA 3: AUDIOS -->
-    <div id="audios" class="tab-content">
-      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Biblioteca de Mensajes en Audio</h3>
-      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Reflexiones para cada momento de tu día:</p>
-      
-      <div style="margin-bottom: 15px; padding: 12px; background: rgba(200, 150, 62, 0.1); border-radius: 12px; border: 1px solid var(--gold-accent);">
-        <span style="font-size: 0.7rem; background: var(--gold-accent); color: white; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase;">Especial para ti</span>
-        <h4 style="margin-top: 6px; font-size: 0.88rem; color: var(--adventist-blue);">🎧 Mensaje de Paz y Esperanza</h4>
-        <audio controls src="audio-paz.mp3" style="margin-top: 6px;"></audio>
-      </div>
-
-      <h4 style="color: var(--adventist-blue); font-size: 0.88rem; margin: 15px 0 10px 0; font-weight: 700;">📻 Series y Mensajes en la Nube:</h4>
-      <div id="muroAudiosLista">
-        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando mensajes...</p>
-      </div>
-    </div>
-
-    <!-- PESTAÑA 4: EVENTOS -->
+    <!-- PESTAÑA 5: EVENTOS -->
     <div id="eventos" class="tab-content">
       <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Eventos y Anuncios</h3>
       <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Toca cualquier imagen para ampliarla:</p>
 
       <div id="muroEventosLista">
         <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando eventos...</p>
-      </div>
-    </div>
-
-    <!-- PESTAÑA 5: ORACIÓN -->
-    <div id="oracion" class="tab-content">
-      <h3 style="color: var(--adventist-blue); margin-bottom: 6px; font-size: 0.95rem; font-weight: 700;">Muro de Oración • Cancún</h3>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">Comparte tu petición y nuestra comunidad estará orando por ti.</p>
-
-      <div style="background: rgba(240, 246, 252, 0.65); padding: 14px; border-radius: 14px; border: 1px solid rgba(10, 88, 127, 0.15); margin-bottom: 18px;">
-        <input type="text" id="oracionNombre" placeholder="Tu Nombre (o deja vacío para Anónimo)">
-        <textarea id="oracionMensaje" placeholder="Escribe aquí tu petición..." rows="3"></textarea>
-
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 0.75rem; color: var(--text-muted);">
-          <input type="checkbox" id="oracionPrivada">
-          <label for="oracionPrivada">Petición confidencial (enviar solo al pastor por WhatsApp)</label>
-        </div>
-
-        <button id="btnEnviarOracion" onclick="enviarPeticionOracion()" class="btn-draw" style="width: 100%; margin-top: 0; background: var(--adventist-blue);">🙏 ENVIAR PETICIÓN DE ORACIÓN</button>
-      </div>
-
-      <h4 style="color: var(--adventist-blue); font-size: 0.9rem; margin-bottom: 10px; font-weight: 700;">🤍 Peticiones Recientes</h4>
-      <div id="muroOracionesLista">
-        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Cargando muro...</p>
       </div>
     </div>
 
@@ -583,27 +584,23 @@
     }
 
     function openTab(evt, tabName) {
-      // Ocultar todas las pestañas
       const contents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < contents.length; i++) {
         contents[i].classList.remove("active");
         contents[i].style.display = "none";
       }
 
-      // Quitar la clase active de los botones
       const buttons = document.getElementsByClassName("tab-btn");
       for (let i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("active");
       }
 
-      // Mostrar la pestaña seleccionada
       const activeTab = document.getElementById(tabName);
       if (activeTab) {
         activeTab.style.display = "block";
         activeTab.classList.add("active");
       }
 
-      // Activar el botón correspondiente
       if (evt && evt.currentTarget) {
         evt.currentTarget.classList.add("active");
       }
@@ -747,12 +744,9 @@
 
         let seriesHTML = '';
         for (let categoria in seriesMap) {
-          if (categoria === 'destacado') continue; // Ignoramos los destacados porque van arriba
+          if (categoria === 'destacado') continue;
 
-          // Limpiamos el nombre de la categoría para que luzca ordenado como título de serie
           let nombreLimpio = categoria.charAt(0).toUpperCase() + categoria.slice(1);
-          
-          // Opcional: Si quieres personalizar algunas con emojis especiales según lo que escribas
           let iconoSerie = '📂';
           let catLower = categoria.toLowerCase();
           if (catLower.includes('paz') || catLower.includes('ansiedad')) iconoSerie = '🕊️ Serie:';
@@ -814,8 +808,8 @@
     function escapeHTML(str) {
       return str ? str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&#34;' }[tag] || tag)) : '';
     }
+
     function irAPestanaOracion() {
-      // Selecciona el segundo botón del menú (que ahora es Oración)
       const btnOracion = document.querySelector('.nav-tabs button:nth-child(2)');
       if (btnOracion) {
         openTab({ currentTarget: btnOracion }, 'oracion');
