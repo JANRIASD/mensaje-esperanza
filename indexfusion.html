@@ -113,19 +113,10 @@
     }
 
     /* CONTENIDO PESTAÑAS */
-    .tab-content {
+   .tab-content {
       display: none;
-      background: var(--glass-card);
-      padding: 22px;
-      border-radius: 18px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      animation: fadeIn 0.4s ease-in-out;
+      /* ... lo demás que tenga ... */
     }
-
     .tab-content.active { display: block; }
 
     @keyframes fadeIn {
@@ -581,25 +572,27 @@
     }
 
     function openTab(evt, tabName) {
-      // Ocultar todas las pestañas de forma explícita
+      // Ocultar todas las pestañas
       const contents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < contents.length; i++) {
         contents[i].classList.remove("active");
+        contents[i].style.display = "none";
       }
 
-      // Quitar la clase active de todos los botones de navegación
+      // Quitar la clase active de los botones
       const buttons = document.getElementsByClassName("tab-btn");
       for (let i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("active");
       }
 
-      // Mostrar únicamente la pestaña seleccionada
+      // Mostrar la pestaña seleccionada
       const activeTab = document.getElementById(tabName);
       if (activeTab) {
+        activeTab.style.display = "block";
         activeTab.classList.add("active");
       }
 
-      // Activar visualmente el botón correspondiente
+      // Activar el botón correspondiente
       if (evt && evt.currentTarget) {
         evt.currentTarget.classList.add("active");
       }
