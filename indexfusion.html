@@ -826,9 +826,11 @@
 
    document.addEventListener("DOMContentLoaded", () => {
       // Forzar que la pestaña inicial sea visible al cargar
-      const pestañaInicial = document.getElementById('siente');
-      if (pestañaInicial) pestañaInicial.style.display = 'block';
-
+     const pestañaInicial = document.getElementById('siente');
+      if (pestañaInicial) {
+        pestañaInicial.style.display = 'block';
+        pestañaInicial.classList.add('active');
+      }
       cargarOracionesEnTiempoReal();
       cargarEventosEnTiempoReal();
       cargarAudiosEnTiempoReal();
