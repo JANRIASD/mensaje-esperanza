@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paz en su Palabra - Tarjeta de Presentación</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --adventist-blue: #0A587F;
+      --adventist-blue-dark: #003A5D;
+      --gold-accent: #C8963E;
+      --crimson-accent: #A31D1D;
+      --crimson-hover: #821515;
+      --green-wa: #25d366;
+      
+      --glass-overlay: rgba(245, 248, 252, 0.75);
+      --glass-card: rgba(255, 255, 255, 0.9);
+      --glass-border: rgba(200, 150, 62, 0.35);
+      --text-main: #0B2545;
+      --text-muted: #4A607A;
+      
+      --bg-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80');
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+    body {
+      background: linear-gradient(var(--glass-overlay), var(--glass-overlay)), var(--bg-image) center/cover no-repeat fixed;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 15px;
+    }
+
+    .card-container {
+      width: 100%;
+      max-width: 500px;
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 30px 20px;
+      box-shadow: 0 15px 35px rgba(10, 88, 127, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      text-align: center;
+    }
+
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, var(--adventist-blue), var(--adventist-blue-dark));
+      color: white;
+      font-size: 2.2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px auto;
+      box-shadow: 0 8px 20px rgba(10, 88, 127, 0.3);
+      border: 3px solid #ffffff;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      color: var(--adventist-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--adventist-blue-dark);
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .bio-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      padding: 0 10px;
+    }
+
+    /* ESTILO VISOR / CARRUSEL GLASS (ESTILO WINDOWS VISTA / MODERN GLASS) */
+    .qr-showcase-box {
+      background: rgba(240, 246, 252, 0.85);
+      border: 1px solid rgba(10, 88, 127, 0.15);
+      border-radius: 18px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: inset 0 2px 5px rgba(255,255,255,0.8);
+    }
+
+    .qr-showcase-title {
+      font-size: 0.88rem;
+      color: var(--adventist-blue);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .qr-preview-container {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid rgba(10, 88, 127, 0.2);
+      border-radius: 14px;
+      padding: 12px;
+      margin: 10px auto;
+      width: 170px;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .qr-preview-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .qr-preview-container img:hover {
+      transform: scale(1.03);
+    }
+
+    .qr-hint {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* MINIATURAS DEL CARRUSEL EN HORIZONTAL */
+    .qr-thumbnails-track {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 6px 2px;
+      scroll-behavior: smooth;
+      justify-content: flex-start;
+    }
+
+    .qr-thumbnails-track::-webkit-scrollbar {
+      height: 6px;
+    }
+    .qr-thumbnails-track::-webkit-scrollbar-thumb {
+      background: rgba(10, 88, 127, 0.2);
+      border-radius: 3px;
+    }
+
+    .qr-thumb-item {
+      flex: 0 0 46px;
+      height: 46px;
+      background: #ffffff;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 3px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .qr-thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .qr-thumb-item.active {
+      border-color: var(--gold-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(200, 150, 62, 0.3);
+    }
+
+    /* BOTONES DE ENLACES (LINKS) */
+    .links-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .btn-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(240, 246, 252, 0.85);
+      border: 1px solid rgba(10, 88, 127, 0.15);
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .btn-link span {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-link:hover {
+      background: #ffffff;
+      border-color: var(--adventist-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(10, 88, 127, 0.12);
+    }
+
+    /* BOTÓN DORADO BRILLANTE */
+    .btn-gold {
+      background: linear-gradient(135deg, #FFD700, #DAA520, #B8860B);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(218, 165, 32, 0.35);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #ffdf33, #e6b824, #c6950d);
+    }
+
+    /* BOTÓN CARMESÍ PARA ORACIÓN */
+    .btn-crimson {
+      background: linear-gradient(135deg, #C42B2B, var(--crimson-accent), #7A1212);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(163, 29, 29, 0.35);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .btn-crimson:hover {
+      background: linear-gradient(135deg, #d83535, #b21f1f, #8c1515);
+    }
+
+    /* BOTÓN WHATSAPP */
+    .btn-whatsapp {
+      background: var(--green-wa);
+      color: #ffffff;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
+      justify-content: center;
+    }
+    .btn-whatsapp:hover {
+      background: #20ba59;
+    }
+
+    /* MODAL PARA AMPLIAR IMAGEN */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center; align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+    }
+    .modal-overlay img {
+      max-width: 90%;
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      background: #fff;
+      padding: 10px;
+    }
+
+    footer {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    footer a {
+      color: var(--adventist-blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card-container">
+    
+    <div class="profile-avatar">
+      🕊️
+    </div>
+
+    <h1>Paz en su Palabra</h1>
+    <p class="subtitle">Mensaje de Esperanza • Cancún</p>
+    
+    <p class="bio-text">
+      Un espacio dedicado a llevar alivio al corazón, recursos espirituales, mensajes de esperanza y apoyo en oración para tu vida diaria.
+    </p>
+
+    <!-- CARRUSEL INTERACTIVO DE CÓDIGOS QR (ESTILO GLASS / VISTA PREVIA) -->
+    <div class="qr-showcase-box">
+      <div class="qr-showcase-title" id="qrActiveTitle">🕊️ Paz que sobrepasa todo entendimiento</div>
+      
+      <!-- Imagen en grande con interacción nativa de guardado/compartir -->
+      <div class="qr-preview-container">
+        <img id="qrActiveImg" src="Paz CL.png" alt="Código QR" onclick="ampliarImagen(this.src)" title="Toca para ampliar y guardar">
+      </div>
+      <p class="qr-hint">💡 Toca la imagen para ampliar, guardar o compartir</p>
+
+      <!-- Carrusel de miniaturas horizontales -->
+      <div class="qr-thumbnails-track" id="qrThumbnailsTrack">
+        <!-- Generado dinámicamente por JavaScript -->
+      </div>
+    </div>
+
+    <!-- LISTA DE ENLACES CLAVE -->
+    <div class="links-stack">
+      
+      <!-- Enlace a la App Principal -->
+      <a href="index.html" class="btn-link btn-gold">
+        <span>✨ Abrir la Web de Esperanza</span>
+        <span>👉</span>
+      </a>
+
+      <!-- Botón de Oración en Carmesí -->
+      <a href="index.html?tab=oracion" class="btn-link btn-crimson">
+        <span>🙏 Pedir Oración / Muro Comunitario</span>
+        <span>🤍</span>
+      </a>
+
+      <!-- Recursos y Estudios Bíblicos -->
+      <a href="https://www.nuevotiempo.org/ensenarlabiblia" target="_blank" class="btn-link">
+        <span>📚 Curso Bíblico por WhatsApp</span>
+        <span>📖</span>
+      </a>
+
+      <!-- Contacto Directo por WhatsApp -->
+      <a href="https://wa.me/5219831255281?text=Hola,%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20los%20mensajes%20de%20esperanza." target="_blank" class="btn-link btn-whatsapp">
+        <span>💬 Contacto Directo por WhatsApp</span>
+      </a>
+
+    </div>
+
+    <footer>
+      <p>Proyecto Evangelístico • Cancún © 2026</p>
+      <p style="margin-top: 4px;"><a href="https://facebook.com/share/1NkKZCCNns/" target="_blank">Síguenos en Facebook</a></p>
+    </footer>
+
+  </div>
+
+  <!-- MODAL PARA PANTALLA COMPLETA -->
+  <div id="imageModal" class="modal-overlay" onclick="cerrarModal()">
+    <img id="imgAmpliada" src="" alt="Código QR Ampliado">
+  </div>
+
+  <script>
+    // Lista completa de códigos QR para el carrusel interactivo
+    const codigosQR = [
+      { key: 'paz', t: '🕊️ Paz', img: 'Paz CL.png', titulo: '🕊️ Paz que sobrepasa todo entendimiento' },
+      { key: 'estres', t: '🧘 Estrés', img: 'Estres CL.png', titulo: '🧘 Paz para el Estrés y la Ansiedad' },
+      { key: 'miedo', t: '🛡️ Miedo', img: 'Miedo CL.png', titulo: '🛡️ Protección y Confianza en el Miedo' },
+      { key: 'culpa', t: '❤️‍🩹 Culpa', img: 'Culpa CL.png', titulo: '❤️‍🩹 Perdón y Libertad de la Culpa' },
+      { key: 'duelo', t: '🩹 Duelo', img: 'Duelo CL.png', titulo: '🩹 Consuelo Celestial en la Pérdida' },
+      { key: 'soledad', t: '🫂 Soledad', img: 'Soledad CL.png', titulo: '🫂 Compañía Divina en la Soledad' },
+      { key: 'finanzas', t: '💸 Finanzas', img: 'Finanzas CL.png', titulo: '💸 Provisión y Paz Financiera' },
+      { key: 'familia', t: '🏠 Familia', img: 'Paz CL.png', titulo: '🏠 Bendición y Armonía para tu Hogar' },
+      { key: 'cansancio', t: '🏃 Cansancio', img: 'Cansancio CL.png', titulo: '🏃 Fuerza Renovada para el Cansado' },
+      { key: 'proposito', t: '🎯 Propósito', img: 'Proposito CL.png', titulo: '🎯 Un Propósito de Esperanza para tu Vida' }
+    ];
+
+    function inicializarCarrusel() {
+      const track = document.getElementById('qrThumbnailsTrack');
+      track.innerHTML = '';
+
+      codigosQRcentrados = codigosQR.forEach((item, index) => {
+        const thumb = document.createElement('div');
+        thumb.className = `qr-thumb-item ${index === 0 ? 'active' : ''}`;
+        thumb.innerHTML = `<img src="${item.img}" alt="${item.t}">`;
+        thumb.onclick = () => seleccionarQr(index);
+        track.appendChild(thumb);
+      });
+    }
+
+    function seleccionarQr(index) {
+      const item = codigosQR[index];
+      document.getElementById('qrActiveTitle').innerText = item.titulo;
+      document.getElementById('qrActiveImg').src = item.img;
+
+      // Actualizar clase activa en las miniaturas
+      const thumbs = document.querySelectorAll('.qr-thumb-item');
+      thumbs.forEach((th, idx) => {
+        if (idx === index) {
+          th.classList.add('active');
+        } else {
+          th.classList.remove('active');
+        }
+      });
+    }
+
+    function ampliarImagen(src) {
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("imgAmpliada");
+      if (modal && modalImg) {
+        modalImg.src = src;
+        modal.style.display = "flex";
+      }
+    }
+
+    function cerrarModal() {
+      const modal = document.getElementById("imageModal");
+      if (modal) modal.style.display = "none";
+    }
+
+    // Ejecutar al cargar la página
+    document.addEventListener("DOMContentLoaded", () => {
+      inicializarCarrusel();
+    });
+  </script>
+</body>
+</html>
