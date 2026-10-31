@@ -392,7 +392,7 @@
         </div>
       </div>
 
-     <!-- 5. VIDEO DE ESCUELA SABÁTICA -->
+      <!-- 5. VIDEO DE ESCUELA SABÁTICA -->
       <div class="home-section">
         <h3>📖 Escuela Sabática de la Semana</h3>
         <p class="section-intro">Estudia y repasa la lección en video directamente desde aquí:</p>
@@ -400,6 +400,8 @@
           <iframe width="560" height="315" src="https://www.youtube.com/embed/JiRL24GglxI?si=DmBSG8VSldWHsmvu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
       </div>
+
+    </div> <!-- 🔥 AQUÍ FALTABA ESTE CIERRE DE DIV PARA LA PESTAÑA 'siente' -->
 
     <!-- PESTAÑA 2: ORACIÓN -->
     <div id="oracion" class="tab-content">
@@ -583,31 +585,26 @@
     }
 
     function openTab(evt, tabName) {
-      // Ocultar todas las pestañas explícitamente
       const contents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < contents.length; i++) {
         contents[i].classList.remove("active");
         contents[i].style.display = "none";
       }
 
-      // Quitar la clase active de todos los botones
       const buttons = document.getElementsByClassName("tab-btn");
       for (let i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("active");
       }
 
-      // Mostrar la pestaña seleccionada
       const activeTab = document.getElementById(tabName);
       if (activeTab) {
         activeTab.style.display = "block";
         activeTab.classList.add("active");
       }
 
-      // Activar el botón correspondiente
       if (evt && evt.currentTarget) {
         evt.currentTarget.classList.add("active");
       } else {
-        // Por si se llama desde otra función sin evento, busca el botón que coincida
         const matchingBtn = document.querySelector(`.nav-tabs button[onclick*="'${tabName}'"]`);
         if (matchingBtn) matchingBtn.classList.add("active");
       }
@@ -824,9 +821,8 @@
       }
     }
 
-   document.addEventListener("DOMContentLoaded", () => {
-      // Forzar que la pestaña inicial sea visible al cargar
-     const pestañaInicial = document.getElementById('siente');
+    document.addEventListener("DOMContentLoaded", () => {
+      const pestañaInicial = document.getElementById('siente');
       if (pestañaInicial) {
         pestañaInicial.style.display = 'block';
         pestañaInicial.classList.add('active');
